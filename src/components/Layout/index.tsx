@@ -18,9 +18,7 @@ const Layouts: React.FC<LayoutsProps> = ({ children }) => {
             </Head>
             <div className={styles.root}>
                 <Navbar />
-                <main>
-                    <div className={styles.page_content}>{children}</div>
-                </main>
+                <main>{children}</main>
             </div>
         </>
     );

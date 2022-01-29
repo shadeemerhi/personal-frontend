@@ -8,10 +8,6 @@
   background: main.$black-primary;
 }
 
-.page_content {
-  height: 100vh;
-}
-
 @include sm {
     .root {
       flex-direction: row;
