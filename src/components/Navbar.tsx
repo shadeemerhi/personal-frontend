@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styles from './Navbar.module.scss';
+import styles from "../styles/Navbar.module.scss";
 
 type NavbarProps = {
   

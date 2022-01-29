@@ -1,7 +1,7 @@
 import Head from "next/head";
 import React from "react";
 import Navbar from "../Navbar";
-import styles from './Layout.module.scss';
+import styles from '../../styles/Layout.module.scss';
 
 interface LayoutsProps {};
 

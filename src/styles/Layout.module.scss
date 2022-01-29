@@ -1,5 +1,5 @@
-@use '../../styles/main.scss';
-@import '../../styles/_mixins';
+@use './main.scss';
+@import './_mixins';
 
 .root {
   display: flex;

@@ -1,10 +1,10 @@
 import React from 'react';
 
-type projectsProps = {
+interface ProjectPageProps {
   
 };
 
-const Projects:React.FC<projectsProps> = () => {
+const Projects:React.FC<ProjectPageProps> = () => {
   
   return <div className='page_container'>
     Projects Page
