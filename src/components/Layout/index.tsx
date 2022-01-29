@@ -1,10 +1,11 @@
 import Head from "next/head";
 import React from "react";
-import Navbar from "./Navbar";
+import Navbar from "../Navbar";
+import styles from './Layout.module.scss';
 
-type LayoutsProps = {};
+interface LayoutsProps {};
 
-const Layouts: React.FC<LayoutsProps> = () => {
+const Layouts: React.FC<LayoutsProps> = ({ children }) => {
     return (
         <>
             <Head>
@@ -15,7 +16,12 @@ const Layouts: React.FC<LayoutsProps> = () => {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <Navbar />
+            <div className={styles.root}>
+                <Navbar />
+                <main>
+                    <div className={styles.page_content}>{children}</div>
+                </main>
+            </div>
         </>
     );
 };

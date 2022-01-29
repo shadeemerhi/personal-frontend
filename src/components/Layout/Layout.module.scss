@@ -1,0 +1,19 @@
+@use '../../styles/main.scss';
+@import '../../styles/_mixins';
+
+.root {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  background: main.$black-primary;
+}
+
+.page_content {
+  height: 100vh;
+}
+
+@include sm {
+    .root {
+      flex-direction: row;
+    }
+}
