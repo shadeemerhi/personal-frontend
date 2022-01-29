@@ -1,0 +1,21 @@
+@use '../styles/main.scss';
+@import '../styles/mixins';
+
+.root {
+  display: flex;
+  border: 1px solid red;
+  width: 100%;
+  height: 34px;
+  background-color: main.$black-secondary;
+  color: white;
+}
+
+@include xs {
+    .root {
+      border: 2px solid blue;
+      height: 100vh;
+      width: 300px;
+    }
+}
+
+
