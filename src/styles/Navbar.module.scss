@@ -9,20 +9,34 @@
   color: white;
 
   .nav_item {
+    display: flex;
+    align-items: center;
 
-
-    &.__selected {
+    .icon {
+    }
+    
+    
+    &._selected {
       background: main.$main-color;
     }
-
   }
 }
 
 @include sm {
-    .root {
-      height: 100vh;
-      width: 300px;
-      flex-direction: column;
+  .root {
+    height: 100vh;
+    width: 300px;
+    flex-direction: column;
+  }
+  
+  .nav_item {
+    border-radius: 10px;
+    height: 60px;
+    padding: 10px;
+    
+      .icon {
+        margin-right: 10px;
+      }
     }
 }
 
