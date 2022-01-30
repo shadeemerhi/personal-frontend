@@ -1,9 +1,10 @@
 import Head from "next/head";
 import React from "react";
 import Navbar from "../Navbar";
-import styles from '../../styles/Layout.module.scss';
+import styles from "../../styles/Layout.module.scss";
+import { Box, Grid } from "@mui/material";
 
-interface LayoutsProps {};
+interface LayoutsProps {}
 
 const Layouts: React.FC<LayoutsProps> = ({ children }) => {
     return (
