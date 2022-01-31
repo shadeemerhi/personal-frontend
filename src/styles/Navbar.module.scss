@@ -4,17 +4,22 @@
 .root {
   display: flex;
   width: 100%;
-  height: 34px;
   background-color: main.$black-secondary;
   color: white;
 
   .nav_item {
     display: flex;
+    flex-direction: column;
     align-items: center;
+    padding: 4px 0px;
 
     .icon {
+      font-size: 14pt;
     }
-    
+
+    .text {
+      font-size: 8pt;
+    }
     
     &._selected {
       background: main.$main-color;
@@ -28,17 +33,27 @@
     width: 30%;
     max-width: 300px;
     flex-direction: column;
+
+    .nav_item {
+      flex-direction: row;
+      justify-content: flex-start;
+      border-radius: 10px;
+      height: 60px;
+      width: 100%;
+      padding: 10px;
+      
+        .icon {
+          margin-right: 12px;
+          font-size: 16pt;
+        }
+
+        .text {
+          font-weight: 500;
+          font-size: 12pt;
+        }
+      }
   }
   
-  .nav_item {
-    border-radius: 10px;
-    height: 60px;
-    padding: 10px;
-    
-      .icon {
-        margin-right: 10px;
-      }
-    }
 }
 
 

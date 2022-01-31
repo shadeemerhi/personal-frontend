@@ -3,6 +3,7 @@ import styles from "../../styles/Navbar.module.scss";
 import classNames from "classnames";
 import Icon from "@mui/material/Icon";
 import { useRouter } from "next/router";
+import { Box } from "@mui/material";
 
 export type NavItemInputs = {
     text: string;
@@ -14,12 +15,13 @@ interface NavItemProps {
     item: NavItemInputs;
     isSelected: boolean;
     setSelected: (value: string) => void;
+    width: number;
 }
 
-const NavItem: React.FC<NavItemProps> = ({ item, isSelected, setSelected }) => {
+const NavItem: React.FC<NavItemProps> = ({ item, width, isSelected, setSelected }) => {
     const router = useRouter();
     return (
-        <div
+        <Box
             className={classNames({
                 pointer: true,
                 [styles.nav_item]: true,
@@ -29,10 +31,11 @@ const NavItem: React.FC<NavItemProps> = ({ item, isSelected, setSelected }) => {
                 setSelected(item.text);
                 router.push(item.route);
             }}
+            width={{ xs: `${width}%`, sm: '100%' }}
         >
-            {item.icon && <Icon className={styles.icon}>{item.icon}</Icon>}
-            {item.text}
-        </div>
+            <item.icon className={styles.icon} />
+            <p className={`mg_0 ${styles.text}`}>{item.text}</p>
+        </Box>
     );
 };
 export default NavItem;

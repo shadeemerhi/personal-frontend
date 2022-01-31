@@ -15,27 +15,27 @@ const navItems = [
     {
         text: "Home",
         route: "/",
-        icon: <HomeIcon />,
+        icon: HomeIcon
     },
     {
         text: "Projects",
         route: "/projects",
-        icon: <CodeIcon />,
+        icon: CodeIcon,
     },
     {
         text: "Experience",
         route: "/experience",
-        icon: <WorkOutlineIcon />,
+        icon: WorkOutlineIcon,
     },
     {
         text: "Blog",
         route: "/blog",
-        icon: <ArticleIcon />,
+        icon: ArticleIcon,
     },
     {
         text: "Contact",
         route: "/contact",
-        icon: <AlternateEmailIcon />,
+        icon: AlternateEmailIcon,
     },
 ];
 
@@ -48,6 +48,7 @@ const Navbar: React.FC<{}> = () => {
                     item={item}
                     isSelected={item.text === selected}
                     setSelected={setSelected}
+                    width={Math.round((1 / navItems.length) * 100)}
                 />
             ))}
         </div>
