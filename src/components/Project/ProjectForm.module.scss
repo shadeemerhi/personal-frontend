@@ -1,11 +1,16 @@
 .outer_form_container {
-  width: 100%;
+  // width: 100%;
+  max-width: 600px;
   border: 1px solid red;
 }
 
 .form_container {
   display: flex;
   flex-direction: column;
+
+  .input_label {
+    margin-bottom: 4px;
+  }
 
   .input_container {
     margin: 10px 0px;

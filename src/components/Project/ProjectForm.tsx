@@ -13,13 +13,13 @@ type ProjectFormProps = {
 
 const ProjectForm: React.FC<ProjectFormProps> = ({ setShowForm }) => {
     return (
-        <div style={{ width: '100%', border: '2px solid blue' }}>
+        <div>
             <ArrowBackIcon
                 className="pointer"
                 onClick={() => setShowForm(false)}
             />
             <Box className={styles.outer_form_container}>
-                <h3>Create New Project</h3>
+                <h3 className="heavy_text">Create New Project</h3>
                 <Formik
                     initialValues={{ title: "shadee" }}
                     onSubmit={async (values) => {
@@ -34,11 +34,25 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ setShowForm }) => {
                         >
                             <InputField
                                 name="title"
-                                label="Project Title"
+                                label="Project title"
                                 placeholder="Project title"
                             />
                         </Box>
-                        <button className="btn_primary">Add Project</button>
+                        <Box
+                            className={styles.input_container}
+                            display="flex"
+                            flexDirection="column"
+                        >
+                            <InputField
+                                name="description"
+                                label="Project description"
+                                placeholder="Project description"
+                                textarea
+                            />
+                        </Box>
+                        <button type="submit" className="btn_primary">
+                            Add Project
+                        </button>
                     </Form>
                 </Formik>
             </Box>

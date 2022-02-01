@@ -6,7 +6,7 @@ type InputFieldProps = React.InputHTMLAttributes<
 > & {
     name: string;
     label?: string;
-    textarea?: string;
+    textarea?: boolean;
 };
 
 const InputField: React.FC<InputFieldProps> = ({
@@ -18,9 +18,9 @@ const InputField: React.FC<InputFieldProps> = ({
     const [field, { error }] = useField(props);
     return (
         <>
-            <label>{label}</label>
+            <label style={{ marginBottom: '4px' }}>{label}</label>
             {textarea ? (
-                <textarea />
+                <textarea placeholder={props.placeholder} />
             ) : (
                 <input
                     {...field}

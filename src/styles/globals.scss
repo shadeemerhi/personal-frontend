@@ -34,14 +34,28 @@ input {
   border: none;
   font-family: main.$font-stack;
   padding: 6px;
+  
+  &:focus {
+    outline: 2px solid main.$main-color;
+  }
+  
+  &::placeholder {
+    color: main.$grey-secondary;
+  }
 }
 
-input:focus {
-  outline: 3px solid main.$main-color;
-}
+textarea {
+  border-radius: 4px;
+  padding: 6px;
+  font-family: main.$font-stack;
 
-input::placeholder {
-  color: main.$grey-secondary;
+  &:focus {
+    outline: 2px solid main.$main-color;
+  }
+  
+  &::placeholder {
+    color: main.$grey-secondary;
+  }
 }
 
 .page_container {
@@ -62,6 +76,18 @@ input::placeholder {
 .btn_primary {
   color: white;
   background-color: main.$main-color;
+}
+
+.light_text {
+  font-weight: 300;
+}
+
+.medium_text {
+  font-weight: 500;
+}
+
+.heavy_text {
+  font-weight: 800;
 }
 
 
