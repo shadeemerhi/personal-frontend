@@ -1,3 +1,6 @@
+@use '../styles/main.scss';
+@import '../styles/mixins';
+
 body {
   padding: 0;
   margin: 0;
@@ -13,7 +16,21 @@ a {
   box-sizing: border-box;
 }
 
+button {
+  border-radius: 4px;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+  font-family: main.$font-stack;
+
+  &:focus {
+    outline: none;
+  }
+
+}
+
 .page_container {
+  padding: 10px;
   min-height: 100vh;
 }
 
@@ -23,6 +40,11 @@ a {
 
 .mg_0 {
   margin: 0;
+}
+
+.btn_primary {
+  color: white;
+  background-color: main.$main-color;
 }
 
 

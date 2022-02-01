@@ -1,13 +1,27 @@
-import React from 'react';
+import React, { useState } from "react";
+import ProjectForm from "../components/Project/ProjectForm";
 
-interface ProjectPageProps {
-  
+interface ProjectPageProps {}
+
+const Projects: React.FC<ProjectPageProps> = () => {
+    const [showForm, setShowForm] = useState(false);
+    return (
+        <div className="page_container">
+            {showForm ? (
+                <ProjectForm setShowForm={setShowForm} />
+            ) : (
+                <>
+                    <p>IMAGE HEADER WILL BE HERE</p>
+                    <p>Projects Page</p>
+                    <button
+                        className="btn_primary"
+                        onClick={() => setShowForm(true)}
+                    >
+                        Create Project
+                    </button>
+                </>
+            )}
+        </div>
+    );
 };
-
-const Projects:React.FC<ProjectPageProps> = () => {
-  
-  return <div className='page_container'>
-    Projects Page
-  </div>
-}
 export default Projects;
