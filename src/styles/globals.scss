@@ -44,10 +44,15 @@ input {
   }
 }
 
+label {
+  margin-bottom: 4px;
+}
+
 textarea {
   border-radius: 4px;
   padding: 6px;
   font-family: main.$font-stack;
+  height: 60px;
 
   &:focus {
     outline: 2px solid main.$main-color;

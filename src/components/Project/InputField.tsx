@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import { useField } from "formik";
 import React from "react";
 
@@ -20,7 +21,7 @@ const InputField: React.FC<InputFieldProps> = ({
 }) => {
     return (
         <>
-            <label style={{ marginBottom: "4px" }}>{label}</label>
+            <label className="medium_text">{label}</label>
             {textarea ? (
                 <textarea
                     placeholder={placeholder}

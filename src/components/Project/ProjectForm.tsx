@@ -78,7 +78,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ setShowForm }) => {
                             name="title"
                             handleChange={handleChange}
                             label="Project title"
-                            placeholder="Project title"
+                            placeholder="Title"
                         />
                     </Box>
                     <Box
@@ -90,7 +90,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ setShowForm }) => {
                             name="description"
                             handleChange={handleChange}
                             label="Project description"
-                            placeholder="Project description"
+                            placeholder="Description"
                             textarea
                         />
                     </Box>

@@ -44,7 +44,7 @@ const DateInputs: React.FC<DateInputsProps> = ({
                     alignItems="center"
                     mb={2}
                 >
-                    <span>Start Date</span>
+                    <span className="medium_text">Start Date</span>
                     <DesktopDatePicker
                         inputFormat="yyyy/MM"
                         views={["year", "month"]}
@@ -69,7 +69,7 @@ const DateInputs: React.FC<DateInputsProps> = ({
                         alignItems="center"
                         mb={2}
                     >
-                        <span>End Date</span>
+                        <span className="medium_text">End Date</span>
                         <DesktopDatePicker
                             inputFormat="yyyy/MM"
                             views={["year", "month"]}
@@ -98,7 +98,7 @@ const DateInputs: React.FC<DateInputsProps> = ({
                 alignItems="center"
                 mb={2}
             >
-                <span>In Progress</span>
+                <span className="medium_text">In Progress</span>
                 <Checkbox
                     classes={{ checked: styles.testing }}
                     sx={{ color: "white" }}
