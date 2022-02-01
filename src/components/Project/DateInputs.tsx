@@ -7,69 +7,110 @@ import {
     MobileDatePicker,
     TimePicker,
 } from "@mui/lab";
+import { Checkbox } from "@mui/material";
 import { Box, Stack, TextField } from "@mui/material";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import styles from "./ProjectForm.module.scss";
 
 type DateInputsProps = {
+    startDate: Date;
+    endDate: Date | null;
+    inProgress: boolean;
+    handleChange: (
+        field: string,
+        value: string | boolean | Date | null
+    ) => void;
 };
 
 const color = "white";
 
-const DateInputs: React.FC<DateInputsProps> = () => {
+const DateInputs: React.FC<DateInputsProps> = ({
+    startDate,
+    endDate,
+    inProgress,
+    handleChange,
+}) => {
     const [value, setValue] = useState<Date | null>(new Date());
-    const [inProgress, setInProgress] = useState(false);
 
-    const handleChange = (newValue: Date | null) => {
+    const handleDateChange = (newValue: Date | null) => {
         setValue(newValue);
     };
     return (
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <Box
+                    display="flex"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    mb={2}
+                >
+                    <span>Start Date</span>
+                    <DesktopDatePicker
+                        inputFormat="yyyy/MM"
+                        views={["year", "month"]}
+                        value={startDate}
+                        onChange={(event) => handleChange("startDate", event)}
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                sx={{
+                                    svg: { color },
+                                    input: { color, fontFamily: "montserrat" },
+                                    label: { color },
+                                }}
+                            />
+                        )}
+                    />
+                </Box>
+                {!inProgress && (
+                    <Box
+                        display="flex"
+                        justifyContent="space-between"
+                        alignItems="center"
+                        mb={2}
+                    >
+                        <span>End Date</span>
+                        <DesktopDatePicker
+                            inputFormat="yyyy/MM"
+                            views={["year", "month"]}
+                            value={endDate}
+                            onChange={(event) => handleChange("endDate", event)}
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    sx={{
+                                        svg: { color },
+                                        input: {
+                                            color,
+                                            fontFamily: "montserrat",
+                                        },
+                                        label: { color },
+                                    }}
+                                />
+                            )}
+                        />
+                    </Box>
+                )}
+            </LocalizationProvider>
             <Box
                 display="flex"
                 justifyContent="space-between"
                 alignItems="center"
                 mb={2}
             >
-                <span>Start Date</span>
-                <DesktopDatePicker
-                    inputFormat="MM/dd/yyyy"
-                    value={value}
-                    onChange={handleChange}
-                    renderInput={(params) => (
-                        <TextField
-                            {...params}
-                            sx={{
-                                svg: { color },
-                                input: { color, fontFamily: "montserrat" },
-                                label: { color },
-                            }}
-                        />
-                    )}
+                <span>In Progress</span>
+                <Checkbox
+                    classes={{ checked: styles.testing }}
+                    sx={{ color: "white" }}
+                    onChange={(event) => {
+                        handleChange("inProgress", event.target.checked);
+                        if (event.target.checked) {
+                            handleChange("endDate", null);
+                        }
+                    }}
                 />
             </Box>
-            <Box
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-            >
-                <span>End Date</span>
-                <DesktopDatePicker
-                    inputFormat="MM/dd/yyyy"
-                    value={value}
-                    onChange={handleChange}
-                    renderInput={(params) => (
-                        <TextField
-                            {...params}
-                            sx={{
-                                svg: { color },
-                                input: { color, fontFamily: "montserrat" },
-                                label: { color },
-                            }}
-                        />
-                    )}
-                />
-            </Box>
-        </LocalizationProvider>
+        </>
     );
 };
 

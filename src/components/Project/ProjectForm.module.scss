@@ -1,5 +1,8 @@
+@use '../../styles/main.scss';
+@import '../../styles/mixins';
+
 .outer_form_container {
-  max-width: 600px;
+  max-width: 460px;
   padding: 10px;
 }
 
@@ -14,4 +17,8 @@
   .input_container {
     margin: 10px 0px;
   }
+}
+
+.testing {
+  color: main.$main-color !important;
 }

@@ -48,7 +48,10 @@ const DEFAULT_PROJECT: Project = {
 const ProjectForm: React.FC<ProjectFormProps> = ({ setShowForm }) => {
     const [project, setProject] = useState<Project>(DEFAULT_PROJECT);
 
-    const handleStringChange = (field: string, value: string) => {
+    const handleChange = (
+        field: string,
+        value: string | boolean | Date | null
+    ) => {
         setProject((prev) => ({
             ...prev,
             [field]: value,
@@ -73,7 +76,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ setShowForm }) => {
                     >
                         <InputField
                             name="title"
-                            handleChange={handleStringChange}
+                            handleChange={handleChange}
                             label="Project title"
                             placeholder="Project title"
                         />
@@ -85,13 +88,18 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ setShowForm }) => {
                     >
                         <InputField
                             name="description"
-                            handleChange={handleStringChange}
+                            handleChange={handleChange}
                             label="Project description"
                             placeholder="Project description"
                             textarea
                         />
                     </Box>
-                    <DateInputs />
+                    <DateInputs
+                        startDate={project.startDate}
+                        endDate={project.endDate}
+                        inProgress={project.inProgress}
+                        handleChange={handleChange}
+                    />
                     <Box
                         className={styles.input_container}
                         display="flex"
