@@ -1,33 +1,15 @@
 import React, { useState } from "react";
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Form, Formik } from "formik";
 import Box from "@mui/material/Box";
 import InputField from "./InputField";
-// import DateInputs from "./DateInputs";
+import { Project } from "../../types/project";
 
 import styles from "./ProjectForm.module.scss";
 import DateInputs from "./DateInputs";
 
 type ProjectFormProps = {
     setShowForm: (value: boolean) => void;
-};
-
-export type Stack = {
-    frontend: string[];
-    backend: string[];
-    other: string[];
-};
-
-export type Project = {
-    title: string;
-    description: string;
-    photoURL?: string;
-    startDate: Date;
-    endDate: Date | null;
-    inProgress: boolean;
-    repositoryLinks: string[];
-    stack: Stack;
 };
 
 const DEFAULT_PROJECT: Project = {
@@ -57,8 +39,6 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ setShowForm }) => {
             [field]: value,
         }));
     };
-    const handleDateChange = () => {};
-    const handleStackChange = () => {};
 
     return (
         <>
