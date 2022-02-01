@@ -10,12 +10,13 @@ import { Box, Grid, Icon } from "@mui/material";
 import styles from "../../styles/Navbar.module.scss";
 import classNames from "classnames";
 import NavItem, { NavItemInputs } from "./NavItem";
+import { useRouter } from "next/router";
 
 const navItems = [
     {
         text: "Home",
         route: "/",
-        icon: HomeIcon
+        icon: HomeIcon,
     },
     {
         text: "Projects",
@@ -40,11 +41,18 @@ const navItems = [
 ];
 
 const Navbar: React.FC<{}> = () => {
-    const [selected, setSelected] = useState(navItems[0].text);
+    const router = useRouter();
+    console.log("HERE IS THE ROUTER", router);
+
+    const initSelected =
+        navItems.find((item) => item.route === router.pathname)?.text || "";
+
+    const [selected, setSelected] = useState(initSelected);
     return (
         <div className={styles.root}>
-            {navItems.map((item) => (
+            {navItems.map((item, index) => (
                 <NavItem
+                    key={index}
                     item={item}
                     isSelected={item.text === selected}
                     setSelected={setSelected}
