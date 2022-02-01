@@ -5,28 +5,32 @@ type InputFieldProps = React.InputHTMLAttributes<
     HTMLInputElement | HTMLTextAreaElement
 > & {
     name: string;
+    handleChange: (field: string, value: string) => void;
+    placeholder: string;
     label?: string;
     textarea?: boolean;
 };
 
 const InputField: React.FC<InputFieldProps> = ({
+    name,
+    handleChange,
     label,
     textarea,
-    size: _,
-    ...props
+    placeholder,
 }) => {
-    const [field, { error }] = useField(props);
     return (
         <>
-            <label style={{ marginBottom: '4px' }}>{label}</label>
+            <label style={{ marginBottom: "4px" }}>{label}</label>
             {textarea ? (
-                <textarea placeholder={props.placeholder} />
+                <textarea
+                    placeholder={placeholder}
+                    onChange={(event) => handleChange(name, event.target.value)}
+                />
             ) : (
                 <input
-                    {...field}
-                    {...props}
-                    id={field.name}
-                    placeholder={props.placeholder}
+                    name={name}
+                    placeholder={placeholder}
+                    onChange={(event) => handleChange(name, event.target.value)}
                 />
             )}
         </>
