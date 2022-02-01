@@ -26,12 +26,29 @@ button {
   &:focus {
     outline: none;
   }
+}
 
+input {
+  height: 22px;
+  border-radius: 4px;
+  border: none;
+  font-family: main.$font-stack;
+  padding: 6px;
+}
+
+input:focus {
+  outline: 3px solid main.$main-color;
+}
+
+input::placeholder {
+  color: main.$grey-secondary;
 }
 
 .page_container {
+  flex-grow: 1;
   padding: 10px;
   min-height: 100vh;
+  border: 1px solid green;
 }
 
 .pointer {

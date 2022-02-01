@@ -6,8 +6,6 @@ interface ExperiencePageProps {
 
 const Experience:React.FC<ExperiencePageProps> = () => {
   
-  return <div className='page_container'>
-    Experience Page
-  </div>
+  return <>Experience Page</>;
 }
 export default Experience;

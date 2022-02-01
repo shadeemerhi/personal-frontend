@@ -1,0 +1,13 @@
+.outer_form_container {
+  width: 100%;
+  border: 1px solid red;
+}
+
+.form_container {
+  display: flex;
+  flex-direction: column;
+
+  .input_container {
+    margin: 10px 0px;
+  }
+}

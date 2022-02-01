@@ -10,7 +10,7 @@ const Home: NextPage = () => {
     const { data, loading, error } = useProjectsQuery();
     console.log("HERE IS DATA", loading, data);
 
-    return <div className="page_container">Home Page</div>;
+    return <>Home Page</>;
 };
 
 export default withApollo({ ssr: true })(Home);

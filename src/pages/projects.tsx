@@ -6,7 +6,7 @@ interface ProjectPageProps {}
 const Projects: React.FC<ProjectPageProps> = () => {
     const [showForm, setShowForm] = useState(false);
     return (
-        <div className="page_container">
+        <>
             {showForm ? (
                 <ProjectForm setShowForm={setShowForm} />
             ) : (
@@ -21,7 +21,7 @@ const Projects: React.FC<ProjectPageProps> = () => {
                     </button>
                 </>
             )}
-        </div>
+        </>
     );
 };
 export default Projects;
