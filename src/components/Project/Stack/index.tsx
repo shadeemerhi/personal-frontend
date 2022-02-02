@@ -1,9 +1,10 @@
 import { Box } from "@mui/material";
 import React, { useState } from "react";
-import { Stack, StackInputItem } from "../../types/project";
+import { Stack, StackInputItem } from "../../../types/project";
 import ClearIcon from "@mui/icons-material/Clear";
+import StackItem from "./StackItem";
 
-import styles from "./ProjectForm.module.scss";
+import styles from "../ProjectForm.module.scss";
 
 type StackProps = {
   handleChange: (stackItem: StackInputItem, adding?: boolean) => void;
@@ -25,6 +26,7 @@ const Stack: React.FC<StackProps> = ({ stack, handleChange }) => {
     });
   };
 
+  type TestType = keyof Stack;
   return (
     <Box
       className={styles.input_container}
@@ -66,51 +68,22 @@ const Stack: React.FC<StackProps> = ({ stack, handleChange }) => {
         </Box>
       </form>
       <Box display="flex" flexDirection="column" mt={2} mb={2}>
-        <Box mb={1}>
-          <span className="light_text sm_text">Frontend</span>
-          {stack.frontend.map((itemName) => (
-            <Box>
-              {itemName}{" "}
-              <ClearIcon
-                className="pointer"
-                sx={{ fontSize: "12pt" }}
-                onClick={() =>
-                  handleChange({ name: itemName, category: "frontend" })
-                }
-              />
+        {Object.keys(stack).map((category) => (
+          <Box mb={2}>
+            <span className="light_text sm_text">
+              {category.charAt(0).toUpperCase() + category.slice(1)}
+            </span>
+            <Box display="flex" flexWrap="wrap">
+              {stack[category].map((itemName: string) => (
+                <StackItem
+                  name={itemName}
+                  category={category}
+                  deleteItem={handleChange}
+                />
+              ))}
             </Box>
-          ))}
-        </Box>
-        <Box mb={1}>
-          <span className="light_text sm_text">Backend</span>
-          {stack.backend.map((itemName) => (
-            <Box>
-              {itemName}{" "}
-              <ClearIcon
-                className="pointer"
-                sx={{ fontSize: "12pt" }}
-                onClick={() =>
-                  handleChange({ name: itemName, category: "backend" })
-                }
-              />
-            </Box>
-          ))}
-        </Box>
-        <Box mb={1}>
-          <span className="light_text sm_text">Other</span>
-          {stack.other.map((itemName) => (
-            <Box>
-              {itemName}{" "}
-              <ClearIcon
-                className="pointer"
-                sx={{ fontSize: "12pt" }}
-                onClick={() =>
-                  handleChange({ name: itemName, category: "other" })
-                }
-              />
-            </Box>
-          ))}
-        </Box>
+          </Box>
+        ))}
       </Box>
     </Box>
   );

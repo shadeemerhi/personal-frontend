@@ -46,6 +46,20 @@
   }
 }
 
+.stack_item {
+  border: 1px solid main.$main-color;
+  height: 26px;
+  padding: 4px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  margin: 6px 8px 0px 0px;
+
+  span {
+    margin-right: 2px;
+  }
+}
+
 
 .checkbox {
   color: main.$main-color !important;
