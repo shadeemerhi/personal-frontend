@@ -53,14 +53,26 @@ textarea {
   padding: 6px;
   font-family: main.$font-stack;
   height: 60px;
-
+  
   &:focus {
     outline: 2px solid main.$main-color;
   }
-
+  
   &::placeholder {
     color: main.$grey-secondary;
   }
+}
+
+select {
+  font-family: main.$font-stack;
+  border: none;
+  border-radius: 4px;
+  background-color: main.$grey-primary;
+  color: white;
+}
+
+select:focus {
+  outline: none;
 }
 
 .page_container {

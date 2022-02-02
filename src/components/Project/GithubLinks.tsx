@@ -31,7 +31,6 @@ const GithubLinks: React.FC<GithubLinksProps> = ({
       <form onSubmit={onAddLink}>
         <label className="medium_text">Github Links</label>
         <input
-          name="repositoryLinks"
           onChange={(event) => setLink(event.target.value)}
           placeholder="Link"
           value={link}

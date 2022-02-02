@@ -26,6 +26,18 @@
       display: flex;
       flex-direction: column;
       width: 100%;
+
+      &.stack_form {
+
+        input {
+          width: 50%;
+        }
+
+        .type {
+          border: 1px solid blue;
+          flex-grow: 1;
+        }
+      }
     }
   }
 }

@@ -7,6 +7,7 @@ import { Project } from "../../types/project";
 
 import DateInputs from "./DateInputs";
 import GithubLinks from "./GithubLinks";
+import Stack from "./Stack";
 
 import styles from "./ProjectForm.module.scss";
 
@@ -45,7 +46,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ setShowForm }) => {
   const handleRepoChange = (link: string, adding?: boolean) => {
     const updatedLinks = adding
       ? [...project.repositoryLinks, link]
-      : project.repositoryLinks.filter(l => l !== link);
+      : project.repositoryLinks.filter((l) => l !== link);
     setProject((prev) => ({
       ...prev,
       repositoryLinks: updatedLinks,
@@ -95,6 +96,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ setShowForm }) => {
             repositoryLinks={project.repositoryLinks}
             handleChange={handleRepoChange}
           />
+          <Stack handleChange={handleStackChange} />
           <br />
           <button type="submit" className="btn_primary">
             Add Project

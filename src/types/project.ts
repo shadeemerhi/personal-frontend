@@ -4,6 +4,11 @@ export type Stack = {
     other: string[];
 };
 
+export type StackInputItem = {
+    name: string;
+    category: 'frontend' | 'backend' | 'other'
+}
+
 export type Project = {
     title: string;
     description: string;
