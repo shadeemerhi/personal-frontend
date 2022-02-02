@@ -20,7 +20,7 @@ type DateInputsProps = {
   handleChange: (field: string, value: string | boolean | Date | null) => void;
 };
 
-const dateDefault = "white";
+const dateDefault = "blue";
 const dateDisabled = "#4E4E4E";
 
 const DateInputs: React.FC<DateInputsProps> = ({
