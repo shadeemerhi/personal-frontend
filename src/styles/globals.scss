@@ -1,5 +1,5 @@
-@use '../styles/main.scss';
-@import '../styles/mixins';
+@use "../styles/main.scss";
+@import "../styles/mixins";
 
 body {
   padding: 0;
@@ -34,11 +34,11 @@ input {
   border: none;
   font-family: main.$font-stack;
   padding: 6px;
-  
+
   &:focus {
     outline: 2px solid main.$main-color;
   }
-  
+
   &::placeholder {
     color: main.$grey-secondary;
   }
@@ -57,7 +57,7 @@ textarea {
   &:focus {
     outline: 2px solid main.$main-color;
   }
-  
+
   &::placeholder {
     color: main.$grey-secondary;
   }
@@ -94,4 +94,10 @@ textarea {
   font-weight: 800;
 }
 
+.italic_text {
+  font-style: italic;
+}
 
+.disabled_text {
+  color: main.$grey-primary;
+}
