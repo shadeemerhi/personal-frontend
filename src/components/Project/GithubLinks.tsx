@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Box } from "@mui/material";
-import InputField from "./InputField";
+import ClearIcon from "@mui/icons-material/Clear";
 
 import styles from "./ProjectForm.module.scss";
 
 type GithubLinksProps = {
   repositoryLinks: string[];
-  handleChange: any;
+  handleChange: (link: string, adding?: boolean) => void;
 };
 
 const GithubLinks: React.FC<GithubLinksProps> = ({
@@ -17,6 +17,9 @@ const GithubLinks: React.FC<GithubLinksProps> = ({
 
   const onAddLink = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (!link) return;
+    handleChange(link, true);
+    setLink("");
   };
 
   return (
@@ -31,13 +34,21 @@ const GithubLinks: React.FC<GithubLinksProps> = ({
           name="repositoryLinks"
           onChange={(event) => setLink(event.target.value)}
           placeholder="Link"
+          value={link}
         />
       </form>
-      {repositoryLinks.map((link) => (
-        <Box>
-          <span className="light_text italic_text">www.lol.com</span>
-        </Box>
-      ))}
+      <Box mt={2}>
+        {repositoryLinks.map((link) => (
+          <Box display="flex" justifyContent="space-between" alignItems='center'>
+            <span className="light_text sm_text">{link}</span>
+            <ClearIcon
+              className="pointer"
+              sx={{ fontSize: "12pt" }}
+              onClick={() => handleChange(link)}
+            />
+          </Box>
+        ))}
+      </Box>
     </Box>
   );
 };

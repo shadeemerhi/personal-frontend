@@ -42,10 +42,10 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ setShowForm }) => {
     }));
   };
 
-  const handleRepoChange = (link: string, adding: boolean = true) => {
+  const handleRepoChange = (link: string, adding?: boolean) => {
     const updatedLinks = adding
       ? [...project.repositoryLinks, link]
-      : project.repositoryLinks.filter((link) => link !== link);
+      : project.repositoryLinks.filter(l => l !== link);
     setProject((prev) => ({
       ...prev,
       repositoryLinks: updatedLinks,
