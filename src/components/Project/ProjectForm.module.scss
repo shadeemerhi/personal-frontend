@@ -10,37 +10,45 @@
     margin: 6px 0px;
   }
 
-  .form_container {
+  .input_label {
+    margin-bottom: 4px;
+  }
+
+  .input_container {
+    margin: 10px 0px;
+
+    .upload_button {
+      border-radius: 4px;
+      border: none;
+      padding: 6px;
+      font-size: main.$md-text;
+      background-color: main.$grey-primary;
+    }
+
+    img {
+      max-width: 75%;
+      max-height: 300px;
+    }
+
+  }
+
+  form {
     display: flex;
     flex-direction: column;
-  
-    .input_label {
-      margin-bottom: 4px;
-    }
-  
-    .input_container {
-      margin: 10px 0px;
-    }
+    width: 100%;
 
-    form {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
+    &.stack_form {
 
-      &.stack_form {
+      input {
+        margin-right: 8px;
+      }
 
-        input {
-          margin-right: 8px;
-        }
+      select {
+        height: 100%;
+      }
 
-        select {
-          height: 100%;
-        }
-
-        .type {
-          border: 1px solid blue;
-          // flex-grow: 1;
-        }
+      .type {
+        border: 1px solid blue;
       }
     }
   }

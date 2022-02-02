@@ -8,6 +8,7 @@ import { Project, StackInputItem } from "../../types/project";
 import DateInputs from "./DateInputs";
 import GithubLinks from "./GithubLinks";
 import Stack from "./Stack";
+import ImageUpload from "./ImageUpload";
 
 import styles from "./ProjectForm.module.scss";
 
@@ -75,7 +76,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ setShowForm }) => {
       <ArrowBackIcon className="pointer" onClick={() => setShowForm(false)} />
       <Box className={styles.outer_form_container}>
         <h3 className="heavy_text">Create New Project</h3>
-        <div className={styles.form_container}>
+        <Box display='flex' flexDirection='column'>
           <Box
             className={styles.input_container}
             display="flex"
@@ -101,6 +102,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ setShowForm }) => {
               textarea
             />
           </Box>
+          <ImageUpload />
           <DateInputs
             startDate={project.startDate}
             endDate={project.endDate}
@@ -116,7 +118,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ setShowForm }) => {
           <button type="submit" className="btn_primary">
             Add Project
           </button>
-        </div>
+        </Box>
       </Box>
     </>
   );

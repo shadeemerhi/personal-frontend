@@ -117,7 +117,7 @@ select:focus {
 }
 
 .disabled_text {
-  color: main.$grey-primary;
+  color: main.$grey-secondary;
 }
 
 .sm_text {
@@ -126,4 +126,8 @@ select:focus {
 
 .md_text {
   font-size: main.$md-text;
+}
+
+.xl_text {
+  font-size: main.$xl-text;
 }

@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "../../styles/Navbar.module.scss";
 import classNames from "classnames";
-import Icon from "@mui/material/Icon";
 import { useRouter } from "next/router";
 import { Box } from "@mui/material";
 
@@ -33,8 +32,8 @@ const NavItem: React.FC<NavItemProps> = ({ item, width, isSelected, setSelected 
             }}
             width={{ xs: `${width}%`, sm: '100%' }}
         >
-            <item.icon className={styles.icon} />
-            <p className={`mg_0 ${styles.text}`}>{item.text}</p>
+            <item.icon className={`${styles.icon} xl_text`} />
+            <span className="medium_text">{item.text}</span>
         </Box>
     );
 };
