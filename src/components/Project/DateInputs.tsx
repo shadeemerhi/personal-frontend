@@ -20,7 +20,7 @@ type DateInputsProps = {
   handleChange: (field: string, value: string | boolean | Date | null) => void;
 };
 
-const dateDefault = "blue";
+const dateDefault = "white";
 const dateDisabled = "#4E4E4E";
 
 const DateInputs: React.FC<DateInputsProps> = ({
@@ -35,7 +35,7 @@ const DateInputs: React.FC<DateInputsProps> = ({
     setValue(newValue);
   };
   return (
-    <>
+    <Box className={styles.input_container}>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <Box
           display="flex"
@@ -115,7 +115,7 @@ const DateInputs: React.FC<DateInputsProps> = ({
           }}
         />
       </Box>
-    </>
+    </Box>
   );
 };
 

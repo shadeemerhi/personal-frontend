@@ -6,7 +6,8 @@ type InputFieldProps = React.InputHTMLAttributes<
     HTMLInputElement | HTMLTextAreaElement
 > & {
     name: string;
-    handleChange: (field: string, value: string) => void;
+    // handleChange: (field: string, value: string) => void;
+    handleChange: any;
     placeholder: string;
     label?: string;
     textarea?: boolean;

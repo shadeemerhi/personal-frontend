@@ -21,6 +21,12 @@
     .input_container {
       margin: 10px 0px;
     }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
   }
 }
 
