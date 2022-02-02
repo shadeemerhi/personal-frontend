@@ -30,12 +30,16 @@
       &.stack_form {
 
         input {
-          width: 50%;
+          margin-right: 8px;
+        }
+
+        select {
+          height: 100%;
         }
 
         .type {
           border: 1px solid blue;
-          flex-grow: 1;
+          // flex-grow: 1;
         }
       }
     }

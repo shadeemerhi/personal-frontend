@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Box from "@mui/material/Box";
 import InputField from "./InputField";
-import { Project } from "../../types/project";
+import { Project, StackInputItem } from "../../types/project";
 
 import DateInputs from "./DateInputs";
 import GithubLinks from "./GithubLinks";
@@ -53,7 +53,22 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ setShowForm }) => {
     }));
   };
 
-  const handleStackChange = () => {};
+  const handleStackChange = (stackItem: StackInputItem, adding?: boolean) => {
+      console.log('HERE IS SUBMIT', stackItem);
+      
+    const updatedStackList = adding
+      ? [...project.stack[stackItem.category], stackItem.name]
+      : project.stack[stackItem.category].filter(
+          (itemName) => itemName !== stackItem.name
+        );
+    setProject((prev) => ({
+      ...prev,
+      stack: {
+        ...project.stack,
+        [stackItem.category]: updatedStackList,
+      },
+    }));
+  };
 
   return (
     <>
@@ -96,7 +111,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ setShowForm }) => {
             repositoryLinks={project.repositoryLinks}
             handleChange={handleRepoChange}
           />
-          <Stack handleChange={handleStackChange} />
+          <Stack stack={project.stack} handleChange={handleStackChange} />
           <br />
           <button type="submit" className="btn_primary">
             Add Project
