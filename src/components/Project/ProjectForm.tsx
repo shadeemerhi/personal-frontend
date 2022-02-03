@@ -4,6 +4,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Box from "@mui/material/Box";
 import InputField from "./InputField";
 import { Project, StackInputItem } from "../../types/project";
+import { withApollo } from "../../util/withApollo";
 
 import DateInputs from "./DateInputs";
 import GithubLinks from "./GithubLinks";
@@ -11,6 +12,7 @@ import Stack from "./Stack";
 import ImageUpload from "./ImageUpload";
 
 import styles from "./ProjectForm.module.scss";
+import { useCreateProjectMutation } from "../../generated/graphql";
 
 type ProjectFormProps = {
   setShowForm: (value: boolean) => void;
@@ -33,6 +35,18 @@ const DEFAULT_PROJECT: Project = {
 
 const ProjectForm: React.FC<ProjectFormProps> = ({ setShowForm }) => {
   const [project, setProject] = useState<Project>(DEFAULT_PROJECT);
+  const [photoFile, setPhotoFile] = useState<File>();
+
+  const [createProject, { data, loading, error }] = useCreateProjectMutation();
+  console.log(error);
+
+  const onCreateProject = async () => {
+    console.log("HERE IS FILE", photoFile);
+
+    await createProject({
+      variables: { file: photoFile, name: "Shadee" },
+    });
+  };
 
   const handleChange = (
     field: string,
@@ -55,8 +69,8 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ setShowForm }) => {
   };
 
   const handleStackChange = (stackItem: StackInputItem, adding?: boolean) => {
-      console.log('HERE IS SUBMIT', stackItem);
-      
+    console.log("HERE IS SUBMIT", stackItem);
+
     const updatedStackList = adding
       ? [...project.stack[stackItem.category], stackItem.name]
       : project.stack[stackItem.category].filter(
@@ -76,7 +90,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ setShowForm }) => {
       <ArrowBackIcon className="pointer" onClick={() => setShowForm(false)} />
       <Box className={styles.outer_form_container}>
         <h3 className="heavy_text">Create New Project</h3>
-        <Box display='flex' flexDirection='column'>
+        <Box display="flex" flexDirection="column">
           <Box
             className={styles.input_container}
             display="flex"
@@ -102,7 +116,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ setShowForm }) => {
               textarea
             />
           </Box>
-          <ImageUpload />
+          <ImageUpload photoFile={photoFile} setPhotoFile={setPhotoFile} />
           <DateInputs
             startDate={project.startDate}
             endDate={project.endDate}
@@ -115,7 +129,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ setShowForm }) => {
           />
           <Stack stack={project.stack} handleChange={handleStackChange} />
           <br />
-          <button type="submit" className="btn_primary">
+          <button className="btn_primary" onClick={onCreateProject}>
             Add Project
           </button>
         </Box>

@@ -1,0 +1,3 @@
+mutation CreateProject($file: Upload!, $name: String!) {
+    createProject(file: $file, name: $name)
+}

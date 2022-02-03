@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ProjectForm from "../components/Project/ProjectForm";
+import { withApollo } from "../util/withApollo";
 
 interface ProjectPageProps {}
 
@@ -24,4 +25,4 @@ const Projects: React.FC<ProjectPageProps> = () => {
         </>
     );
 };
-export default Projects;
+export default withApollo({ ssr: true })(Projects);

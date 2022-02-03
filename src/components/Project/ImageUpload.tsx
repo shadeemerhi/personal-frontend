@@ -4,16 +4,21 @@ import PhotoCameraBackIcon from "@mui/icons-material/PhotoCameraBack";
 
 import styles from "./ProjectForm.module.scss";
 
-type ImageUploadProps = {};
+type ImageUploadProps = {
+  photoFile: File | undefined;
+  setPhotoFile: (file: File) => void;
+};
 
-const ImageUpload: React.FC<ImageUploadProps> = () => {
-  const [image, setImage] = useState<any>();
+const ImageUpload: React.FC<ImageUploadProps> = ({
+  photoFile,
+  setPhotoFile,
+}) => {
+  //   const [image, setImage] = useState<File>();
+
   const onImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("here are the files", event.target.files);
     if (!event.target.files || !event.target.files[0]) return;
-    const newImage = event.target.files[0];
-    console.log("FILE TYPE", typeof newImage);
-    setImage(newImage);
+    const image = event.target.files[0];
+    setPhotoFile(image);
   };
   return (
     <Box
@@ -40,14 +45,17 @@ const ImageUpload: React.FC<ImageUploadProps> = () => {
         justifyContent="center"
         alignItems="center"
       >
-        {image ? (
+        {photoFile ? (
           <>
-            <img src={URL.createObjectURL(image)} />
-            <span className="sm_text italic_text">{image?.name}</span>
+            <img src={URL.createObjectURL(photoFile)} />
+            <span className="sm_text italic_text">{photoFile.name}</span>
           </>
         ) : (
           <>
-            <PhotoCameraBackIcon className="disabled_text" style={{ fontSize: '30pt' }} />
+            <PhotoCameraBackIcon
+              className="disabled_text"
+              style={{ fontSize: "30pt" }}
+            />
             <span className="sm_text disabled_text">No Image Selected</span>
           </>
         )}
