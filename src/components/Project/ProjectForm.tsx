@@ -11,6 +11,9 @@ import GithubLinks from "./GithubLinks";
 import Stack from "./Stack";
 import ImageUpload from "./ImageUpload";
 
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
+
 import styles from "./ProjectForm.module.scss";
 import { useCreateProjectMutation } from "../../generated/graphql";
 
@@ -36,16 +39,56 @@ const DEFAULT_PROJECT: Project = {
 const ProjectForm: React.FC<ProjectFormProps> = ({ setShowForm }) => {
   const [project, setProject] = useState<Project>(DEFAULT_PROJECT);
   const [photoFile, setPhotoFile] = useState<File>();
+  const [incompleteProject, setIncompleteProject] = useState(false);
 
   const [createProject, { data, loading, error }] = useCreateProjectMutation();
-  console.log(error);
 
   const onCreateProject = async () => {
-    console.log("HERE IS FILE", photoFile);
+    if (!canSubmitProject()) {
+      setIncompleteProject(true);
+      return;
+    }
+    try {
+      if (incompleteProject) setIncompleteProject(false);
+      const { data, errors } = await createProject({
+        variables: {
+          input: {
+            title: project.title,
+            description: "here is desc",
+            photoFile,
+            startDate: project.startDate,
+            endDate: project.endDate,
+            inProgress: project.inProgress,
+            stack: project.stack, // not type safe - unsure how to do this as of now
+          },
+        },
+      });
+      console.log("HERE IS RESPONSE", data, errors);
+    } catch (error) {
+      console.log("creatProject error", error);
+    }
+  };
 
-    await createProject({
-      variables: { file: photoFile, name: "Shadee" },
-    });
+  const canSubmitProject = () => {
+    const {
+      title,
+      description,
+      startDate,
+      endDate,
+      inProgress,
+      repositoryLinks,
+      stack: { frontend, backend, other },
+    } = project;
+
+    return (
+      !!title &&
+      !!description &&
+      !!startDate &&
+      (inProgress || endDate) &&
+      !!repositoryLinks.length &&
+      !!frontend.length &&
+      !!backend.length
+    );
   };
 
   const handleChange = (
@@ -128,7 +171,15 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ setShowForm }) => {
             handleChange={handleRepoChange}
           />
           <Stack stack={project.stack} handleChange={handleStackChange} />
-          <br />
+          {(error || incompleteProject) && (
+            <Box mb={2}>
+              <Alert severity="error">
+                {incompleteProject
+                  ? "One or more of the required fields is missing"
+                  : "Error creating project"}
+              </Alert>
+            </Box>
+          )}
           <button className="btn_primary" onClick={onCreateProject}>
             Add Project
           </button>

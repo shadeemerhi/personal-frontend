@@ -1,3 +1,6 @@
-mutation CreateProject($file: Upload!, $name: String!) {
-    createProject(file: $file, name: $name)
+mutation CreateProject($input: ProjectInput!) {
+    createProject(input: $input) {
+        title
+        photoURL
+    }
 }

@@ -13,24 +13,46 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** A project tech stack */
+  Stack: any;
+  /** The javascript `Date` as integer. Type represents date and time as number of milliseconds from start of UNIX epoch. */
+  Timestamp: any;
   /** The `Upload` scalar type represents a file upload. */
   Upload: any;
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createProject: Scalars['Boolean'];
+  createProject: Project;
 };
 
 
 export type MutationCreateProjectArgs = {
-  file: Scalars['Upload'];
-  name: Scalars['String'];
+  input: ProjectInput;
 };
 
 export type Project = {
   __typename?: 'Project';
   _id: Scalars['String'];
+  createdAt: Scalars['Timestamp'];
+  description: Scalars['String'];
+  endDate: Scalars['Timestamp'];
+  inProgress: Scalars['Boolean'];
+  photoURL: Scalars['String'];
+  repositoryLinks: Array<Scalars['String']>;
+  stack: Scalars['Stack'];
+  startDate: Scalars['Timestamp'];
+  title: Scalars['String'];
+  updatedAt: Scalars['Timestamp'];
+};
+
+export type ProjectInput = {
+  description: Scalars['String'];
+  endDate: Scalars['Timestamp'];
+  inProgress: Scalars['Boolean'];
+  photoFile: Scalars['Upload'];
+  stack: Scalars['Stack'];
+  startDate: Scalars['Timestamp'];
   title: Scalars['String'];
 };
 
@@ -46,12 +68,11 @@ export type QueryProjectArgs = {
 };
 
 export type CreateProjectMutationVariables = Exact<{
-  file: Scalars['Upload'];
-  name: Scalars['String'];
+  input: ProjectInput;
 }>;
 
 
-export type CreateProjectMutation = { __typename?: 'Mutation', createProject: boolean };
+export type CreateProjectMutation = { __typename?: 'Mutation', createProject: { __typename?: 'Project', title: string, photoURL: string } };
 
 export type ProjectsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -60,8 +81,11 @@ export type ProjectsQuery = { __typename?: 'Query', projects: Array<{ __typename
 
 
 export const CreateProjectDocument = gql`
-    mutation CreateProject($file: Upload!, $name: String!) {
-  createProject(file: $file, name: $name)
+    mutation CreateProject($input: ProjectInput!) {
+  createProject(input: $input) {
+    title
+    photoURL
+  }
 }
     `;
 export type CreateProjectMutationFn = Apollo.MutationFunction<CreateProjectMutation, CreateProjectMutationVariables>;
@@ -79,8 +103,7 @@ export type CreateProjectMutationFn = Apollo.MutationFunction<CreateProjectMutat
  * @example
  * const [createProjectMutation, { data, loading, error }] = useCreateProjectMutation({
  *   variables: {
- *      file: // value for 'file'
- *      name: // value for 'name'
+ *      input: // value for 'input'
  *   },
  * });
  */
