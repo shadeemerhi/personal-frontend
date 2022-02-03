@@ -70,9 +70,16 @@ const Stack: React.FC<StackProps> = ({ stack, handleChange }) => {
       <Box display="flex" flexDirection="column" mt={2} mb={2}>
         {Object.keys(stack).map((category) => (
           <Box mb={2}>
-            <span className="light_text sm_text">
-              {category.charAt(0).toUpperCase() + category.slice(1)}
-            </span>
+            <Box display="flex" flexDirection="column">
+              <span className="sm_text">
+                {category.charAt(0).toUpperCase() + category.slice(1)}
+              </span>
+              {!stack[category].length && (
+                <span className="italic_text disabled_text xs_text">
+                  No items
+                </span>
+              )}
+            </Box>
             <Box display="flex" flexWrap="wrap">
               {stack[category].map((itemName: string) => (
                 <StackItem
