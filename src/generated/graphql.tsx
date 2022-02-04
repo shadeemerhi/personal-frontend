@@ -13,10 +13,10 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** The javascript `Date` as string. Type represents date and time as the ISO Date string. */
+  DateTime: any;
   /** A project tech stack */
   Stack: any;
-  /** The javascript `Date` as integer. Type represents date and time as number of milliseconds from start of UNIX epoch. */
-  Timestamp: any;
   /** The `Upload` scalar type represents a file upload. */
   Upload: any;
 };
@@ -34,25 +34,24 @@ export type MutationCreateProjectArgs = {
 export type Project = {
   __typename?: 'Project';
   _id: Scalars['String'];
-  createdAt: Scalars['Timestamp'];
   description: Scalars['String'];
-  endDate: Scalars['Timestamp'];
+  endDate?: Maybe<Scalars['DateTime']>;
   inProgress: Scalars['Boolean'];
   photoURL: Scalars['String'];
   repositoryLinks: Array<Scalars['String']>;
   stack: Scalars['Stack'];
-  startDate: Scalars['Timestamp'];
+  startDate: Scalars['DateTime'];
   title: Scalars['String'];
-  updatedAt: Scalars['Timestamp'];
 };
 
 export type ProjectInput = {
   description: Scalars['String'];
-  endDate: Scalars['Timestamp'];
+  endDate?: InputMaybe<Scalars['DateTime']>;
   inProgress: Scalars['Boolean'];
   photoFile: Scalars['Upload'];
+  repositoryLinks: Array<Scalars['String']>;
   stack: Scalars['Stack'];
-  startDate: Scalars['Timestamp'];
+  startDate: Scalars['DateTime'];
   title: Scalars['String'];
 };
 
@@ -77,7 +76,7 @@ export type CreateProjectMutation = { __typename?: 'Mutation', createProject: { 
 export type ProjectsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ProjectsQuery = { __typename?: 'Query', projects: Array<{ __typename?: 'Project', title: string }> };
+export type ProjectsQuery = { __typename?: 'Query', projects: Array<{ __typename?: 'Project', _id: string, title: string, description: string, photoURL: string, startDate: any, endDate?: any | null | undefined, inProgress: boolean, repositoryLinks: Array<string>, stack: any }> };
 
 
 export const CreateProjectDocument = gql`
@@ -117,7 +116,16 @@ export type CreateProjectMutationOptions = Apollo.BaseMutationOptions<CreateProj
 export const ProjectsDocument = gql`
     query Projects {
   projects {
+    _id
     title
+    description
+    photoURL
+    description
+    startDate
+    endDate
+    inProgress
+    repositoryLinks
+    stack
   }
 }
     `;

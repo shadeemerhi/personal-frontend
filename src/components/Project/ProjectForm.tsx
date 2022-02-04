@@ -2,20 +2,20 @@ import React, { useState } from "react";
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Box from "@mui/material/Box";
-import InputField from "./InputField";
-import { Project, StackInputItem } from "../../types/project";
-import { withApollo } from "../../util/withApollo";
+import Alert from "@mui/material/Alert";
+import CircularProgress from "@mui/material/CircularProgress";
 
+import InputField from "./InputField";
 import DateInputs from "./DateInputs";
 import GithubLinks from "./GithubLinks";
 import Stack from "./Stack";
 import ImageUpload from "./ImageUpload";
 
-import Alert from "@mui/material/Alert";
-import AlertTitle from "@mui/material/AlertTitle";
+import { Project, StackInputItem } from "../../types/project";
+import { useCreateProjectMutation } from "../../generated/graphql";
+import { validateProject } from "../../util/validateProject";
 
 import styles from "./ProjectForm.module.scss";
-import { useCreateProjectMutation } from "../../generated/graphql";
 
 type ProjectFormProps = {
   setShowForm: (value: boolean) => void;
@@ -44,51 +44,29 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ setShowForm }) => {
   const [createProject, { data, loading, error }] = useCreateProjectMutation();
 
   const onCreateProject = async () => {
-    if (!canSubmitProject()) {
+    if (!validateProject(project)) {
       setIncompleteProject(true);
       return;
     }
-    try {
-      if (incompleteProject) setIncompleteProject(false);
-      const { data, errors } = await createProject({
-        variables: {
-          input: {
-            title: project.title,
-            description: "here is desc",
-            photoFile,
-            startDate: project.startDate,
-            endDate: project.endDate,
-            inProgress: project.inProgress,
-            stack: project.stack, // not type safe - unsure how to do this as of now
-          },
+
+    if (incompleteProject) setIncompleteProject(false);
+    const newProject = { ...project };
+    delete newProject.photoURL;
+    await createProject({
+      variables: {
+        input: {
+          ...newProject,
+          photoFile,
         },
-      });
-      console.log("HERE IS RESPONSE", data, errors);
+      },
+      update: (cache) => {
+        cache.evict({ fieldName: "projects" });
+      },
+    });
+    try {
     } catch (error) {
-      console.log("creatProject error", error);
+      console.log("createProject error", error);
     }
-  };
-
-  const canSubmitProject = () => {
-    const {
-      title,
-      description,
-      startDate,
-      endDate,
-      inProgress,
-      repositoryLinks,
-      stack: { frontend, backend, other },
-    } = project;
-
-    return (
-      !!title &&
-      !!description &&
-      !!startDate &&
-      (inProgress || endDate) &&
-      !!repositoryLinks.length &&
-      !!frontend.length &&
-      !!backend.length
-    );
   };
 
   const handleChange = (
@@ -112,8 +90,6 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ setShowForm }) => {
   };
 
   const handleStackChange = (stackItem: StackInputItem, adding?: boolean) => {
-    console.log("HERE IS SUBMIT", stackItem);
-
     const updatedStackList = adding
       ? [...project.stack[stackItem.category], stackItem.name]
       : project.stack[stackItem.category].filter(
@@ -131,7 +107,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ setShowForm }) => {
   return (
     <>
       <ArrowBackIcon className="pointer" onClick={() => setShowForm(false)} />
-      <Box className={styles.outer_form_container}>
+      <Box className={styles.outer_form_container} mb={10}>
         <h3 className="heavy_text">Create New Project</h3>
         <Box display="flex" flexDirection="column">
           <Box
@@ -171,8 +147,44 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ setShowForm }) => {
             handleChange={handleRepoChange}
           />
           <Stack stack={project.stack} handleChange={handleStackChange} />
+          <Box
+            display="flex"
+            flexDirection="column"
+            justifyContent="center"
+            alignItems="center"
+            className={styles.submit_container}
+          >
+            {data && (
+              <Box mb={2}>
+                <p className="mg_0 md_text">
+                  {data.createProject.title} successfully created!{" "}
+                  <span
+                    className="md_text heavy_text pointer"
+                    onClick={() => setShowForm(false)}
+                  >
+                    View
+                  </span>
+                </p>
+              </Box>
+            )}
+            <button
+              className="btn_primary"
+              onClick={onCreateProject}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {loading ? (
+                <CircularProgress size={18} color="inherit" />
+              ) : (
+                "Submit Project"
+              )}
+            </button>
+          </Box>
           {(error || incompleteProject) && (
-            <Box mb={2}>
+            <Box mb={2} mt={2}>
               <Alert severity="error">
                 {incompleteProject
                   ? "One or more of the required fields is missing"
@@ -180,9 +192,6 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ setShowForm }) => {
               </Alert>
             </Box>
           )}
-          <button className="btn_primary" onClick={onCreateProject}>
-            Add Project
-          </button>
         </Box>
       </Box>
     </>

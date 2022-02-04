@@ -1,5 +1,14 @@
 query Projects {
   projects {
+    _id
     title
+    description
+    photoURL
+    description
+    startDate
+    endDate
+    inProgress
+    repositoryLinks
+    stack
   }
 }

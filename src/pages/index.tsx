@@ -7,8 +7,7 @@ import Navbar from "../components/Navbar";
 import { useProjectsQuery } from "../generated/graphql";
 
 const Home: NextPage = () => {
-    const { data, loading, error } = useProjectsQuery();
-    console.log("HERE IS DATA", loading, data);
+    
 
     return <>Home Page</>;
 };
