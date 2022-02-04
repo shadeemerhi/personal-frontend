@@ -33,7 +33,7 @@ const NavItem: React.FC<NavItemProps> = ({ item, width, isSelected, setSelected 
             width={{ xs: `${width}%`, sm: '100%' }}
         >
             <item.icon className={`${styles.icon} xl_text`} />
-            <span className="medium_text">{item.text}</span>
+            <span className={styles.text}>{item.text}</span>
         </Box>
     );
 };

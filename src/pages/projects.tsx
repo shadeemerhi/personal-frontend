@@ -27,6 +27,7 @@ const Projects: React.FC<ProjectPageProps> = () => {
           <button className="btn_primary" onClick={() => setShowForm(true)}>
             Create Project
           </button>
+          <br />
           {data?.projects.map((project) => (
             <ProjectItem key={project._id} project={project} />
           ))}

@@ -135,3 +135,7 @@ select:focus {
 .xl_text {
   font-size: main.$xl-text;
 }
+
+.underline_text {
+  border-bottom: 2px solid main.$main-color;
+}
