@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import React from "react";
 import { Project } from "../../../generated/graphql";
+import Link from 'next/link';
 
 import styles from "./ProjectItem.module.scss";
 
@@ -19,7 +20,12 @@ const ProjectItem: React.FC<ProjectItemProps> = ({ project }) => {
           src={project.photoURL}
           style={{ height: "auto", width: "300px" }}
         />
-        <span className="sm_text">pefjewpfjwepfwejpweojwpoejwpoe pqefjwepof jwepoo efpowej fpowejf wepfjwe pfweojf pweojf wpefj poj</span>
+        <div className={styles.description_container}>
+          <span className="sm_text">{project.description}</span>
+          <a href='https://www.google.com'>
+            <button className="btn_inverted sm_text">Source Code</button>
+          </a>
+        </div>
       </div>
     </div>
   );

@@ -24,13 +24,12 @@ button {
   font-size: main.$md-text;
   cursor: pointer;
   font-family: main.$font-stack;
-
+  transition: 0.2s ease-in-out;
   &:focus {
     outline: none;
   }
 
   &.disabled {
-    background-color: red;
   }
 }
 
@@ -98,6 +97,16 @@ select:focus {
 .btn_primary {
   color: white;
   background-color: main.$main-color;
+}
+
+.btn_inverted {
+  color: white;
+  background-color: transparent;
+  border: 1px solid main.$main-color;
+
+  &:hover {
+    background-color: main.$main-color;
+  }
 }
 
 .light_text {
