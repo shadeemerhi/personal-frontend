@@ -19,7 +19,7 @@ const Layouts: React.FC<LayoutsProps> = ({ children }) => {
             </Head>
             <div className={styles.root}>
                 <Navbar />
-                <div className="page_container">{children}</div>
+                <div className={styles.page_container}>{children}</div>
             </div>
         </>
     );

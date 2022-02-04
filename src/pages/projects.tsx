@@ -14,7 +14,7 @@ const Projects: React.FC<ProjectPageProps> = () => {
   console.log("HERE IS DATA", loading, data, error);
   const [showForm, setShowForm] = useState(false);
 
-  if (error) return <div>There was an error sad face</div>
+  if (error) return <div>There was an error sad face</div>;
 
   return (
     <>
@@ -24,9 +24,11 @@ const Projects: React.FC<ProjectPageProps> = () => {
         <Box display="flex" flexDirection="column">
           <p>IMAGE HEADER WILL BE HERE</p>
           <p>Projects Page</p>
-          <button className="btn_primary" onClick={() => setShowForm(true)}>
-            Create Project
-          </button>
+          <Box>
+            <button className="btn_primary" onClick={() => setShowForm(true)}>
+              Create Project
+            </button>
+          </Box>
           <br />
           {data?.projects.map((project) => (
             <ProjectItem key={project._id} project={project} />

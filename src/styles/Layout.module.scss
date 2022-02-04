@@ -6,10 +6,19 @@
   flex-direction: column;
   color: white;
   background: main.$black-primary;
+
+  .page_container {
+    // width: 100%;
+      flex-grow: 1;
+      padding: 10px;
+  }
 }
 
 @include sm {
-    .root {
-      flex-direction: row;
+  .root {
+    flex-direction: row;
+      .page_container {
+        width: 65%;
+      }
     }
 }

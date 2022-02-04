@@ -5,23 +5,41 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 1px solid red;
+    margin-bottom: 80px;
 
-    .image_container {
+    .content_container {
+        width: auto;
+        max-width: 1200px;
+
+        .title_container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+    }
+
+    .upper_content {
         display: flex;
         flex-direction: column;
         align-items: center;
-        border: 1px solid blue;
         width: 300px; // same as image width
-
-        img {
-            margin-bottom: 8px;
+        margin-bottom: 20px;
+        
+        .image_container {
+            height: auto;
+            margin-bottom: 20px;
+            
+            img {
+                width: 300px;
+            }
         }
-
+        
         .description_container {
             display: flex;
             flex-direction: column;
             align-items: center;
+            font-size: main.$sm-text;
 
             button {
                 width: 100px;
@@ -30,28 +48,112 @@
         }
     }
 
-    @include md {
-    }
-    
-    .title_container {
+    .stack_container {
         display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .stack_items {
+            padding: 8px;
+            width: 300px;
+            border: 1px solid main.$main-color;
+
+            .section_container {
+                font-size: main.$xs-text;
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                margin: 6px 0px;
+
+                .title_text {
+                    margin-right: 8px;
+                }
+            }
+
+            @include md {
+                .section_container {
+                    font-size: main.$sm-text;
+                }
+            }
+        }
     }
 }
 
 @include md {
     .root {
         align-items: flex-start;
+        padding: 10px;
 
-        .image_container {
-            border: 1px;
+        .content_container {
+            width: 100%;
+
+            .title_container {
+                align-items: flex-start;
+                margin-bottom: 6px;
+            }
+        }
+        
+        .upper_content {
             flex-direction: row;
             align-items: flex-start;
             width: auto;
+            
+            .description_container {
+                font-size: main.$xs-text;
+            }
 
-            img {
+            @include lg {
+                .description_container {
+                    font-size: main.$sm-text;
+                }
+            }
+            
+            .image_container {
                 margin-right: 12px;
                 margin-bottom: 0px;
             }
         }
     }
 }
+
+@include lg {
+    .root {
+        .upper_content {
+            .image_container {
+
+                img {
+                    width: 400px;
+                }
+            }
+        }
+
+        .stack_container {
+            .stack_items {
+                width: 500px;
+            }
+        }
+    }
+}
+
+@include xl {
+    .root {
+        .upper_content {
+            .image_container {
+
+                img {
+                    width: 500px;
+                }
+            }
+        }
+
+        .stack_container {
+            .stack_items {
+                width: 500px;
+            }
+        }
+    }
+}
+
+
+

@@ -87,6 +87,7 @@ const Stack: React.FC<StackProps> = ({ stack, handleChange }) => {
                   name={itemName}
                   category={category}
                   deleteItem={handleChange}
+                  borderColor='main'
                 />
               ))}
             </Box>

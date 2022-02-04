@@ -71,19 +71,13 @@ textarea {
 select {
   font-family: main.$font-stack;
   border: none;
-  border-radius: 4px;
+  border-radius: main.$border-radius;
   background-color: main.$grey-primary;
   color: white;
 }
 
 select:focus {
   outline: none;
-}
-
-.page_container {
-  flex-grow: 1;
-  padding: 10px;
-  min-height: 100vh;
 }
 
 .pointer {
@@ -147,4 +141,16 @@ select:focus {
 
 .underline_text {
   border-bottom: 2px solid main.$main-color;
+}
+
+.border_radius {
+  border-radius: main.$border-radius;
+}
+
+.border_main {
+  border: 1px solid main.$main-color;
+}
+
+.border_white {
+  border: 1px solid main.$off-white;
 }
