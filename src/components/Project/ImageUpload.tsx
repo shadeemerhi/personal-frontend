@@ -28,7 +28,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     >
       <Box display="flex" justifyContent="space-between" mb={2}>
         Project Image
-        <label for="file-upload" class="custom-file-upload">
+        <label htmlFor="file-upload">
           <div className={`${styles.upload_button} pointer`}>Select File</div>
         </label>
         <input

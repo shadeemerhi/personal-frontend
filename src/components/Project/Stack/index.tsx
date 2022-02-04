@@ -68,8 +68,8 @@ const Stack: React.FC<StackProps> = ({ stack, handleChange }) => {
         </Box>
       </form>
       <Box display="flex" flexDirection="column" mt={2} mb={2}>
-        {Object.keys(stack).map((category) => (
-          <Box mb={2}>
+        {Object.keys(stack).map((category, index) => (
+          <Box key={index} mb={2}>
             <Box display="flex" flexDirection="column">
               <span className="sm_text">
                 {category.charAt(0).toUpperCase() + category.slice(1)}
@@ -81,8 +81,9 @@ const Stack: React.FC<StackProps> = ({ stack, handleChange }) => {
               )}
             </Box>
             <Box display="flex" flexWrap="wrap">
-              {stack[category].map((itemName: string) => (
+              {stack[category].map((itemName: string, index: number) => (
                 <StackItem
+                  key={index}
                   name={itemName}
                   category={category}
                   deleteItem={handleChange}

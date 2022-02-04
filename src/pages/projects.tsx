@@ -28,7 +28,7 @@ const Projects: React.FC<ProjectPageProps> = () => {
             Create Project
           </button>
           {data?.projects.map((project) => (
-            <ProjectItem project={project} />
+            <ProjectItem key={project._id} project={project} />
           ))}
         </Box>
       )}
