@@ -6,32 +6,61 @@ import ProjectItem from "../components/Project/Item/ProjectItem";
 
 import { useProjectsQuery } from "../generated/graphql";
 import { withApollo } from "../util/withApollo";
+import { Project } from "../types/project";
 
-interface ProjectPageProps {}
+const DEFAULT_PROJECT: Project = {
+  title: "",
+  description: "",
+  photoURL: "",
+  startDate: new Date(),
+  endDate: new Date(),
+  inProgress: false,
+  repositoryLinks: [],
+  stack: {
+    frontend: [],
+    backend: [],
+    other: [],
+  },
+};
 
-const Projects: React.FC<ProjectPageProps> = () => {
+export type ProjectFormState = {
+  visible: boolean;
+  project: any;
+};
+
+const Projects: React.FC = () => {
   const { data, loading, error } = useProjectsQuery();
-  console.log("HERE IS DATA", loading, data, error);
-  const [showForm, setShowForm] = useState(false);
+  const [showForm, setShowForm] = useState<ProjectFormState>({
+    visible: false,
+    project: DEFAULT_PROJECT,
+  });
 
   if (error) return <div>There was an error sad face</div>;
 
   return (
     <>
-      {showForm ? (
-        <ProjectForm setShowForm={setShowForm} />
+      {showForm.visible ? (
+        <ProjectForm setShowForm={setShowForm} project={showForm.project} />
       ) : (
         <Box display="flex" flexDirection="column">
           <p>IMAGE HEADER WILL BE HERE</p>
           <p>Projects Page</p>
           <Box>
-            <button className="btn_primary" onClick={() => setShowForm(true)}>
+            <button
+              className="btn_primary"
+              onClick={() =>
+                setShowForm({
+                  ...showForm,
+                  visible: true,
+                })
+              }
+            >
               Create Project
             </button>
           </Box>
           <br />
           {data?.projects.map((project) => (
-            <ProjectItem key={project._id} project={project} />
+            <ProjectItem key={project._id} project={project} setShowForm={setShowForm} />
           ))}
         </Box>
       )}

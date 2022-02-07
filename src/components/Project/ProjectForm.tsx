@@ -16,41 +16,29 @@ import { useCreateProjectMutation } from "../../generated/graphql";
 import { validateProject } from "../../util/validateProject";
 
 import styles from "./ProjectForm.module.scss";
+import { ProjectFormState } from "../../pages/projects";
 
 type ProjectFormProps = {
-  setShowForm: (value: boolean) => void;
+  // setShowForm: (value: boolean) => void;
+  project: Project;
+  setShowForm: any;
 };
 
-const DEFAULT_PROJECT: Project = {
-  title: "",
-  description: "",
-  photoURL: "",
-  startDate: new Date(),
-  endDate: new Date(),
-  inProgress: false,
-  repositoryLinks: [],
-  stack: {
-    frontend: [],
-    backend: [],
-    other: [],
-  },
-};
-
-const ProjectForm: React.FC<ProjectFormProps> = ({ setShowForm }) => {
-  const [project, setProject] = useState<Project>(DEFAULT_PROJECT);
+const ProjectForm: React.FC<ProjectFormProps> = ({ project, setShowForm }) => {
+  const [currentProject, setCurrentProject] = useState<Project>(project);
   const [photoFile, setPhotoFile] = useState<File>();
   const [incompleteProject, setIncompleteProject] = useState(false);
 
   const [createProject, { data, loading, error }] = useCreateProjectMutation();
 
   const onCreateProject = async () => {
-    if (!validateProject(project)) {
+    if (!validateProject(currentProject)) {
       setIncompleteProject(true);
       return;
     }
 
     if (incompleteProject) setIncompleteProject(false);
-    const newProject = { ...project };
+    const newProject = { ...currentProject };
     delete newProject.photoURL;
     await createProject({
       variables: {
@@ -73,7 +61,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ setShowForm }) => {
     field: string,
     value: string | boolean | Date | null
   ) => {
-    setProject((prev) => ({
+    setCurrentProject((prev) => ({
       ...prev,
       [field]: value,
     }));
@@ -81,9 +69,9 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ setShowForm }) => {
 
   const handleRepoChange = (link: string, adding?: boolean) => {
     const updatedLinks = adding
-      ? [...project.repositoryLinks, link]
-      : project.repositoryLinks.filter((l) => l !== link);
-    setProject((prev) => ({
+      ? [...currentProject.repositoryLinks, link]
+      : currentProject.repositoryLinks.filter((l) => l !== link);
+    setCurrentProject((prev) => ({
       ...prev,
       repositoryLinks: updatedLinks,
     }));
@@ -91,14 +79,14 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ setShowForm }) => {
 
   const handleStackChange = (stackItem: StackInputItem, adding?: boolean) => {
     const updatedStackList = adding
-      ? [...project.stack[stackItem.category], stackItem.name]
-      : project.stack[stackItem.category].filter(
+      ? [...currentProject.stack[stackItem.category], stackItem.name]
+      : currentProject.stack[stackItem.category].filter(
           (itemName) => itemName !== stackItem.name
         );
-    setProject((prev) => ({
+    setCurrentProject((prev) => ({
       ...prev,
       stack: {
-        ...project.stack,
+        ...currentProject.stack,
         [stackItem.category]: updatedStackList,
       },
     }));
@@ -106,7 +94,15 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ setShowForm }) => {
 
   return (
     <>
-      <ArrowBackIcon className="pointer" onClick={() => setShowForm(false)} />
+      <ArrowBackIcon
+        className="pointer"
+        onClick={() =>
+          setShowForm((prev: ProjectFormState) => ({
+            ...prev,
+            visible: false,
+          }))
+        }
+      />
       <Box className={styles.outer_form_container} mb={10}>
         <h3 className="heavy_text">Create New Project</h3>
         <Box display="flex" flexDirection="column">
@@ -120,33 +116,35 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ setShowForm }) => {
               handleChange={handleChange}
               label="Project title"
               placeholder="Title"
-            />
+              value={currentProject.title}
+              />
           </Box>
           <Box
             className={styles.input_container}
             display="flex"
             flexDirection="column"
-          >
+            >
             <InputField
               name="description"
               handleChange={handleChange}
               label="Project description"
               placeholder="Description"
+              value={currentProject.description}
               textarea
             />
           </Box>
           <ImageUpload photoFile={photoFile} setPhotoFile={setPhotoFile} />
           <DateInputs
-            startDate={project.startDate}
-            endDate={project.endDate}
-            inProgress={project.inProgress}
+            startDate={currentProject.startDate}
+            endDate={currentProject.endDate}
+            inProgress={currentProject.inProgress}
             handleChange={handleChange}
           />
           <GithubLinks
-            repositoryLinks={project.repositoryLinks}
+            repositoryLinks={currentProject.repositoryLinks}
             handleChange={handleRepoChange}
           />
-          <Stack stack={project.stack} handleChange={handleStackChange} />
+          <Stack stack={currentProject.stack} handleChange={handleStackChange} />
           <Box
             display="flex"
             flexDirection="column"

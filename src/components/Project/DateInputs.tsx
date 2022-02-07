@@ -15,9 +15,9 @@ import classNames from "classnames";
 
 type DateInputsProps = {
   startDate: Date;
-  endDate: Date | null;
+  endDate?: Date;
   inProgress: boolean;
-  handleChange: (field: string, value: string | boolean | Date | null) => void;
+  handleChange: (field: string, value: string | boolean | Date | null | undefined) => void;
 };
 
 const dateDefault = "white";
@@ -110,7 +110,7 @@ const DateInputs: React.FC<DateInputsProps> = ({
           onChange={(event) => {
             handleChange("inProgress", event.target.checked);
             if (event.target.checked) {
-              handleChange("endDate", null);
+              handleChange("endDate", undefined);
             }
           }}
         />
