@@ -8,7 +8,7 @@
   background: main.$black-primary;
 
   .page_container {
-    // width: 100%;
+      min-height: 100vh;
       flex-grow: 1;
       padding: 10px;
   }
