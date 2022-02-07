@@ -12,7 +12,7 @@ const DEFAULT_PROJECT: Project = {
   _id: '',
   title: "",
   description: "",
-  photoFile: null,
+  photoFile: undefined,
   startDate: new Date(),
   endDate: new Date(),
   inProgress: false,
