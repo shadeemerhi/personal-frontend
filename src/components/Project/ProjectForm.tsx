@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Box from "@mui/material/Box";
@@ -92,6 +92,10 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ project, setShowForm }) => {
     }));
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <ArrowBackIcon
@@ -134,7 +138,8 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ project, setShowForm }) => {
             />
           </Box>
           <ImageUpload
-            photoFile={project.photoFile}
+            photoFile={currentProject.photoFile}
+            photoURL={currentProject.photoURL}
             setCurrentProject={setCurrentProject}
           />
           <DateInputs

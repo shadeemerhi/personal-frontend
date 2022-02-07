@@ -3,22 +3,29 @@ import { Box } from "@mui/material";
 import PhotoCameraBackIcon from "@mui/icons-material/PhotoCameraBack";
 
 import styles from "./ProjectForm.module.scss";
+import { ProjectFormState } from "../../pages/projects";
+import { Project } from "../../types/project";
 
 type ImageUploadProps = {
-  photoFile: File | undefined;
-  setPhotoFile: (file: File) => void;
+  photoFile?: File;
+  photoURL?: string;
+  setCurrentProject: any;
 };
 
 const ImageUpload: React.FC<ImageUploadProps> = ({
   photoFile,
-  setPhotoFile,
+  photoURL,
+  setCurrentProject,
 }) => {
-  //   const [image, setImage] = useState<File>();
 
   const onImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files || !event.target.files[0]) return;
     const image = event.target.files[0];
-    setPhotoFile(image);
+    setCurrentProject((prev: Project) => ({
+      ...prev,
+      photoFile: image,
+      photoURL: undefined,
+    }));
   };
   return (
     <Box
@@ -45,10 +52,12 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
         justifyContent="center"
         alignItems="center"
       >
-        {photoFile ? (
+        {photoFile || photoURL ? (
           <>
-            <img src={URL.createObjectURL(photoFile)} />
-            <span className="sm_text italic_text">{photoFile.name}</span>
+            <img src={photoFile ? URL.createObjectURL(photoFile) : photoURL} />
+            {photoFile && (
+              <span className="sm_text italic_text">{photoFile.name}</span>
+            )}
           </>
         ) : (
           <>

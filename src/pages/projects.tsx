@@ -9,7 +9,7 @@ import { withApollo } from "../util/withApollo";
 import { Project } from "../types/project";
 
 const DEFAULT_PROJECT: Project = {
-  _id: '',
+  _id: "",
   title: "",
   description: "",
   photoFile: undefined,
@@ -51,8 +51,8 @@ const Projects: React.FC = () => {
               className="btn_primary"
               onClick={() =>
                 setShowForm({
-                  ...showForm,
                   visible: true,
+                  project: DEFAULT_PROJECT,
                 })
               }
             >
@@ -61,7 +61,11 @@ const Projects: React.FC = () => {
           </Box>
           <br />
           {data?.projects.map((project) => (
-            <ProjectItem key={project._id} project={project} setShowForm={setShowForm} />
+            <ProjectItem
+              key={project._id}
+              project={project}
+              setShowForm={setShowForm}
+            />
           ))}
         </Box>
       )}
