@@ -28,7 +28,18 @@ export type Mutation = {
 
 
 export type MutationCreateProjectArgs = {
-  input: ProjectInput;
+  input: NewProjectInput;
+};
+
+export type NewProjectInput = {
+  description: Scalars['String'];
+  endDate?: InputMaybe<Scalars['DateTime']>;
+  inProgress: Scalars['Boolean'];
+  photoFile: Scalars['Upload'];
+  repositoryLinks: Array<Scalars['String']>;
+  stack: Scalars['Stack'];
+  startDate: Scalars['DateTime'];
+  title: Scalars['String'];
 };
 
 export type Project = {
@@ -38,17 +49,6 @@ export type Project = {
   endDate?: Maybe<Scalars['DateTime']>;
   inProgress: Scalars['Boolean'];
   photoURL: Scalars['String'];
-  repositoryLinks: Array<Scalars['String']>;
-  stack: Scalars['Stack'];
-  startDate: Scalars['DateTime'];
-  title: Scalars['String'];
-};
-
-export type ProjectInput = {
-  description: Scalars['String'];
-  endDate?: InputMaybe<Scalars['DateTime']>;
-  inProgress: Scalars['Boolean'];
-  photoFile: Scalars['Upload'];
   repositoryLinks: Array<Scalars['String']>;
   stack: Scalars['Stack'];
   startDate: Scalars['DateTime'];
@@ -67,7 +67,7 @@ export type QueryProjectArgs = {
 };
 
 export type CreateProjectMutationVariables = Exact<{
-  input: ProjectInput;
+  input: NewProjectInput;
 }>;
 
 
@@ -80,7 +80,7 @@ export type ProjectsQuery = { __typename?: 'Query', projects: Array<{ __typename
 
 
 export const CreateProjectDocument = gql`
-    mutation CreateProject($input: ProjectInput!) {
+    mutation CreateProject($input: NewProjectInput!) {
   createProject(input: $input) {
     title
     photoURL

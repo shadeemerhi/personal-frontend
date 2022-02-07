@@ -1,4 +1,4 @@
-mutation CreateProject($input: ProjectInput!) {
+mutation CreateProject($input: NewProjectInput!) {
     createProject(input: $input) {
         title
         photoURL

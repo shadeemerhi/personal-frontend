@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { Project } from "../../../generated/graphql";
+import React from "react";
 
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
@@ -8,6 +7,7 @@ import { Box } from "@mui/material";
 import styles from "./ProjectItem.module.scss";
 import StackItem from "../Stack/StackItem";
 import { ProjectFormState } from "../../../pages/projects";
+import { Project } from "../../../types/project";
 
 type ProjectItemProps = {
   setShowForm: (value: ProjectFormState) => void;

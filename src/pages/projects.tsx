@@ -9,9 +9,10 @@ import { withApollo } from "../util/withApollo";
 import { Project } from "../types/project";
 
 const DEFAULT_PROJECT: Project = {
+  _id: '',
   title: "",
   description: "",
-  photoURL: "",
+  photoFile: null,
   startDate: new Date(),
   endDate: new Date(),
   inProgress: false,
@@ -25,7 +26,7 @@ const DEFAULT_PROJECT: Project = {
 
 export type ProjectFormState = {
   visible: boolean;
-  project: any;
+  project: Project;
 };
 
 const Projects: React.FC = () => {

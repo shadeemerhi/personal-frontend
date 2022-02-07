@@ -11,7 +11,7 @@ import GithubLinks from "./GithubLinks";
 import Stack from "./Stack";
 import ImageUpload from "./ImageUpload";
 
-import { Project, StackInputItem } from "../../types/project";
+import { StackInputItem, Project } from "../../types/project";
 import { useCreateProjectMutation } from "../../generated/graphql";
 import { validateProject } from "../../util/validateProject";
 
@@ -26,7 +26,7 @@ type ProjectFormProps = {
 
 const ProjectForm: React.FC<ProjectFormProps> = ({ project, setShowForm }) => {
   const [currentProject, setCurrentProject] = useState<Project>(project);
-  const [photoFile, setPhotoFile] = useState<File>();
+  // const [photoFile, setPhotoFile] = useState<File>();
   const [incompleteProject, setIncompleteProject] = useState(false);
 
   const [createProject, { data, loading, error }] = useCreateProjectMutation();
@@ -44,7 +44,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ project, setShowForm }) => {
       variables: {
         input: {
           ...newProject,
-          photoFile,
+          photoFile: newProject.photoFile,
         },
       },
       update: (cache) => {
@@ -59,7 +59,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ project, setShowForm }) => {
 
   const handleChange = (
     field: string,
-    value: string | boolean | Date | null
+    value: string | boolean | Date | null | undefined
   ) => {
     setCurrentProject((prev) => ({
       ...prev,
@@ -117,13 +117,13 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ project, setShowForm }) => {
               label="Project title"
               placeholder="Title"
               value={currentProject.title}
-              />
+            />
           </Box>
           <Box
             className={styles.input_container}
             display="flex"
             flexDirection="column"
-            >
+          >
             <InputField
               name="description"
               handleChange={handleChange}
@@ -133,7 +133,10 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ project, setShowForm }) => {
               textarea
             />
           </Box>
-          <ImageUpload photoFile={photoFile} setPhotoFile={setPhotoFile} />
+          <ImageUpload
+            photoFile={project.photoFile}
+            setCurrentProject={setCurrentProject}
+          />
           <DateInputs
             startDate={currentProject.startDate}
             endDate={currentProject.endDate}
@@ -144,7 +147,10 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ project, setShowForm }) => {
             repositoryLinks={currentProject.repositoryLinks}
             handleChange={handleRepoChange}
           />
-          <Stack stack={currentProject.stack} handleChange={handleStackChange} />
+          <Stack
+            stack={currentProject.stack}
+            handleChange={handleStackChange}
+          />
           <Box
             display="flex"
             flexDirection="column"

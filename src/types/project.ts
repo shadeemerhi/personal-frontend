@@ -14,8 +14,9 @@ export type Project = {
     title: string;
     description: string;
     photoURL?: string;
+    photoFile?: File;
     startDate: Date;
-    endDate: Date | null;
+    endDate?: Date;
     inProgress: boolean;
     repositoryLinks: string[];
     stack: Stack;
