@@ -47,7 +47,6 @@
 @include sm {
   .root {
     width: 35%;
-    // min-height: 100vh;
     max-width: 400px;
     flex-direction: column;
     justify-content: space-between;
@@ -81,10 +80,7 @@
     .lock_icon_container {
       display: flex;
       padding: 6px;
-
-      .icon {
-        color: main.$grey-primary;
-      }
+      color: main.$grey-primary;
     }
   }
 }

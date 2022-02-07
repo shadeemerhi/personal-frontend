@@ -60,7 +60,7 @@ const Navbar: React.FC<{}> = () => {
         ))}
       </div>
       <div className={styles.lock_icon_container}>
-        <LockIcon className={`${styles.icon} pointer`} />
+        <LockIcon className="pointer" />
       </div>
     </div>
   );

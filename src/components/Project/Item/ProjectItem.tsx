@@ -1,7 +1,9 @@
-import { Box } from "@mui/material";
 import React, { useEffect } from "react";
 import { Project } from "../../../generated/graphql";
-import Link from "next/link";
+
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { Box } from "@mui/material";
 
 import styles from "./ProjectItem.module.scss";
 import StackItem from "../Stack/StackItem";
@@ -14,9 +16,12 @@ const ProjectItem: React.FC<ProjectItemProps> = ({ project }) => {
   return (
     <div className={styles.root}>
       <div className={styles.content_container}>
-        <Box mb={1}></Box>
         <div className={styles.title_container}>
           <span className="underline_text">{project.title}</span>
+          <div className={styles.icon_container}>
+            <EditIcon className="pointer" />
+            <DeleteOutlineIcon className="pointer" />
+          </div>
         </div>
         <div className={styles.upper_content}>
           <div className={styles.image_container}>
