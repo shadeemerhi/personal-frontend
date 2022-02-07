@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box } from "@mui/material";
 
 import ProjectForm from "../components/Project/ProjectForm";
@@ -9,7 +9,7 @@ import { withApollo } from "../util/withApollo";
 import { Project } from "../types/project";
 
 const DEFAULT_PROJECT: Project = {
-  _id: "",
+  // _id: "",
   title: "",
   description: "",
   photoFile: undefined,
@@ -38,10 +38,18 @@ const Projects: React.FC = () => {
 
   if (error) return <div>There was an error sad face</div>;
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       {showForm.visible ? (
-        <ProjectForm setShowForm={setShowForm} project={showForm.project} />
+        <ProjectForm
+          setShowForm={setShowForm}
+          project={showForm.project}
+          editing={!!showForm.project._id}
+        />
       ) : (
         <Box display="flex" flexDirection="column">
           <p>IMAGE HEADER WILL BE HERE</p>

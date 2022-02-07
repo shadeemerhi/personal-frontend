@@ -10,6 +10,7 @@ export type StackInputItem = {
 }
 
 export type Project = {
+    __typename?: string;
     _id?: string;
     title: string;
     description: string;

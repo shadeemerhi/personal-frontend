@@ -12,24 +12,46 @@ import Stack from "./Stack";
 import ImageUpload from "./ImageUpload";
 
 import { StackInputItem, Project } from "../../types/project";
-import { useCreateProjectMutation } from "../../generated/graphql";
+import {
+  NewProjectInput,
+  ProjectsDocument,
+  UpdateProjectInput,
+  useCreateProjectMutation,
+  useUpdateProjectMutation,
+  Project as ProjectThing,
+} from "../../generated/graphql";
 import { validateProject } from "../../util/validateProject";
 
 import styles from "./ProjectForm.module.scss";
 import { ProjectFormState } from "../../pages/projects";
+import { gql } from "@apollo/client";
 
 type ProjectFormProps = {
-  // setShowForm: (value: boolean) => void;
+  editing?: boolean;
+  setShowForm: (value: any) => void; // tried using ProjectFormState as type here but not working?
   project: Project;
-  setShowForm: any;
 };
 
-const ProjectForm: React.FC<ProjectFormProps> = ({ project, setShowForm }) => {
+const ProjectForm: React.FC<ProjectFormProps> = ({
+  editing,
+  project,
+  setShowForm,
+}) => {
   const [currentProject, setCurrentProject] = useState<Project>(project);
-  // const [photoFile, setPhotoFile] = useState<File>();
   const [incompleteProject, setIncompleteProject] = useState(false);
 
-  const [createProject, { data, loading, error }] = useCreateProjectMutation();
+  const [
+    createProject,
+    { data: createProjectData, loading: createProjectLoading, error },
+  ] = useCreateProjectMutation();
+  const [
+    updateProject,
+    { data: updateProjectData, loading: updateProjectLoading },
+  ] = useUpdateProjectMutation();
+
+  const onSubmit = async () => {
+    editing ? onUpdateProject() : onCreateProject();
+  };
 
   const onCreateProject = async () => {
     if (!validateProject(currentProject)) {
@@ -42,10 +64,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ project, setShowForm }) => {
     delete newProject.photoURL;
     await createProject({
       variables: {
-        input: {
-          ...newProject,
-          photoFile: newProject.photoFile,
-        },
+        input: newProject as NewProjectInput,
       },
       update: (cache) => {
         cache.evict({ fieldName: "projects" });
@@ -54,6 +73,30 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ project, setShowForm }) => {
     try {
     } catch (error) {
       console.log("createProject error", error);
+    }
+  };
+
+  const onUpdateProject = async () => {
+    const newProject = { ...currentProject };
+    delete newProject.__typename;
+    try {
+      const { data } = await updateProject({
+        variables: {
+          input: newProject as UpdateProjectInput,
+        },
+        update: (cache) => {
+          cache.evict({ fieldName: "projects" });
+        },
+        // update: (cache) => {
+        //   cache.writeFragment({
+        //     id: `Project:${data?.updateProject._id}`,
+        //     fragment: gql`fragment`,
+        //     data: { ...data?.updateProject },
+        //   });
+        // },
+      });
+    } catch (error) {
+      console.log("updateProject error", error);
     }
   };
 
@@ -108,7 +151,9 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ project, setShowForm }) => {
         }
       />
       <Box className={styles.outer_form_container} mb={10}>
-        <h3 className="heavy_text">Create New Project</h3>
+        <h3 className="heavy_text">
+          {editing ? "Update Project" : "Create New Project"}
+        </h3>
         <Box display="flex" flexDirection="column">
           <Box
             className={styles.input_container}
@@ -163,13 +208,36 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ project, setShowForm }) => {
             alignItems="center"
             className={styles.submit_container}
           >
-            {data && (
+            {createProjectData && (
               <Box mb={2}>
                 <p className="mg_0 md_text">
-                  {data.createProject.title} successfully created!{" "}
+                  {createProjectData.createProject.title} successfully created!{" "}
                   <span
                     className="md_text heavy_text pointer"
-                    onClick={() => setShowForm(false)}
+                    onClick={() =>
+                      setShowForm((prev: ProjectFormState) => ({
+                        ...prev,
+                        visible: false,
+                      }))
+                    }
+                  >
+                    View
+                  </span>
+                </p>
+              </Box>
+            )}
+            {updateProjectData && (
+              <Box mb={2}>
+                <p className="mg_0 md_text">
+                  {updateProjectData.updateProject.title} successfully updated!{" "}
+                  <span
+                    className="md_text heavy_text pointer"
+                    onClick={() =>
+                      setShowForm((prev: ProjectFormState) => ({
+                        ...prev,
+                        visible: false,
+                      }))
+                    }
                   >
                     View
                   </span>
@@ -178,17 +246,17 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ project, setShowForm }) => {
             )}
             <button
               className="btn_primary"
-              onClick={onCreateProject}
+              onClick={onSubmit}
               style={{
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
               }}
             >
-              {loading ? (
+              {createProjectLoading || updateProjectLoading ? (
                 <CircularProgress size={18} color="inherit" />
               ) : (
-                "Submit Project"
+                `${editing ? "Update Project" : "Submit Project"}`
               )}
             </button>
           </Box>
