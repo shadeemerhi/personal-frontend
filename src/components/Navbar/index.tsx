@@ -6,11 +6,14 @@ import ArticleIcon from "@mui/icons-material/Article";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import LockIcon from "@mui/icons-material/Lock";
+import LockOpenIcon from '@mui/icons-material/LockOpen';
 
 import styles from "../../styles/Navbar.module.scss";
 import classNames from "classnames";
 import NavItem, { NavItemInputs } from "./NavItem";
 import { useRouter } from "next/router";
+import BasicModal from "../Modal";
+import { useAuth } from "../../hooks/useAuth";
 
 const navItems = [
   {
@@ -46,6 +49,8 @@ const Navbar: React.FC<{}> = () => {
     navItems.find((item) => item.route === router.pathname)?.text || "";
 
   const [selected, setSelected] = useState(initSelected);
+  const [open, setOpen] = useState(false);
+  const { authenticated } = useAuth();
   return (
     <div className={styles.root}>
       <div className={styles.items_container}>
@@ -60,7 +65,8 @@ const Navbar: React.FC<{}> = () => {
         ))}
       </div>
       <div className={styles.lock_icon_container}>
-        <LockIcon className="pointer" />
+        <BasicModal open={open} setOpen={setOpen} />
+        {authenticated ? <LockOpenIcon /> : <LockIcon className="pointer" onClick={() => setOpen(true)} />}
       </div>
     </div>
   );

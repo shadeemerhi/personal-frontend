@@ -143,6 +143,10 @@ select:focus {
   border-bottom: 2px solid main.$main-color;
 }
 
+.danger_text {
+  color: main.$danger;
+}
+
 .border_radius {
   border-radius: main.$border-radius;
 }

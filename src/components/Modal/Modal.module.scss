@@ -1,0 +1,19 @@
+@use '../../styles/main.scss';
+@import '../../styles/_mixins';
+
+.root {
+    position: absolute;
+    top: 50;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400;
+    box-shadow: 24;
+    padding: 40px;
+    border-radius: main.$border-radius;
+    color: white;
+    background-color: main.$black-secondary;
+
+    &:focus {
+        outline: none;
+    }
+}
