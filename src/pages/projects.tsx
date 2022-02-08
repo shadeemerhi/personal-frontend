@@ -7,9 +7,9 @@ import ProjectItem from "../components/Project/Item/ProjectItem";
 import { useProjectsQuery } from "../generated/graphql";
 import { withApollo } from "../util/withApollo";
 import { Project } from "../types/project";
+import { useAuth } from "../hooks/useAuth";
 
 const DEFAULT_PROJECT: Project = {
-  // _id: "",
   title: "",
   description: "",
   photoFile: undefined,
@@ -30,6 +30,7 @@ export type ProjectFormState = {
 };
 
 const Projects: React.FC = () => {
+  const { authKey } = useAuth();
   const { data, loading, error } = useProjectsQuery();
   const [showForm, setShowForm] = useState<ProjectFormState>({
     visible: false,
@@ -49,28 +50,32 @@ const Projects: React.FC = () => {
           setShowForm={setShowForm}
           project={showForm.project}
           editing={!!showForm.project._id}
+          authKey={authKey}
         />
       ) : (
         <Box display="flex" flexDirection="column">
           <p>IMAGE HEADER WILL BE HERE</p>
           <p>Projects Page</p>
-          <Box>
-            <button
-              className="btn_primary"
-              onClick={() =>
-                setShowForm({
-                  visible: true,
-                  project: DEFAULT_PROJECT,
-                })
-              }
-            >
-              Create Project
-            </button>
-          </Box>
+          {authKey && (
+            <Box>
+              <button
+                className="btn_primary"
+                onClick={() =>
+                  setShowForm({
+                    visible: true,
+                    project: DEFAULT_PROJECT,
+                  })
+                }
+              >
+                Create Project
+              </button>
+            </Box>
+          )}
           <br />
           {data?.projects.map((project) => (
             <ProjectItem
               key={project._id}
+              authKey={authKey}
               project={project}
               setShowForm={setShowForm}
             />

@@ -26,7 +26,7 @@ const ModalContainer: React.FC<ModalProps> = ({ open, setOpen }) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const { authenticated, error, verifyKey } = useAuth();
+  const { authKey, error, verifyKey } = useAuth();
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -65,7 +65,7 @@ const ModalContainer: React.FC<ModalProps> = ({ open, setOpen }) => {
           </form>
           {error && (
             <Box mt={2} className="danger_text">
-              Incorrect passphrase!
+              {error}
             </Box>
           )}
         </Box>

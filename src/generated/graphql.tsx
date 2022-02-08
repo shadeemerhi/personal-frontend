@@ -44,6 +44,7 @@ export type MutationUpdateProjectArgs = {
 };
 
 export type NewProjectInput = {
+  adminPassKey: Scalars['String'];
   description: Scalars['String'];
   endDate?: InputMaybe<Scalars['DateTime']>;
   inProgress: Scalars['Boolean'];
@@ -57,6 +58,7 @@ export type NewProjectInput = {
 export type Project = {
   __typename?: 'Project';
   _id: Scalars['String'];
+  adminPassKey: Scalars['String'];
   description: Scalars['String'];
   endDate?: Maybe<Scalars['DateTime']>;
   inProgress: Scalars['Boolean'];
@@ -80,6 +82,7 @@ export type QueryProjectArgs = {
 
 export type UpdateProjectInput = {
   _id: Scalars['String'];
+  adminPassKey: Scalars['String'];
   description: Scalars['String'];
   endDate?: InputMaybe<Scalars['DateTime']>;
   inProgress: Scalars['Boolean'];
@@ -110,7 +113,7 @@ export type UpdateProjectMutationVariables = Exact<{
 }>;
 
 
-export type UpdateProjectMutation = { __typename?: 'Mutation', updateProject: { __typename?: 'Project', _id: string, title: string, description: string, photoURL: string, startDate: any, endDate?: any | null | undefined, inProgress: boolean, repositoryLinks: Array<string>, stack: any } };
+export type UpdateProjectMutation = { __typename?: 'Mutation', updateProject: { __typename?: 'Project', _id: string, title: string, description: string, photoURL: string, startDate: any, endDate?: any | null | undefined, inProgress: boolean, repositoryLinks: Array<string>, stack: any, adminPassKey: string } };
 
 export type ProjectsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -196,6 +199,7 @@ export const UpdateProjectDocument = gql`
     inProgress
     repositoryLinks
     stack
+    adminPassKey
   }
 }
     `;

@@ -12,13 +12,18 @@ import { Project } from "../../../types/project";
 import { useDeleteProjectMutation } from "../../../generated/graphql";
 
 type ProjectItemProps = {
+  authKey: string;
   setShowForm: (value: ProjectFormState) => void;
   project: Project;
 };
 
-const ProjectItem: React.FC<ProjectItemProps> = ({ project, setShowForm }) => {
+const ProjectItem: React.FC<ProjectItemProps> = ({
+  authKey,
+  project,
+  setShowForm,
+}) => {
   const [deleteProject, { data, loading, error }] = useDeleteProjectMutation();
-  
+
   const onDelete = async () => {
     try {
       await deleteProject({
@@ -44,29 +49,31 @@ const ProjectItem: React.FC<ProjectItemProps> = ({ project, setShowForm }) => {
       <div className={styles.content_container}>
         <div className={styles.title_container}>
           <span className="underline_text">{project.title}</span>
-          <div className={styles.icon_container}>
-            <EditIcon
-              className="pointer"
-              onClick={() =>
-                setShowForm({
-                  visible: true,
-                  project,
-                })
-              }
-            />
-            <Box
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              ml={1}
-            >
-              {loading ? (
-                <CircularProgress size={20} color="inherit" />
-              ) : (
-                <DeleteOutlineIcon className="pointer" onClick={onDelete} />
-              )}
-            </Box>
-          </div>
+          {authKey && (
+            <div className={styles.icon_container}>
+              <EditIcon
+                className="pointer"
+                onClick={() =>
+                  setShowForm({
+                    visible: true,
+                    project,
+                  })
+                }
+              />
+              <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                ml={1}
+              >
+                {loading ? (
+                  <CircularProgress size={20} color="inherit" />
+                ) : (
+                  <DeleteOutlineIcon className="pointer" onClick={onDelete} />
+                )}
+              </Box>
+            </div>
+          )}
         </div>
         <div className={styles.upper_content}>
           <div className={styles.image_container}>

@@ -5,13 +5,13 @@ type UseAuthProps = {
 };
 
 interface AuthContextInterface {
-  authenticated: boolean;
+  authKey: string;
   error: string;
   verifyKey: any; // will improve type
 }
 
 const AuthContext = React.createContext<AuthContextInterface>({
-  authenticated: false,
+  authKey: "",
   error: "",
   verifyKey: null,
 });
@@ -21,26 +21,26 @@ export const useAuth = () => {
 };
 
 const AuthProvider: React.FC<UseAuthProps> = ({ children }) => {
-  const [authenticated, setAuthenticated] = useState(false);
+  const [authKey, setAuthKey] = useState("");
   const [error, setError] = useState("");
 
   const verifyKey = (key: string): boolean => {
     setError("");
-    console.log('HERE ARE THINGS', key, process.env.NEXT_PUBLIC_ADMIN_KEY);
-    
+    console.log("HERE ARE THINGS", key, process.env.NEXT_PUBLIC_ADMIN_KEY);
 
     const verified = key === process.env.NEXT_PUBLIC_ADMIN_KEY;
     if (!verified) {
       setError("Incorrect passphrase");
     } else {
-      setAuthenticated(true);
-      setError('');
+      setAuthKey(key);
+      setError("");
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
     return verified;
   };
 
   const value: AuthContextInterface = {
-    authenticated,
+    authKey,
     error,
     verifyKey,
   };

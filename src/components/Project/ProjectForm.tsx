@@ -14,39 +14,46 @@ import ImageUpload from "./ImageUpload";
 import { StackInputItem, Project } from "../../types/project";
 import {
   NewProjectInput,
-  ProjectsDocument,
   UpdateProjectInput,
   useCreateProjectMutation,
   useUpdateProjectMutation,
-  Project as ProjectThing,
 } from "../../generated/graphql";
 import { validateProject } from "../../util/validateProject";
 
 import styles from "./ProjectForm.module.scss";
 import { ProjectFormState } from "../../pages/projects";
-import { gql } from "@apollo/client";
 
 type ProjectFormProps = {
   editing?: boolean;
   setShowForm: (value: any) => void; // tried using ProjectFormState as type here but not working?
   project: Project;
+  authKey: string;
 };
 
 const ProjectForm: React.FC<ProjectFormProps> = ({
   editing,
   project,
   setShowForm,
+  authKey,
 }) => {
   const [currentProject, setCurrentProject] = useState<Project>(project);
   const [incompleteProject, setIncompleteProject] = useState(false);
 
   const [
     createProject,
-    { data: createProjectData, loading: createProjectLoading, error },
+    {
+      data: createProjectData,
+      loading: createProjectLoading,
+      error: createProjectError,
+    },
   ] = useCreateProjectMutation();
   const [
     updateProject,
-    { data: updateProjectData, loading: updateProjectLoading },
+    {
+      data: updateProjectData,
+      loading: updateProjectLoading,
+      error: updateProjectError,
+    },
   ] = useUpdateProjectMutation();
 
   const onSubmit = async () => {
@@ -82,8 +89,11 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
     try {
       const { data } = await updateProject({
         variables: {
-          input: newProject as UpdateProjectInput,
-        }
+          input: {
+            ...newProject,
+            adminPassKey: authKey,
+          } as UpdateProjectInput,
+        },
       });
     } catch (error) {
       console.log("updateProject error", error);
@@ -250,12 +260,12 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
               )}
             </button>
           </Box>
-          {(error || incompleteProject) && (
+          {(createProjectError || updateProjectError || incompleteProject) && (
             <Box mb={2} mt={2}>
               <Alert severity="error">
                 {incompleteProject
                   ? "One or more of the required fields is missing"
-                  : "Error creating project"}
+                  : "Error creating/updating project"}
               </Alert>
             </Box>
           )}
