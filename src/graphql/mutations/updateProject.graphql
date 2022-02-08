@@ -1,5 +1,5 @@
-mutation UpdateProject($input: UpdateProjectInput!) {
-  updateProject(input: $input) {
+mutation UpdateProject($input: UpdateProjectInput!, $adminKey: String!) {
+  updateProject(input: $input, adminKey: $adminKey) {
     _id
     title
     description
@@ -10,6 +10,5 @@ mutation UpdateProject($input: UpdateProjectInput!) {
     inProgress
     repositoryLinks
     stack
-    adminPassKey
   }
 }

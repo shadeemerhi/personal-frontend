@@ -29,6 +29,7 @@ const ProjectItem: React.FC<ProjectItemProps> = ({
       await deleteProject({
         variables: {
           _id: project._id as string,
+          adminKey: authKey
         },
         update: (cache) => {
           cache.evict({ id: `Project:${project._id}` });

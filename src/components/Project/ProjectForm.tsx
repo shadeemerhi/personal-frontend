@@ -1,27 +1,27 @@
-import React, { useState, useEffect } from "react";
-
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import Box from "@mui/material/Box";
 import Alert from "@mui/material/Alert";
+import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
-
-import InputField from "./InputField";
-import DateInputs from "./DateInputs";
-import GithubLinks from "./GithubLinks";
-import Stack from "./Stack";
-import ImageUpload from "./ImageUpload";
-
-import { StackInputItem, Project } from "../../types/project";
+import React, { useEffect, useState } from "react";
 import {
   NewProjectInput,
   UpdateProjectInput,
   useCreateProjectMutation,
-  useUpdateProjectMutation,
+  useUpdateProjectMutation
 } from "../../generated/graphql";
-import { validateProject } from "../../util/validateProject";
-
-import styles from "./ProjectForm.module.scss";
 import { ProjectFormState } from "../../pages/projects";
+import { Project, StackInputItem } from "../../types/project";
+import { validateProject } from "../../util/validateProject";
+import DateInputs from "./DateInputs";
+import GithubLinks from "./GithubLinks";
+import ImageUpload from "./ImageUpload";
+import InputField from "./InputField";
+import styles from "./ProjectForm.module.scss";
+import Stack from "./Stack";
+
+
+
+
 
 type ProjectFormProps = {
   editing?: boolean;
@@ -72,6 +72,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
     await createProject({
       variables: {
         input: newProject as NewProjectInput,
+        adminKey: authKey
       },
       update: (cache) => {
         cache.evict({ fieldName: "projects" });
@@ -89,10 +90,8 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
     try {
       const { data } = await updateProject({
         variables: {
-          input: {
-            ...newProject,
-            adminPassKey: authKey,
-          } as UpdateProjectInput,
+          input: newProject as UpdateProjectInput,
+          adminKey: authKey
         },
       });
     } catch (error) {

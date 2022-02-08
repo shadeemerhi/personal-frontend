@@ -30,21 +30,23 @@ export type Mutation = {
 
 
 export type MutationCreateProjectArgs = {
+  adminKey: Scalars['String'];
   input: NewProjectInput;
 };
 
 
 export type MutationDeleteProjectArgs = {
   _id: Scalars['String'];
+  adminKey: Scalars['String'];
 };
 
 
 export type MutationUpdateProjectArgs = {
+  adminKey: Scalars['String'];
   input: UpdateProjectInput;
 };
 
 export type NewProjectInput = {
-  adminPassKey: Scalars['String'];
   description: Scalars['String'];
   endDate?: InputMaybe<Scalars['DateTime']>;
   inProgress: Scalars['Boolean'];
@@ -58,7 +60,6 @@ export type NewProjectInput = {
 export type Project = {
   __typename?: 'Project';
   _id: Scalars['String'];
-  adminPassKey: Scalars['String'];
   description: Scalars['String'];
   endDate?: Maybe<Scalars['DateTime']>;
   inProgress: Scalars['Boolean'];
@@ -82,7 +83,6 @@ export type QueryProjectArgs = {
 
 export type UpdateProjectInput = {
   _id: Scalars['String'];
-  adminPassKey: Scalars['String'];
   description: Scalars['String'];
   endDate?: InputMaybe<Scalars['DateTime']>;
   inProgress: Scalars['Boolean'];
@@ -96,6 +96,7 @@ export type UpdateProjectInput = {
 
 export type CreateProjectMutationVariables = Exact<{
   input: NewProjectInput;
+  adminKey: Scalars['String'];
 }>;
 
 
@@ -103,6 +104,7 @@ export type CreateProjectMutation = { __typename?: 'Mutation', createProject: { 
 
 export type DeleteProjectMutationVariables = Exact<{
   _id: Scalars['String'];
+  adminKey: Scalars['String'];
 }>;
 
 
@@ -110,10 +112,11 @@ export type DeleteProjectMutation = { __typename?: 'Mutation', deleteProject: bo
 
 export type UpdateProjectMutationVariables = Exact<{
   input: UpdateProjectInput;
+  adminKey: Scalars['String'];
 }>;
 
 
-export type UpdateProjectMutation = { __typename?: 'Mutation', updateProject: { __typename?: 'Project', _id: string, title: string, description: string, photoURL: string, startDate: any, endDate?: any | null | undefined, inProgress: boolean, repositoryLinks: Array<string>, stack: any, adminPassKey: string } };
+export type UpdateProjectMutation = { __typename?: 'Mutation', updateProject: { __typename?: 'Project', _id: string, title: string, description: string, photoURL: string, startDate: any, endDate?: any | null | undefined, inProgress: boolean, repositoryLinks: Array<string>, stack: any } };
 
 export type ProjectsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -122,8 +125,8 @@ export type ProjectsQuery = { __typename?: 'Query', projects: Array<{ __typename
 
 
 export const CreateProjectDocument = gql`
-    mutation CreateProject($input: NewProjectInput!) {
-  createProject(input: $input) {
+    mutation CreateProject($input: NewProjectInput!, $adminKey: String!) {
+  createProject(input: $input, adminKey: $adminKey) {
     title
     photoURL
   }
@@ -145,6 +148,7 @@ export type CreateProjectMutationFn = Apollo.MutationFunction<CreateProjectMutat
  * const [createProjectMutation, { data, loading, error }] = useCreateProjectMutation({
  *   variables: {
  *      input: // value for 'input'
+ *      adminKey: // value for 'adminKey'
  *   },
  * });
  */
@@ -156,8 +160,8 @@ export type CreateProjectMutationHookResult = ReturnType<typeof useCreateProject
 export type CreateProjectMutationResult = Apollo.MutationResult<CreateProjectMutation>;
 export type CreateProjectMutationOptions = Apollo.BaseMutationOptions<CreateProjectMutation, CreateProjectMutationVariables>;
 export const DeleteProjectDocument = gql`
-    mutation DeleteProject($_id: String!) {
-  deleteProject(_id: $_id)
+    mutation DeleteProject($_id: String!, $adminKey: String!) {
+  deleteProject(_id: $_id, adminKey: $adminKey)
 }
     `;
 export type DeleteProjectMutationFn = Apollo.MutationFunction<DeleteProjectMutation, DeleteProjectMutationVariables>;
@@ -176,6 +180,7 @@ export type DeleteProjectMutationFn = Apollo.MutationFunction<DeleteProjectMutat
  * const [deleteProjectMutation, { data, loading, error }] = useDeleteProjectMutation({
  *   variables: {
  *      _id: // value for '_id'
+ *      adminKey: // value for 'adminKey'
  *   },
  * });
  */
@@ -187,8 +192,8 @@ export type DeleteProjectMutationHookResult = ReturnType<typeof useDeleteProject
 export type DeleteProjectMutationResult = Apollo.MutationResult<DeleteProjectMutation>;
 export type DeleteProjectMutationOptions = Apollo.BaseMutationOptions<DeleteProjectMutation, DeleteProjectMutationVariables>;
 export const UpdateProjectDocument = gql`
-    mutation UpdateProject($input: UpdateProjectInput!) {
-  updateProject(input: $input) {
+    mutation UpdateProject($input: UpdateProjectInput!, $adminKey: String!) {
+  updateProject(input: $input, adminKey: $adminKey) {
     _id
     title
     description
@@ -199,7 +204,6 @@ export const UpdateProjectDocument = gql`
     inProgress
     repositoryLinks
     stack
-    adminPassKey
   }
 }
     `;
@@ -219,6 +223,7 @@ export type UpdateProjectMutationFn = Apollo.MutationFunction<UpdateProjectMutat
  * const [updateProjectMutation, { data, loading, error }] = useUpdateProjectMutation({
  *   variables: {
  *      input: // value for 'input'
+ *      adminKey: // value for 'adminKey'
  *   },
  * });
  */

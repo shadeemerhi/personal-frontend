@@ -1,5 +1,5 @@
-mutation CreateProject($input: NewProjectInput!) {
-    createProject(input: $input) {
+mutation CreateProject($input: NewProjectInput!, $adminKey: String!) {
+    createProject(input: $input, adminKey: $adminKey) {
         title
         photoURL
     }
