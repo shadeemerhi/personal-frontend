@@ -83,17 +83,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
       const { data } = await updateProject({
         variables: {
           input: newProject as UpdateProjectInput,
-        },
-        update: (cache) => {
-          cache.evict({ fieldName: "projects" });
-        },
-        // update: (cache) => {
-        //   cache.writeFragment({
-        //     id: `Project:${data?.updateProject._id}`,
-        //     fragment: gql`fragment`,
-        //     data: { ...data?.updateProject },
-        //   });
-        // },
+        }
       });
     } catch (error) {
       console.log("updateProject error", error);
