@@ -19,23 +19,24 @@ const style = {
 type ModalProps = {
   open: boolean;
   setOpen: (value: boolean) => void;
+  error?: string;
 };
 
-const ModalContainer: React.FC<ModalProps> = ({ open, setOpen }) => {
-  const [key, setKey] = React.useState("");
+const ModalWrapper: React.FC<ModalProps> = ({
+  open,
+  setOpen,
+  error,
+  children,
+}) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const { authKey, error, verifyKey } = useAuth();
-
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setKey("");
-    const verified = verifyKey(key);
-    console.log('HERE IS VERIFIED', verified);
-    
-    if (verified) handleClose();
-  };
+  const childrenWithProps = React.Children.map(children, (child) => {
+    if (React.isValidElement(child)) {
+      return React.cloneElement(child, { handleClose });
+    }
+    return child;
+  });
 
   return (
     <div>
@@ -52,17 +53,7 @@ const ModalContainer: React.FC<ModalProps> = ({ open, setOpen }) => {
           flexDirection="column"
           alignItems="center"
         >
-          <form onSubmit={onSubmit}>
-            <Box mb={2}>
-              <span id="modal-modal-title">Enter Passphrase</span>
-            </Box>
-            <input
-              placeholder="passphrase"
-              type="password"
-              value={key}
-              onChange={(event) => setKey(event.target.value)}
-            />
-          </form>
+          {childrenWithProps}
           {error && (
             <Box mt={2} className="danger_text">
               {error}
@@ -74,4 +65,4 @@ const ModalContainer: React.FC<ModalProps> = ({ open, setOpen }) => {
   );
 };
 
-export default ModalContainer;
+export default ModalWrapper;
