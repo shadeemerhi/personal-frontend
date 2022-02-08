@@ -2,12 +2,14 @@ import React from "react";
 
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { Box } from "@mui/material";
+import { Alert, Box } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import styles from "./ProjectItem.module.scss";
 import StackItem from "../Stack/StackItem";
 import { ProjectFormState } from "../../../pages/projects";
 import { Project } from "../../../types/project";
+import { useDeleteProjectMutation } from "../../../generated/graphql";
 
 type ProjectItemProps = {
   setShowForm: (value: ProjectFormState) => void;
@@ -15,8 +17,30 @@ type ProjectItemProps = {
 };
 
 const ProjectItem: React.FC<ProjectItemProps> = ({ project, setShowForm }) => {
+  const [deleteProject, { data, loading, error }] = useDeleteProjectMutation();
+  
+  const onDelete = async () => {
+    try {
+      await deleteProject({
+        variables: {
+          _id: project._id as string,
+        },
+        update: (cache) => {
+          cache.evict({ id: `Project:${project._id}` });
+        },
+      });
+    } catch (error) {
+      console.log("onDelete error");
+    }
+  };
+
   return (
     <div className={styles.root}>
+      {error && (
+        <Box mb={2} mt={2} width="100%">
+          <Alert severity="error">Error deleting project</Alert>
+        </Box>
+      )}
       <div className={styles.content_container}>
         <div className={styles.title_container}>
           <span className="underline_text">{project.title}</span>
@@ -26,11 +50,22 @@ const ProjectItem: React.FC<ProjectItemProps> = ({ project, setShowForm }) => {
               onClick={() =>
                 setShowForm({
                   visible: true,
-                  project
+                  project,
                 })
               }
             />
-            <DeleteOutlineIcon className="pointer" />
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              ml={1}
+            >
+              {loading ? (
+                <CircularProgress size={20} color="inherit" />
+              ) : (
+                <DeleteOutlineIcon className="pointer" onClick={onDelete} />
+              )}
+            </Box>
           </div>
         </div>
         <div className={styles.upper_content}>
