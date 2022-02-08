@@ -9,7 +9,6 @@ import { withApollo } from "../util/withApollo";
 import { Project } from "../types/project";
 
 const DEFAULT_PROJECT: Project = {
-  // _id: "",
   title: "",
   description: "",
   photoFile: undefined,
@@ -38,9 +37,9 @@ const Projects: React.FC = () => {
 
   if (error) return <div>There was an error sad face</div>;
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  // }, []);
 
   return (
     <>
@@ -48,7 +47,7 @@ const Projects: React.FC = () => {
         <ProjectForm
           setShowForm={setShowForm}
           project={showForm.project}
-          editing={!!showForm.project._id}
+          editing={!!showForm.project.id}
         />
       ) : (
         <Box display="flex" flexDirection="column">
@@ -70,7 +69,7 @@ const Projects: React.FC = () => {
           <br />
           {data?.projects.map((project) => (
             <ProjectItem
-              key={project._id}
+              key={project.id}
               project={project}
               setShowForm={setShowForm}
             />

@@ -84,9 +84,9 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
         variables: {
           input: newProject as UpdateProjectInput,
         },
-        update: (cache) => {
-          cache.evict({ fieldName: "projects" });
-        },
+        // update: (cache) => {
+        //   cache.evict({ fieldName: "projects" });
+        // },
         // update: (cache) => {
         //   cache.writeFragment({
         //     id: `Project:${data?.updateProject._id}`,

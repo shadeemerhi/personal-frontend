@@ -1,6 +1,6 @@
 mutation UpdateProject($input: UpdateProjectInput!) {
   updateProject(input: $input) {
-    _id
+    id
     title
     description
     photoURL

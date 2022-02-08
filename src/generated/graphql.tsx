@@ -50,9 +50,9 @@ export type NewProjectInput = {
 
 export type Project = {
   __typename?: 'Project';
-  _id: Scalars['String'];
   description: Scalars['String'];
   endDate?: Maybe<Scalars['DateTime']>;
+  id: Scalars['String'];
   inProgress: Scalars['Boolean'];
   photoURL: Scalars['String'];
   repositoryLinks: Array<Scalars['String']>;
@@ -73,9 +73,9 @@ export type QueryProjectArgs = {
 };
 
 export type UpdateProjectInput = {
-  _id: Scalars['String'];
   description: Scalars['String'];
   endDate?: InputMaybe<Scalars['DateTime']>;
+  id: Scalars['String'];
   inProgress: Scalars['Boolean'];
   photoFile?: InputMaybe<Scalars['Upload']>;
   photoURL: Scalars['String'];
@@ -97,12 +97,12 @@ export type UpdateProjectMutationVariables = Exact<{
 }>;
 
 
-export type UpdateProjectMutation = { __typename?: 'Mutation', updateProject: { __typename?: 'Project', _id: string, title: string, description: string, photoURL: string, startDate: any, endDate?: any | null | undefined, inProgress: boolean, repositoryLinks: Array<string>, stack: any } };
+export type UpdateProjectMutation = { __typename?: 'Mutation', updateProject: { __typename?: 'Project', id: string, title: string, description: string, photoURL: string, startDate: any, endDate?: any | null | undefined, inProgress: boolean, repositoryLinks: Array<string>, stack: any } };
 
 export type ProjectsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ProjectsQuery = { __typename?: 'Query', projects: Array<{ __typename?: 'Project', _id: string, title: string, description: string, photoURL: string, startDate: any, endDate?: any | null | undefined, inProgress: boolean, repositoryLinks: Array<string>, stack: any }> };
+export type ProjectsQuery = { __typename?: 'Query', projects: Array<{ __typename?: 'Project', id: string, title: string, description: string, photoURL: string, startDate: any, endDate?: any | null | undefined, inProgress: boolean, repositoryLinks: Array<string>, stack: any }> };
 
 
 export const CreateProjectDocument = gql`
@@ -142,7 +142,7 @@ export type CreateProjectMutationOptions = Apollo.BaseMutationOptions<CreateProj
 export const UpdateProjectDocument = gql`
     mutation UpdateProject($input: UpdateProjectInput!) {
   updateProject(input: $input) {
-    _id
+    id
     title
     description
     photoURL
@@ -184,7 +184,7 @@ export type UpdateProjectMutationOptions = Apollo.BaseMutationOptions<UpdateProj
 export const ProjectsDocument = gql`
     query Projects {
   projects {
-    _id
+    id
     title
     description
     photoURL

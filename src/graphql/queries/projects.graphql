@@ -1,6 +1,6 @@
 query Projects {
   projects {
-    _id
+    id
     title
     description
     photoURL
