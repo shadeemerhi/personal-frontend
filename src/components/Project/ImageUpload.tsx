@@ -24,7 +24,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     setCurrentProject((prev: Project) => ({
       ...prev,
       photoFile: image,
-      photoURL: undefined,
     }));
   };
   return (
