@@ -7,7 +7,7 @@ type HeaderProps = {};
 const Header: React.FC<HeaderProps> = () => {
   const { data, error } = useUserQuery({
     variables: {
-      email: "shadmerhi@gmail.com",
+      _id: "421f6412-edf9-4ef8-b131-8e957901ce2a",
     },
   });
 

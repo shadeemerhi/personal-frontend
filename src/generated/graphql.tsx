@@ -107,7 +107,7 @@ export type QueryProjectArgs = {
 
 
 export type QueryUserArgs = {
-  email: Scalars['String'];
+  _id: Scalars['String'];
 };
 
 export type UpdateProjectInput = {
@@ -143,6 +143,7 @@ export type User = {
   linkedInLink: Scalars['String'];
   photoURL: Scalars['String'];
   preBio: Scalars['String'];
+  s3Key: Scalars['String'];
   title: Scalars['String'];
 };
 
@@ -184,11 +185,11 @@ export type ProjectsQueryVariables = Exact<{ [key: string]: never; }>;
 export type ProjectsQuery = { __typename?: 'Query', projects: Array<{ __typename?: 'Project', _id: string, title: string, description: string, photoURL: string, startDate: any, endDate?: any | null | undefined, inProgress: boolean, repositoryLinks: Array<string>, stack: any }> };
 
 export type UserQueryVariables = Exact<{
-  email: Scalars['String'];
+  _id: Scalars['String'];
 }>;
 
 
-export type UserQuery = { __typename?: 'Query', user: { __typename?: 'User', title: string, photoURL: string } };
+export type UserQuery = { __typename?: 'Query', user: { __typename?: 'User', _id: string, title: string, photoURL: string, s3Key: string, githubLink: string, linkedInLink: string, email: string, preBio: string, bio: string } };
 
 
 export const CreateProjectDocument = gql`
@@ -379,10 +380,17 @@ export type ProjectsQueryHookResult = ReturnType<typeof useProjectsQuery>;
 export type ProjectsLazyQueryHookResult = ReturnType<typeof useProjectsLazyQuery>;
 export type ProjectsQueryResult = Apollo.QueryResult<ProjectsQuery, ProjectsQueryVariables>;
 export const UserDocument = gql`
-    query User($email: String!) {
-  user(email: $email) {
+    query User($_id: String!) {
+  user(_id: $_id) {
+    _id
     title
     photoURL
+    s3Key
+    githubLink
+    linkedInLink
+    email
+    preBio
+    bio
   }
 }
     `;
@@ -399,7 +407,7 @@ export const UserDocument = gql`
  * @example
  * const { data, loading, error } = useUserQuery({
  *   variables: {
- *      email: // value for 'email'
+ *      _id: // value for '_id'
  *   },
  * });
  */

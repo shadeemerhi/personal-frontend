@@ -55,7 +55,7 @@ const Projects: React.FC = () => {
       ) : (
         <Box display="flex" flexDirection="column">
           {authKey && (
-            <Box>
+            <Box display='flex' justifyContent='center' alignItems='center'>
               <button
                 className="btn_primary"
                 onClick={() =>

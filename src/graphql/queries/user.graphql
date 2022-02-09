@@ -1,6 +1,13 @@
-query User($email: String!) {
-  user(email: $email) {
+query User($_id: String!) {
+  user(_id: $_id) {
+    _id
     title
     photoURL
+    s3Key
+    githubLink
+    linkedInLink
+    email
+    preBio
+    bio
   }
 }

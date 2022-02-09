@@ -15,6 +15,7 @@ type ProfileProps = {
 
 const Profile: React.FC<ProfileProps> = ({ profile }) => {
   const [currentProfile, setCurrentProfile] = useState<User>(profile);
+  const [createNew, setCreateNew] = useState(false);
   const handleChange = (field: string, value: string) => {
     setCurrentProfile((prev) => ({
       ...prev,
@@ -96,18 +97,26 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
         textarea
         value={currentProfile.bio}
       />
-      <Box display="flex" justifyContent="center" mt={4}>
-        <button
-          className="btn_primary"
-          onClick={onCreateUser}
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
+      <Box display="flex" flexDirection="column" alignItems="center" mt={4}>
+        <Box mb={1}>
+          <button
+            className="btn_primary"
+            onClick={onCreateUser}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            Save Profile
+          </button>
+        </Box>
+        <span
+          className="sm_text disabled_text pointer"
+          onClick={() => setCreateNew(!createNew)}
         >
-          Save Profile
-        </button>
+          {createNew ? "Undo" : "New"}
+        </span>
       </Box>
     </Box>
   );
