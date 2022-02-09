@@ -6,6 +6,8 @@ import Avatar from "@mui/material/Avatar";
 import InputField from "../Project/InputField";
 import ImageUpload from "../Project/ImageUpload";
 import { User } from "../../types/project";
+import { NewUserInput, useCreateUserMutation } from "../../generated/graphql";
+import { useAuth } from "../../hooks/useAuth";
 
 type ProfileProps = {
   profile: User;
@@ -18,6 +20,22 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
       ...prev,
       [field]: value,
     }));
+  };
+
+  const { authKey } = useAuth();
+  const [createUser, { data, loading, error }] = useCreateUserMutation();
+
+  const onCreateUser = async () => {
+    try {
+      const { data } = await createUser({
+        variables: {
+          input: currentProfile as NewUserInput,
+          adminKey: authKey,
+        },
+      });
+    } catch (error) {
+      console.log("createUser error", error);
+    }
   };
 
   return (
@@ -81,7 +99,7 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
       <Box display="flex" justifyContent="center" mt={4}>
         <button
           className="btn_primary"
-          //   onClick={onSubmit}
+          onClick={onCreateUser}
           style={{
             display: "flex",
             justifyContent: "center",

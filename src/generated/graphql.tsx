@@ -24,14 +24,22 @@ export type Scalars = {
 export type Mutation = {
   __typename?: 'Mutation';
   createProject: Project;
+  createUser: User;
   deleteProject: Scalars['Boolean'];
   updateProject: Project;
+  updateUser: User;
 };
 
 
 export type MutationCreateProjectArgs = {
   adminKey: Scalars['String'];
   input: NewProjectInput;
+};
+
+
+export type MutationCreateUserArgs = {
+  adminKey: Scalars['String'];
+  input: NewUserInput;
 };
 
 
@@ -46,6 +54,11 @@ export type MutationUpdateProjectArgs = {
   input: UpdateProjectInput;
 };
 
+
+export type MutationUpdateUserArgs = {
+  input: UpdateUserInput;
+};
+
 export type NewProjectInput = {
   description: Scalars['String'];
   endDate?: InputMaybe<Scalars['DateTime']>;
@@ -54,6 +67,16 @@ export type NewProjectInput = {
   repositoryLinks: Array<Scalars['String']>;
   stack: Scalars['Stack'];
   startDate: Scalars['DateTime'];
+  title: Scalars['String'];
+};
+
+export type NewUserInput = {
+  bio: Scalars['String'];
+  email: Scalars['String'];
+  githubLink: Scalars['String'];
+  linkedInLink: Scalars['String'];
+  photoFile: Scalars['Upload'];
+  preBio?: InputMaybe<Scalars['String']>;
   title: Scalars['String'];
 };
 
@@ -74,11 +97,17 @@ export type Query = {
   __typename?: 'Query';
   project: Project;
   projects: Array<Project>;
+  user: User;
 };
 
 
 export type QueryProjectArgs = {
   id: Scalars['String'];
+};
+
+
+export type QueryUserArgs = {
+  email: Scalars['String'];
 };
 
 export type UpdateProjectInput = {
@@ -94,6 +123,29 @@ export type UpdateProjectInput = {
   title: Scalars['String'];
 };
 
+export type UpdateUserInput = {
+  bio: Scalars['String'];
+  email: Scalars['String'];
+  githubLink: Scalars['String'];
+  linkedInLink: Scalars['String'];
+  photoFile?: InputMaybe<Scalars['Upload']>;
+  photoURL: Scalars['String'];
+  preBio?: InputMaybe<Scalars['String']>;
+  title: Scalars['String'];
+};
+
+export type User = {
+  __typename?: 'User';
+  _id: Scalars['String'];
+  bio: Scalars['String'];
+  email: Scalars['String'];
+  githubLink: Scalars['String'];
+  linkedInLink: Scalars['String'];
+  photoURL: Scalars['String'];
+  preBio: Scalars['String'];
+  title: Scalars['String'];
+};
+
 export type CreateProjectMutationVariables = Exact<{
   input: NewProjectInput;
   adminKey: Scalars['String'];
@@ -101,6 +153,14 @@ export type CreateProjectMutationVariables = Exact<{
 
 
 export type CreateProjectMutation = { __typename?: 'Mutation', createProject: { __typename?: 'Project', title: string, photoURL: string } };
+
+export type CreateUserMutationVariables = Exact<{
+  input: NewUserInput;
+  adminKey: Scalars['String'];
+}>;
+
+
+export type CreateUserMutation = { __typename?: 'Mutation', createUser: { __typename?: 'User', title: string } };
 
 export type DeleteProjectMutationVariables = Exact<{
   _id: Scalars['String'];
@@ -122,6 +182,13 @@ export type ProjectsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type ProjectsQuery = { __typename?: 'Query', projects: Array<{ __typename?: 'Project', _id: string, title: string, description: string, photoURL: string, startDate: any, endDate?: any | null | undefined, inProgress: boolean, repositoryLinks: Array<string>, stack: any }> };
+
+export type UserQueryVariables = Exact<{
+  email: Scalars['String'];
+}>;
+
+
+export type UserQuery = { __typename?: 'Query', user: { __typename?: 'User', title: string, photoURL: string } };
 
 
 export const CreateProjectDocument = gql`
@@ -159,6 +226,40 @@ export function useCreateProjectMutation(baseOptions?: Apollo.MutationHookOption
 export type CreateProjectMutationHookResult = ReturnType<typeof useCreateProjectMutation>;
 export type CreateProjectMutationResult = Apollo.MutationResult<CreateProjectMutation>;
 export type CreateProjectMutationOptions = Apollo.BaseMutationOptions<CreateProjectMutation, CreateProjectMutationVariables>;
+export const CreateUserDocument = gql`
+    mutation CreateUser($input: NewUserInput!, $adminKey: String!) {
+  createUser(input: $input, adminKey: $adminKey) {
+    title
+  }
+}
+    `;
+export type CreateUserMutationFn = Apollo.MutationFunction<CreateUserMutation, CreateUserMutationVariables>;
+
+/**
+ * __useCreateUserMutation__
+ *
+ * To run a mutation, you first call `useCreateUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createUserMutation, { data, loading, error }] = useCreateUserMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *      adminKey: // value for 'adminKey'
+ *   },
+ * });
+ */
+export function useCreateUserMutation(baseOptions?: Apollo.MutationHookOptions<CreateUserMutation, CreateUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateUserMutation, CreateUserMutationVariables>(CreateUserDocument, options);
+      }
+export type CreateUserMutationHookResult = ReturnType<typeof useCreateUserMutation>;
+export type CreateUserMutationResult = Apollo.MutationResult<CreateUserMutation>;
+export type CreateUserMutationOptions = Apollo.BaseMutationOptions<CreateUserMutation, CreateUserMutationVariables>;
 export const DeleteProjectDocument = gql`
     mutation DeleteProject($_id: String!, $adminKey: String!) {
   deleteProject(_id: $_id, adminKey: $adminKey)
@@ -277,3 +378,39 @@ export function useProjectsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<P
 export type ProjectsQueryHookResult = ReturnType<typeof useProjectsQuery>;
 export type ProjectsLazyQueryHookResult = ReturnType<typeof useProjectsLazyQuery>;
 export type ProjectsQueryResult = Apollo.QueryResult<ProjectsQuery, ProjectsQueryVariables>;
+export const UserDocument = gql`
+    query User($email: String!) {
+  user(email: $email) {
+    title
+    photoURL
+  }
+}
+    `;
+
+/**
+ * __useUserQuery__
+ *
+ * To run a query within a React component, call `useUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserQuery({
+ *   variables: {
+ *      email: // value for 'email'
+ *   },
+ * });
+ */
+export function useUserQuery(baseOptions: Apollo.QueryHookOptions<UserQuery, UserQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UserQuery, UserQueryVariables>(UserDocument, options);
+      }
+export function useUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserQuery, UserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UserQuery, UserQueryVariables>(UserDocument, options);
+        }
+export type UserQueryHookResult = ReturnType<typeof useUserQuery>;
+export type UserLazyQueryHookResult = ReturnType<typeof useUserLazyQuery>;
+export type UserQueryResult = Apollo.QueryResult<UserQuery, UserQueryVariables>;

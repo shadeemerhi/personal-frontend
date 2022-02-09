@@ -2,6 +2,7 @@ import React from "react";
 
 import Profile from "../components/Admin/Profile";
 import { User } from "../types/project";
+import { withApollo } from "../util/withApollo";
 
 const DEFAULT_PROFILE: User = {
   title: "Full Stack Developer",
@@ -16,4 +17,4 @@ const DEFAULT_PROFILE: User = {
 const Admin: React.FC<{}> = () => {
   return <Profile profile={DEFAULT_PROFILE} />;
 };
-export default Admin;
+export default withApollo({ ssr: true })(Admin);

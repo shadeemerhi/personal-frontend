@@ -1,0 +1,5 @@
+mutation CreateUser ($input: NewUserInput!, $adminKey: String!) {
+  createUser(input: $input, adminKey: $adminKey) {
+    title
+  }
+}

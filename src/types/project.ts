@@ -25,6 +25,7 @@ export type Project = {
 
 export type User = {
   __typename?: string;
+  _id?: string;
   title: string;
   photoURL?: string;
   photoFile?: File;

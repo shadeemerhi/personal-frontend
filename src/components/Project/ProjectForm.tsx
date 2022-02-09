@@ -83,13 +83,6 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
   const onUpdateProject = async () => {
     const newProject = { ...currentProject };
     delete newProject.__typename;
-    console.log(
-      "HERE IS NEW PROJECT",
-      newProject,
-      newProject.endDate, currentProject.endDate,
-      newProject.endDate === currentProject.endDate
-    );
-
     try {
       const { data } = await updateProject({
         variables: {
