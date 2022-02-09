@@ -15,7 +15,15 @@ const Layouts: React.FC<LayoutsProps> = ({ children }) => {
       </Head>
       <div className={styles.root}>
         <Navbar />
-        <div className={styles.page_container}>{children}</div>
+        <div className={styles.page_wrapper}>
+          <div className={styles.header_image_container}>
+            <img src="https://shadee-personal-website.s3.amazonaws.com/7d59338d-ef8f-4898-8ca7-de91df1713b1.png" />
+            <span style={{ zIndex: 1, position: 'absolute', bottom: '20px', left: '20px', fontSize: '30pt' }} className="heavy_text">
+              Shadee Merhi
+            </span>
+          </div>
+          <div className={styles.page_content}>{children}</div>
+        </div>
       </div>
     </>
   );

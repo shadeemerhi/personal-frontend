@@ -54,8 +54,6 @@ const Projects: React.FC = () => {
         />
       ) : (
         <Box display="flex" flexDirection="column">
-          <p>IMAGE HEADER WILL BE HERE</p>
-          <p>Projects Page</p>
           {authKey && (
             <Box>
               <button
