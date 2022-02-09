@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Navbar from "../Navbar";
 import Header from "./Header";
 import styles from "../../styles/Layout.module.scss";
+import { withApollo } from "../../util/withApollo";
 
 interface LayoutsProps {}
 
@@ -24,4 +25,4 @@ const Layouts: React.FC<LayoutsProps> = ({ children }) => {
     </>
   );
 };
-export default Layouts;
+export default withApollo({ ssr: true })(Layouts);

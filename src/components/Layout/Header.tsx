@@ -1,12 +1,21 @@
 import React from "react";
+import { useUserQuery } from "../../generated/graphql";
 import styles from "../../styles/Layout.module.scss";
 
 type HeaderProps = {};
 
 const Header: React.FC<HeaderProps> = () => {
+  const { data, error } = useUserQuery({
+    variables: {
+      email: "shadmerhi@gmail.com",
+    },
+  });
+
+  if (error) return null;
+
   return (
     <div className={styles.header_image_container}>
-      <img src="https://shadee-personal-website.s3.amazonaws.com/7d59338d-ef8f-4898-8ca7-de91df1713b1.png" />
+      <img src={data?.user.photoURL} />
       <span
         style={{
           zIndex: 1,
