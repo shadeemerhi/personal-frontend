@@ -103,6 +103,14 @@ select:focus {
   }
 }
 
+.btn_grey {
+  border-radius: main.$border-radius;
+  border: none;
+  padding: 6px;
+  font-size: main.$md-text;
+  background-color: main.$grey-primary;
+}
+
 .light_text {
   font-weight: 300;
 }

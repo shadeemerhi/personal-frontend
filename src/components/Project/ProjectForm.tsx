@@ -187,7 +187,8 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
           <ImageUpload
             photoFile={currentProject.photoFile}
             photoURL={currentProject.photoURL}
-            setCurrentProject={setCurrentProject}
+            stateUpdateFunction={setCurrentProject}
+            title='Project Image'
           />
           <DateInputs
             startDate={currentProject.startDate}

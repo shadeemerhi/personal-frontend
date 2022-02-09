@@ -7,10 +7,10 @@ import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import LockIcon from "@mui/icons-material/Lock";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 
 import styles from "../../styles/Navbar.module.scss";
-import classNames from "classnames";
-import NavItem, { NavItemInputs } from "./NavItem";
+import NavItem from "./NavItem";
 import { useRouter } from "next/router";
 import ModalWrapper from "../Modal";
 import AuthModal from "../Modal/AuthModal";
@@ -42,6 +42,11 @@ const navItems = [
     route: "/contact",
     icon: AlternateEmailIcon,
   },
+  {
+    text: "Admin",
+    route: "/admin",
+    icon: AdminPanelSettingsIcon,
+  },
 ];
 
 const Navbar: React.FC<{}> = () => {
@@ -56,15 +61,17 @@ const Navbar: React.FC<{}> = () => {
   return (
     <div className={styles.root}>
       <div className={styles.items_container}>
-        {navItems.map((item, index) => (
-          <NavItem
-            key={index}
-            item={item}
-            isSelected={item.text === selected}
-            setSelected={setSelected}
-            width={Math.round((1 / navItems.length) * 100)}
-          />
-        ))}
+        {navItems.map((item, index) =>
+          (item.text === "Admin" && !authKey) ? null : (
+            <NavItem
+              key={index}
+              item={item}
+              isSelected={item.text === selected}
+              setSelected={setSelected}
+              width={Math.round((1 / navItems.length) * 100)}
+            />
+          )
+        )}
       </div>
       <div className={styles.lock_icon_container}>
         <ModalWrapper open={open} setOpen={setOpen} error={error}>

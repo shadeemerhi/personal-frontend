@@ -3,25 +3,26 @@ import { Box } from "@mui/material";
 import PhotoCameraBackIcon from "@mui/icons-material/PhotoCameraBack";
 
 import styles from "./ProjectForm.module.scss";
-import { ProjectFormState } from "../../pages/projects";
-import { Project } from "../../types/project";
+import { Project, User } from "../../types/project";
 
 type ImageUploadProps = {
+  stateUpdateFunction: any;
+  title: string;
   photoFile?: File;
   photoURL?: string;
-  setCurrentProject: any;
 };
 
 const ImageUpload: React.FC<ImageUploadProps> = ({
+  stateUpdateFunction,
+  title,
   photoFile,
   photoURL,
-  setCurrentProject,
 }) => {
 
   const onImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files || !event.target.files[0]) return;
     const image = event.target.files[0];
-    setCurrentProject((prev: Project) => ({
+    stateUpdateFunction((prev: Project | User) => ({
       ...prev,
       photoFile: image,
     }));
@@ -33,9 +34,9 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
       className={styles.input_container}
     >
       <Box display="flex" justifyContent="space-between" mb={2}>
-        Project Image
+        {title}
         <label htmlFor="file-upload">
-          <div className={`${styles.upload_button} pointer`}>Select File</div>
+          <div className={`btn_grey pointer`}>Select File</div>
         </label>
         <input
           id="file-upload"
@@ -53,7 +54,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
       >
         {photoFile || photoURL ? (
           <>
-            <img src={photoFile ? URL.createObjectURL(photoFile) : photoURL} />
+            <img src={photoFile ? URL.createObjectURL(photoFile) : photoURL} style={{ maxWidth: '400px' }} />
             {photoFile && (
               <span className="sm_text italic_text">{photoFile.name}</span>
             )}
