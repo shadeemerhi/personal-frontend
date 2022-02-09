@@ -6,9 +6,9 @@ import AuthProvider from "../hooks/useAuth";
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <AuthProvider>
-      <Layouts>
+      {/* <Layouts> */}
         <Component {...pageProps} />
-      </Layouts>
+      {/* </Layouts> */}
     </AuthProvider>
   );
 }

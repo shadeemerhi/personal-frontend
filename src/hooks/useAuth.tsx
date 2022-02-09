@@ -26,8 +26,6 @@ const AuthProvider: React.FC<UseAuthProps> = ({ children }) => {
 
   const verifyKey = (key: string): boolean => {
     setError("");
-    console.log("HERE ARE THINGS", key, process.env.NEXT_PUBLIC_ADMIN_KEY);
-
     const verified = key === process.env.NEXT_PUBLIC_ADMIN_KEY;
     if (!verified) {
       setError("Incorrect passphrase");

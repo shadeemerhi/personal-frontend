@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 
-import { Box } from "@mui/material";
-import Avatar from "@mui/material/Avatar";
+import { Alert, Box, CircularProgress } from "@mui/material";
 
 import InputField from "../Project/InputField";
 import ImageUpload from "../Project/ImageUpload";
 import { User } from "../../types/project";
-import { NewUserInput, useCreateUserMutation } from "../../generated/graphql";
+import {
+  NewUserInput,
+  UpdateUserInput,
+  useCreateUserMutation,
+  useUpdateUserMutation,
+} from "../../generated/graphql";
 import { useAuth } from "../../hooks/useAuth";
 
 type ProfileProps = {
@@ -24,11 +28,38 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
   };
 
   const { authKey } = useAuth();
-  const [createUser, { data, loading, error }] = useCreateUserMutation();
+  const [
+    createUser,
+    { data: createUserData, loading: createUserLoading, error: createUserError },
+  ] = useCreateUserMutation();
+  const [updateUser, { data: updateUserData, loading: updateUserLoading, error: updateUserError }] =
+    useUpdateUserMutation();
+
+    console.log('LOADING STATE', updateUserLoading);
+    
+
+  const onSubmit = () => {
+    createNew ? onCreateUser() : onUpdateUser();
+  };
+
+  const onUpdateUser = async () => {
+    const updatedUser = { ...currentProfile };
+    delete updatedUser.__typename;
+    try {
+      await updateUser({
+        variables: {
+          input: updatedUser as UpdateUserInput,
+          adminKey: authKey,
+        },
+      });
+    } catch (error) {
+      console.log("updateUser error");
+    }
+  };
 
   const onCreateUser = async () => {
     try {
-      const { data } = await createUser({
+      await createUser({
         variables: {
           input: currentProfile as NewUserInput,
           adminKey: authKey,
@@ -40,11 +71,18 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
   };
 
   return (
-    <Box display="flex" flexDirection="column" mb={10} maxWidth="600px">
+    <Box
+      display="flex"
+      flexDirection="column"
+      mb={10}
+      maxWidth="600px"
+      className="custom_form"
+    >
       <Box mb={4}>
         <ImageUpload
           stateUpdateFunction={setCurrentProfile}
           photoFile={currentProfile.photoFile}
+          photoURL={currentProfile.photoURL}
           title="Header Image"
         />
       </Box>
@@ -98,17 +136,29 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
         value={currentProfile.bio}
       />
       <Box display="flex" flexDirection="column" alignItems="center" mt={4}>
-        <Box mb={1}>
-          <button
-            className="btn_primary"
-            onClick={onCreateUser}
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            Save Profile
+        {(createUserError || updateUserError) && (
+          <Box mb={2} mt={2}>
+            <Alert severity="error">Error updating profile</Alert>
+          </Box>
+        )}
+        {(createUserData || updateUserData) && (
+          <Box mb={2} mt={2}>
+            <Alert severity="success">Profile successfully updated</Alert>
+          </Box>
+        )}
+        <Box
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          mb={1}
+          width="100%"
+        >
+          <button className="btn_primary submit_button" onClick={onSubmit}>
+            {createUserLoading || updateUserLoading ? (
+              <CircularProgress size={18} color="inherit" />
+            ) : (
+              <>{createNew ? "Create Profile" : "Save Changes"}</>
+            )}
           </button>
         </Box>
         <span

@@ -130,10 +130,6 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
     }));
   };
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   return (
     <>
       <ArrowBackIcon
@@ -145,7 +141,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
           }))
         }
       />
-      <Box className={styles.outer_form_container} mb={10}>
+      <Box className={`${styles.outer_form_container} custom_form`} mb={10}>
         <h3 className="heavy_text">
           {editing ? "Update Project" : "Create New Project"}
         </h3>
@@ -241,13 +237,8 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
               </Box>
             )}
             <button
-              className="btn_primary"
+              className="btn_primary submit_button"
               onClick={onSubmit}
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
             >
               {createProjectLoading || updateProjectLoading ? (
                 <CircularProgress size={18} color="inherit" />

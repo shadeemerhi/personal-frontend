@@ -1,6 +1,7 @@
 import React from "react";
 
 import Profile from "../components/Admin/Profile";
+import Layout from "../components/Layout";
 import { useUserQuery } from "../generated/graphql";
 import { User } from "../types/project";
 import { withApollo } from "../util/withApollo";
@@ -21,6 +22,6 @@ const Admin: React.FC<{}> = () => {
   });
   console.log("here is data", data);
 
-  return <>{data?.user && <Profile profile={data?.user} />}</>;
+  return <Layout>{data?.user && <Profile profile={data?.user} />}</Layout>;
 };
 export default withApollo({ ssr: true })(Admin);

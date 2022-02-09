@@ -5,11 +5,14 @@ import { withApollo } from "../util/withApollo";
 import Navbar from "../components/Navbar";
 
 import { useProjectsQuery } from "../generated/graphql";
+import Layout from "../components/Layout";
 
 const Home: NextPage = () => {
-    
-
-    return <>Home Page</>;
+    return (
+        <Layout>
+            Home Page
+        </Layout>
+    )
 };
 
 export default withApollo({ ssr: true })(Home);

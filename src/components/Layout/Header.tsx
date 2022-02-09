@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useUserQuery } from "../../generated/graphql";
 import styles from "../../styles/Layout.module.scss";
+import { withApollo } from "../../util/withApollo";
 
 type HeaderProps = {};
 
@@ -10,6 +11,12 @@ const Header: React.FC<HeaderProps> = () => {
       _id: "421f6412-edf9-4ef8-b131-8e957901ce2a",
     },
   });
+
+  console.log("HERE IS HEADER DATA", data);
+
+  // useEffect(() => {
+
+  // }, [data?.user.upd])
 
   if (error) return null;
 
@@ -27,6 +34,17 @@ const Header: React.FC<HeaderProps> = () => {
         className="heavy_text"
       >
         Shadee Merhi
+      </span>
+      <span
+        style={{
+          zIndex: 1,
+          position: "absolute",
+          bottom: "10px",
+          left: "20px",
+        }}
+        className="md_text heavy_text"
+      >
+        {data?.user.title}
       </span>
     </div>
   );

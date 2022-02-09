@@ -3,6 +3,7 @@ import { Box } from "@mui/material";
 
 import ProjectForm from "../components/Project/ProjectForm";
 import ProjectItem from "../components/Project/Item/ProjectItem";
+import Layout from "../components/Layout";
 
 import { useProjectsQuery } from "../generated/graphql";
 import { withApollo } from "../util/withApollo";
@@ -44,7 +45,7 @@ const Projects: React.FC = () => {
   }, [showForm]);
 
   return (
-    <>
+    <Layout>
       {showForm.visible ? (
         <ProjectForm
           setShowForm={setShowForm}
@@ -80,7 +81,7 @@ const Projects: React.FC = () => {
           ))}
         </Box>
       )}
-    </>
+    </Layout>
   );
 };
 export default withApollo({ ssr: true })(Projects);

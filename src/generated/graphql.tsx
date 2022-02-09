@@ -56,6 +56,7 @@ export type MutationUpdateProjectArgs = {
 
 
 export type MutationUpdateUserArgs = {
+  adminKey: Scalars['String'];
   input: UpdateUserInput;
 };
 
@@ -124,6 +125,7 @@ export type UpdateProjectInput = {
 };
 
 export type UpdateUserInput = {
+  _id: Scalars['String'];
   bio: Scalars['String'];
   email: Scalars['String'];
   githubLink: Scalars['String'];
@@ -145,6 +147,7 @@ export type User = {
   preBio: Scalars['String'];
   s3Key: Scalars['String'];
   title: Scalars['String'];
+  updatedAt: Scalars['String'];
 };
 
 export type CreateProjectMutationVariables = Exact<{
@@ -179,6 +182,14 @@ export type UpdateProjectMutationVariables = Exact<{
 
 export type UpdateProjectMutation = { __typename?: 'Mutation', updateProject: { __typename?: 'Project', _id: string, title: string, description: string, photoURL: string, startDate: any, endDate?: any | null | undefined, inProgress: boolean, repositoryLinks: Array<string>, stack: any } };
 
+export type UpdateUserMutationVariables = Exact<{
+  input: UpdateUserInput;
+  adminKey: Scalars['String'];
+}>;
+
+
+export type UpdateUserMutation = { __typename?: 'Mutation', updateUser: { __typename?: 'User', _id: string, title: string, photoURL: string, githubLink: string, linkedInLink: string, email: string, preBio: string, bio: string, updatedAt: string } };
+
 export type ProjectsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -189,7 +200,7 @@ export type UserQueryVariables = Exact<{
 }>;
 
 
-export type UserQuery = { __typename?: 'Query', user: { __typename?: 'User', _id: string, title: string, photoURL: string, s3Key: string, githubLink: string, linkedInLink: string, email: string, preBio: string, bio: string } };
+export type UserQuery = { __typename?: 'Query', user: { __typename?: 'User', _id: string, title: string, photoURL: string, githubLink: string, linkedInLink: string, email: string, preBio: string, bio: string, updatedAt: string } };
 
 
 export const CreateProjectDocument = gql`
@@ -336,6 +347,48 @@ export function useUpdateProjectMutation(baseOptions?: Apollo.MutationHookOption
 export type UpdateProjectMutationHookResult = ReturnType<typeof useUpdateProjectMutation>;
 export type UpdateProjectMutationResult = Apollo.MutationResult<UpdateProjectMutation>;
 export type UpdateProjectMutationOptions = Apollo.BaseMutationOptions<UpdateProjectMutation, UpdateProjectMutationVariables>;
+export const UpdateUserDocument = gql`
+    mutation UpdateUser($input: UpdateUserInput!, $adminKey: String!) {
+  updateUser(input: $input, adminKey: $adminKey) {
+    _id
+    title
+    photoURL
+    githubLink
+    linkedInLink
+    email
+    preBio
+    bio
+    updatedAt
+  }
+}
+    `;
+export type UpdateUserMutationFn = Apollo.MutationFunction<UpdateUserMutation, UpdateUserMutationVariables>;
+
+/**
+ * __useUpdateUserMutation__
+ *
+ * To run a mutation, you first call `useUpdateUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateUserMutation, { data, loading, error }] = useUpdateUserMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *      adminKey: // value for 'adminKey'
+ *   },
+ * });
+ */
+export function useUpdateUserMutation(baseOptions?: Apollo.MutationHookOptions<UpdateUserMutation, UpdateUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateUserMutation, UpdateUserMutationVariables>(UpdateUserDocument, options);
+      }
+export type UpdateUserMutationHookResult = ReturnType<typeof useUpdateUserMutation>;
+export type UpdateUserMutationResult = Apollo.MutationResult<UpdateUserMutation>;
+export type UpdateUserMutationOptions = Apollo.BaseMutationOptions<UpdateUserMutation, UpdateUserMutationVariables>;
 export const ProjectsDocument = gql`
     query Projects {
   projects {
@@ -385,12 +438,12 @@ export const UserDocument = gql`
     _id
     title
     photoURL
-    s3Key
     githubLink
     linkedInLink
     email
     preBio
     bio
+    updatedAt
   }
 }
     `;

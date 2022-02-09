@@ -18,6 +18,9 @@ a {
 }
 
 button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 4px;
   border: none;
   padding: 6px;
@@ -165,4 +168,11 @@ select:focus {
 
 .border_white {
   border: 1px solid main.$off-white;
+}
+
+.custom_form {
+  .submit_button {
+    width: 25%;
+    height: 30px;
+  }
 }

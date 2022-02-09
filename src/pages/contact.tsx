@@ -1,6 +1,12 @@
 import React from "react";
+import Layout from "../components/Layout";
+import { withApollo } from "../util/withApollo";
 
 const Contact: React.FC<{}> = () => {
-    return <>Contact Page</>;
+    return (
+        <Layout>
+            Contact Page
+        </Layout>
+    )
 };
-export default Contact;
+export default withApollo({ ssr: true })(Contact);

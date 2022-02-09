@@ -1,4 +1,6 @@
 import React from 'react';
+import Layout from '../components/Layout';
+import { withApollo } from '../util/withApollo';
 
 interface ExperiencePageProps {
   
@@ -6,6 +8,10 @@ interface ExperiencePageProps {
 
 const Experience:React.FC<ExperiencePageProps> = () => {
   
-  return <>Experience Page</>;
+  return (
+    <Layout>
+      Experience Page
+    </Layout>
+  )
 }
-export default Experience;
+export default withApollo({ ssr: true })(Experience);

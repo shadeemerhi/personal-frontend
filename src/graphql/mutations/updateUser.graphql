@@ -1,0 +1,13 @@
+mutation UpdateUser($input: UpdateUserInput!, $adminKey: String!) {
+  updateUser(input: $input, adminKey: $adminKey) {
+    _id
+    title
+    photoURL
+    githubLink
+    linkedInLink
+    email
+    preBio
+    bio
+    updatedAt
+  }
+}

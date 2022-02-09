@@ -1,6 +1,12 @@
 import React from "react";
+import Layout from "../components/Layout";
+import { withApollo } from "../util/withApollo";
 
 const Blog: React.FC<{}> = () => {
-    return <>Blog Page</>;
+    return (
+        <Layout>
+            BLog Page
+        </Layout>
+    )
 };
-export default Blog;
+export default withApollo({ ssr: true })(Blog);

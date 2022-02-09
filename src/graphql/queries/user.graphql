@@ -3,11 +3,11 @@ query User($_id: String!) {
     _id
     title
     photoURL
-    s3Key
     githubLink
     linkedInLink
     email
     preBio
     bio
+    updatedAt
   }
 }

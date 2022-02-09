@@ -7,7 +7,7 @@ import { withApollo } from "../../util/withApollo";
 
 interface LayoutsProps {}
 
-const Layouts: React.FC<LayoutsProps> = ({ children }) => {
+const Layout: React.FC<LayoutsProps> = ({ children }) => {
   return (
     <>
       <Head>
@@ -18,11 +18,11 @@ const Layouts: React.FC<LayoutsProps> = ({ children }) => {
       <div className={styles.root}>
         <Navbar />
         <div className={styles.page_wrapper}>
-          <Header />
-          <div className={styles.page_content}>{children}</div>
+            <Header />
+            <div className={styles.page_content}>{children}</div>
         </div>
       </div>
     </>
   );
 };
-export default withApollo({ ssr: true })(Layouts);
+export default Layout;
