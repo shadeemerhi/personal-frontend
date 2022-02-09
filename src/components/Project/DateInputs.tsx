@@ -106,6 +106,7 @@ const DateInputs: React.FC<DateInputsProps> = ({
         <span className="medium_text">In Progress</span>
         <Checkbox
           classes={{ checked: styles.checkbox }}
+          checked={inProgress}
           sx={{ color: "white" }}
           onChange={(event) => {
             handleChange("inProgress", event.target.checked);

@@ -7,7 +7,7 @@ import {
   NewProjectInput,
   UpdateProjectInput,
   useCreateProjectMutation,
-  useUpdateProjectMutation
+  useUpdateProjectMutation,
 } from "../../generated/graphql";
 import { ProjectFormState } from "../../pages/projects";
 import { Project, StackInputItem } from "../../types/project";
@@ -18,10 +18,6 @@ import ImageUpload from "./ImageUpload";
 import InputField from "./InputField";
 import styles from "./ProjectForm.module.scss";
 import Stack from "./Stack";
-
-
-
-
 
 type ProjectFormProps = {
   editing?: boolean;
@@ -72,7 +68,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
     await createProject({
       variables: {
         input: newProject as NewProjectInput,
-        adminKey: authKey
+        adminKey: authKey,
       },
       update: (cache) => {
         cache.evict({ fieldName: "projects" });
@@ -87,11 +83,18 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
   const onUpdateProject = async () => {
     const newProject = { ...currentProject };
     delete newProject.__typename;
+    console.log(
+      "HERE IS NEW PROJECT",
+      newProject,
+      newProject.endDate, currentProject.endDate,
+      newProject.endDate === currentProject.endDate
+    );
+
     try {
       const { data } = await updateProject({
         variables: {
           input: newProject as UpdateProjectInput,
-          adminKey: authKey
+          adminKey: authKey,
         },
       });
     } catch (error) {

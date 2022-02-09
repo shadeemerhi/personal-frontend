@@ -29,7 +29,7 @@ const ProjectItem: React.FC<ProjectItemProps> = ({
       await deleteProject({
         variables: {
           _id: project._id as string,
-          adminKey: authKey
+          adminKey: authKey,
         },
         update: (cache) => {
           cache.evict({ id: `Project:${project._id}` });
@@ -38,6 +38,19 @@ const ProjectItem: React.FC<ProjectItemProps> = ({
     } catch (error) {
       console.log("onDelete error");
     }
+  };
+
+  const formatStringDate = (input: Date) => {
+    const date = new Date(input);
+    const month = date.toLocaleString("default", { month: "long" }).slice(0, 3);
+    const year = date.getFullYear();
+    return `${month}, ${year}`;
+  };
+
+  const getProjectDateString = (startDate: Date, endDate?: Date) => {
+    return `${formatStringDate(project.startDate)} - ${
+      endDate ? formatStringDate(project.endDate as Date) : "In Progress"
+    }`;
   };
 
   return (
@@ -49,7 +62,14 @@ const ProjectItem: React.FC<ProjectItemProps> = ({
       )}
       <div className={styles.content_container}>
         <div className={styles.title_container}>
-          <span className="underline_text">{project.title}</span>
+          <div className={styles.text_container}>
+            <span className={`${styles.title_text} underline_text`}>
+              {project.title}
+            </span>
+            <span className="sm_text medium_text disabled_text">
+              {getProjectDateString(project.startDate, project.endDate)}
+            </span>
+          </div>
           {authKey && (
             <div className={styles.icon_container}>
               <EditIcon

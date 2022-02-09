@@ -41,7 +41,7 @@ const Projects: React.FC = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+  }, [showForm]);
 
   return (
     <>
