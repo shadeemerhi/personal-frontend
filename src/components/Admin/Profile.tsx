@@ -30,13 +30,20 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
   const { authKey } = useAuth();
   const [
     createUser,
-    { data: createUserData, loading: createUserLoading, error: createUserError },
+    {
+      data: createUserData,
+      loading: createUserLoading,
+      error: createUserError,
+    },
   ] = useCreateUserMutation();
-  const [updateUser, { data: updateUserData, loading: updateUserLoading, error: updateUserError }] =
-    useUpdateUserMutation();
-
-    console.log('LOADING STATE', updateUserLoading);
-    
+  const [
+    updateUser,
+    {
+      data: updateUserData,
+      loading: updateUserLoading,
+      error: updateUserError,
+    },
+  ] = useUpdateUserMutation();
 
   const onSubmit = () => {
     createNew ? onCreateUser() : onUpdateUser();

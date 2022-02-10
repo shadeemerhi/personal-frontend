@@ -1,7 +1,12 @@
 import React, { useEffect } from "react";
 import { useUserQuery } from "../../generated/graphql";
-import styles from "../../styles/Layout.module.scss";
-import { withApollo } from "../../util/withApollo";
+
+import GitHubIcon from "@mui/icons-material/GitHub";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import EmailIcon from "@mui/icons-material/Email";
+import styles from "../../styles/Header.module.scss";
+import { Link } from "@mui/material";
 
 type HeaderProps = {};
 
@@ -12,40 +17,44 @@ const Header: React.FC<HeaderProps> = () => {
     },
   });
 
-  console.log("HERE IS HEADER DATA", data);
-
-  // useEffect(() => {
-
-  // }, [data?.user.upd])
-
   if (error) return null;
 
   return (
-    <div className={styles.header_image_container}>
+    <div className={styles.root}>
       <img src={data?.user.photoURL} />
-      <span
-        style={{
-          zIndex: 1,
-          position: "absolute",
-          bottom: "20px",
-          left: "20px",
-          fontSize: "30pt",
-        }}
-        className="heavy_text"
-      >
-        Shadee Merhi
-      </span>
-      <span
-        style={{
-          zIndex: 1,
-          position: "absolute",
-          bottom: "10px",
-          left: "20px",
-        }}
-        className="md_text heavy_text"
-      >
-        {data?.user.title}
-      </span>
+      <div className={styles.text_icon_container}>
+        <div className={styles.title_container}>
+          <CheckCircleIcon sx={{ marginRight: "6px", color: "#1982FC" }} />
+          <span className="sm_text">{data?.user.title}</span>
+        </div>
+        <span className={`${styles.name} heavy_text`}>Shadee Merhi</span>
+        <div className={styles.icon_container}>
+          <a
+            target="_blank"
+            href={data?.user.githubLink}
+            className={styles.icon_item}
+          >
+            <span className="xs_text">GITHUB</span>
+            <GitHubIcon />
+          </a>
+          <a
+            target="_blank"
+            href={data?.user.linkedInLink}
+            className={styles.icon_item}
+          >
+            <span className="xs_text">LINKEDIN</span>
+            <LinkedInIcon />
+          </a>
+          <a
+            target="_blank"
+            href={`mailto: ${data?.user.email}`}
+            className={styles.icon_item}
+          >
+            <span className="xs_text">EMAIL</span>
+            <EmailIcon />
+          </a>
+        </div>
+      </div>
     </div>
   );
 };

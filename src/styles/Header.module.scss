@@ -1,0 +1,124 @@
+@use "./main.scss";
+@import "./_mixins";
+
+.root {
+  position: relative;
+  height: 260px;
+  overflow: hidden;
+
+  .text_icon_container {
+    z-index: 1;
+    position: absolute;
+    bottom: 30px;
+    left: 16px;
+
+    .title_container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .name {
+      font-size: 26pt;
+    }
+
+    .icon_container {
+      display: flex;
+      width: 50%;
+      justify-content: space-between;
+      margin-top: 10px;
+      cursor: pointer;
+
+      .icon_item {
+        span {
+          display: none;
+        }
+      }
+    }
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: -moz-linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0),
+      main.$black-primary
+    ); /* FF3.6+ */
+    background: -webkit-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0),
+      main.$black-primary
+    ); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0),
+      main.$black-primary
+    ); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0),
+      main.$black-primary
+    ); /* Opera 11.10+ */
+    background: -ms-linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0),
+      main.$black-primary
+    ); /* IE10+ */
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0),
+      main.$black-primary
+    ); /* W3C */
+  }
+
+  img {
+    width: 100%;
+    min-height: 100%;
+    object-fit: cover;
+  }
+}
+
+@include sm {
+  .root {
+    height: 340px;
+
+    .text_icon_container {
+      .title_container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      .name {
+        font-size: 46pt;
+      }
+
+      .icon_container {
+        width: 70%;
+
+        .icon_item {
+          display: flex;
+          align-items: center;
+          border: 1px solid main.$main-color;
+          border-radius: 30px;
+          padding: 4px 10px;
+          transition: 0.2s ease-in-out;
+
+          span {
+            display: unset;
+            margin-right: 4px;
+          }
+
+          &:hover {
+            background-color: main.$main-color;
+          }
+        }
+      }
+    }
+  }
+}

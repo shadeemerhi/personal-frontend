@@ -1,4 +1,5 @@
-import React, { useState, useContext, ReactNode } from "react";
+import React, { useState, useContext, ReactNode, useEffect } from "react";
+import { useRouter } from "next/router";
 
 type UseAuthProps = {
   children: ReactNode;
@@ -21,6 +22,7 @@ export const useAuth = () => {
 };
 
 const AuthProvider: React.FC<UseAuthProps> = ({ children }) => {
+  const router = useRouter();
   const [authKey, setAuthKey] = useState("");
   const [error, setError] = useState("");
 
@@ -36,6 +38,13 @@ const AuthProvider: React.FC<UseAuthProps> = ({ children }) => {
     }
     return verified;
   };
+
+  useEffect(() => {
+    console.log("HERE IS ROUTER", router);
+    if (router.pathname.includes("admin") && !authKey) {
+      router.push("/");
+    }
+  }, []);
 
   const value: AuthContextInterface = {
     authKey,
