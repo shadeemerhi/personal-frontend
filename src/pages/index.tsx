@@ -37,16 +37,26 @@ const Home: NextPage = () => {
       <div className={styles.content_container}>
         {navItem === "ABOUT" && (
           <>
-            <span className="md_text">{data?.user.preBio}</span>
-            <br />
-            <br />
-            <br />
-            <span className="heavy_text">Mini Bio</span>
-            <br />
-            <span className="md_text">{data?.user.bio}</span>
+            <div className={styles.content_section}>
+              <span className="md_text">{data?.user.user?.preBio}</span>
+            </div>
+            <div className={styles.content_section}>
+              <span className="heavy_text">Mini Bio</span>
+              <br />
+              <span className="md_text">{data?.user.user?.bio}</span>
+            </div>
+            <div className={styles.content_section}>
+              <span className="heavy_text">Latest Release</span>
+              <br />
+              <span className="md_text">{data?.user.latestRelease?.title}</span>
+            </div>
           </>
         )}
-        {navItem === "SKILLS" && <span>SKILLS SECTION - COMING SOON</span>}
+        {navItem === "SKILLS" && (
+          <div className={styles.content_section}>
+            <span>SKILLS SECTION COMING SOON</span>
+          </div>
+        )}
       </div>
     </Layout>
   );

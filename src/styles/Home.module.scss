@@ -5,7 +5,7 @@
   display: flex;
   justify-content: space-between;
   width: 150px;
-  margin-bottom: 30px;
+  //   margin-bottom: 30px;
 
   .nav_item {
     color: main.$grey-secondary;
@@ -14,5 +14,11 @@
       font-weight: 500;
       border-bottom: 2px solid main.$main-color;
     }
+  }
+}
+
+.content_container {
+  .content_section {
+    margin: 10px 0px 40px 0px;
   }
 }

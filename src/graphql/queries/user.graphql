@@ -1,13 +1,27 @@
 query User($_id: String!) {
   user(_id: $_id) {
-    _id
-    title
-    photoURL
-    githubLink
-    linkedInLink
-    email
-    preBio
-    bio
-    updatedAt
+    user {
+      _id
+      title
+      photoURL
+      githubLink
+      linkedInLink
+      email
+      preBio
+      bio
+      updatedAt
+    }
+    latestRelease {
+      _id
+      title
+      description
+      photoURL
+      description
+      startDate
+      endDate
+      inProgress
+      repositoryLinks
+      stack
+    }
   }
 }

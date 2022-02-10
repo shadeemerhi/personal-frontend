@@ -21,17 +21,17 @@ const Header: React.FC<HeaderProps> = () => {
 
   return (
     <div className={styles.root}>
-      <img src={data?.user.photoURL} />
+      <img src={data?.user.user?.photoURL} />
       <div className={styles.text_icon_container}>
         <div className={styles.title_container}>
           <CheckCircleIcon sx={{ marginRight: "6px", color: "#1982FC" }} />
-          <span className="sm_text">{data?.user.title}</span>
+          <span className="sm_text">{data?.user.user?.title}</span>
         </div>
         <span className={`${styles.name} heavy_text`}>Shadee Merhi</span>
         <div className={styles.icon_container}>
           <a
             target="_blank"
-            href={data?.user.githubLink}
+            href={data?.user.user?.githubLink}
             className={styles.icon_item}
           >
             <span className="xs_text">GITHUB</span>
@@ -39,7 +39,7 @@ const Header: React.FC<HeaderProps> = () => {
           </a>
           <a
             target="_blank"
-            href={data?.user.linkedInLink}
+            href={data?.user.user?.linkedInLink}
             className={styles.icon_item}
           >
             <span className="xs_text">LINKEDIN</span>
@@ -47,7 +47,7 @@ const Header: React.FC<HeaderProps> = () => {
           </a>
           <a
             target="_blank"
-            href={`mailto: ${data?.user.email}`}
+            href={`mailto: ${data?.user.user?.email}`}
             className={styles.icon_item}
           >
             <span className="xs_text">EMAIL</span>

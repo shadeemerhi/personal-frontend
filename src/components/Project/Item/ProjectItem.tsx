@@ -13,7 +13,7 @@ import { useDeleteProjectMutation } from "../../../generated/graphql";
 
 type ProjectItemProps = {
   authKey: string;
-  setShowForm: (value: ProjectFormState) => void;
+  setShowForm?: (value: ProjectFormState) => void;
   project: Project;
 };
 

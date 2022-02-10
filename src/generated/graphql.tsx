@@ -98,7 +98,7 @@ export type Query = {
   __typename?: 'Query';
   project: Project;
   projects: Array<Project>;
-  user: User;
+  user: UserResponse;
 };
 
 
@@ -134,6 +134,7 @@ export type UpdateUserInput = {
   photoURL: Scalars['String'];
   preBio?: InputMaybe<Scalars['String']>;
   title: Scalars['String'];
+  updatedAt?: InputMaybe<Scalars['String']>;
 };
 
 export type User = {
@@ -148,6 +149,12 @@ export type User = {
   s3Key: Scalars['String'];
   title: Scalars['String'];
   updatedAt: Scalars['String'];
+};
+
+export type UserResponse = {
+  __typename?: 'UserResponse';
+  latestRelease?: Maybe<Project>;
+  user?: Maybe<User>;
 };
 
 export type CreateProjectMutationVariables = Exact<{
@@ -200,7 +207,7 @@ export type UserQueryVariables = Exact<{
 }>;
 
 
-export type UserQuery = { __typename?: 'Query', user: { __typename?: 'User', _id: string, title: string, photoURL: string, githubLink: string, linkedInLink: string, email: string, preBio: string, bio: string, updatedAt: string } };
+export type UserQuery = { __typename?: 'Query', user: { __typename?: 'UserResponse', user?: { __typename?: 'User', _id: string, title: string, photoURL: string, githubLink: string, linkedInLink: string, email: string, preBio: string, bio: string, updatedAt: string } | null | undefined, latestRelease?: { __typename?: 'Project', _id: string, title: string, description: string, photoURL: string, startDate: any, endDate?: any | null | undefined, inProgress: boolean, repositoryLinks: Array<string>, stack: any } | null | undefined } };
 
 
 export const CreateProjectDocument = gql`
@@ -435,15 +442,29 @@ export type ProjectsQueryResult = Apollo.QueryResult<ProjectsQuery, ProjectsQuer
 export const UserDocument = gql`
     query User($_id: String!) {
   user(_id: $_id) {
-    _id
-    title
-    photoURL
-    githubLink
-    linkedInLink
-    email
-    preBio
-    bio
-    updatedAt
+    user {
+      _id
+      title
+      photoURL
+      githubLink
+      linkedInLink
+      email
+      preBio
+      bio
+      updatedAt
+    }
+    latestRelease {
+      _id
+      title
+      description
+      photoURL
+      description
+      startDate
+      endDate
+      inProgress
+      repositoryLinks
+      stack
+    }
   }
 }
     `;
