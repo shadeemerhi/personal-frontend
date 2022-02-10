@@ -9,6 +9,7 @@ import { useProjectsQuery } from "../generated/graphql";
 import { withApollo } from "../util/withApollo";
 import { Project } from "../types/project";
 import { useAuth } from "../hooks/useAuth";
+import { NextPage } from "next";
 
 const DEFAULT_PROJECT: Project = {
   title: "",
@@ -30,7 +31,7 @@ export type ProjectFormState = {
   project: Project;
 };
 
-const Projects: React.FC = () => {
+const Projects: NextPage = () => {
   const { authKey } = useAuth();
   const { data, loading, error } = useProjectsQuery();
   const [showForm, setShowForm] = useState<ProjectFormState>({
@@ -56,7 +57,7 @@ const Projects: React.FC = () => {
       ) : (
         <Box display="flex" flexDirection="column">
           {authKey && (
-            <Box display='flex' justifyContent='center' alignItems='center'>
+            <Box display="flex" justifyContent="center" alignItems="center">
               <button
                 className="btn_primary"
                 onClick={() =>
