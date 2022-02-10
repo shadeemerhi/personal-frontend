@@ -22,6 +22,8 @@ const Admin: React.FC<{}> = () => {
   });
   console.log("here is data", data);
 
-  return <Layout>{data?.user && <Profile profile={data?.user} />}</Layout>;
+  return (
+    <Layout>{data?.user.user && <Profile profile={data?.user.user} />}</Layout>
+  );
 };
 export default withApollo({ ssr: true })(Admin);
