@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Box } from "@mui/material";
 
 import ProjectForm from "../components/Project/ProjectForm";
 import ProjectItem from "../components/Project/Item/ProjectItem";
 import Layout from "../components/Layout";
+import { Box, CircularProgress } from "@mui/material";
 
 import { useProjectsQuery } from "../generated/graphql";
 import { withApollo } from "../util/withApollo";
@@ -56,30 +56,38 @@ const Projects: NextPage = () => {
         />
       ) : (
         <Box display="flex" flexDirection="column">
-          {authKey && (
+          {loading ? (
             <Box display="flex" justifyContent="center" alignItems="center">
-              <button
-                className="btn_primary"
-                onClick={() =>
-                  setShowForm({
-                    visible: true,
-                    project: DEFAULT_PROJECT,
-                  })
-                }
-              >
-                Create Project
-              </button>
+              <CircularProgress color="inherit" size={100} />
             </Box>
+          ) : (
+            <>
+              {authKey && (
+                <Box display="flex" justifyContent="center" alignItems="center">
+                  <button
+                    className="btn_primary"
+                    onClick={() =>
+                      setShowForm({
+                        visible: true,
+                        project: DEFAULT_PROJECT,
+                      })
+                    }
+                  >
+                    Create Project
+                  </button>
+                </Box>
+              )}
+              <br />
+              {data?.projects.map((project) => (
+                <ProjectItem
+                  key={project._id}
+                  authKey={authKey}
+                  project={project}
+                  setShowForm={setShowForm}
+                />
+              ))}
+            </>
           )}
-          <br />
-          {data?.projects.map((project) => (
-            <ProjectItem
-              key={project._id}
-              authKey={authKey}
-              project={project}
-              setShowForm={setShowForm}
-            />
-          ))}
         </Box>
       )}
     </Layout>

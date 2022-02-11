@@ -75,9 +75,7 @@ const Stack: React.FC<StackProps> = ({ stack, handleChange }) => {
                 {category.charAt(0).toUpperCase() + category.slice(1)}
               </span>
               {!stack[category].length && (
-                <span className="italic_text disabled_text xs_text">
-                  No items
-                </span>
+                <span className="italic_text grey_text xs_text">No items</span>
               )}
             </Box>
             <Box display="flex" flexWrap="wrap">
@@ -87,7 +85,7 @@ const Stack: React.FC<StackProps> = ({ stack, handleChange }) => {
                   name={itemName}
                   category={category}
                   deleteItem={handleChange}
-                  borderColor='main'
+                  borderColor="main"
                 />
               ))}
             </Box>

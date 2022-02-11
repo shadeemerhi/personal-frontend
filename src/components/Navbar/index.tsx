@@ -62,13 +62,13 @@ const Navbar: React.FC<{}> = () => {
     <div className={styles.root}>
       <div className={styles.items_container}>
         {navItems.map((item, index) =>
-          (item.text === "Admin" && !authKey) ? null : (
+          item.text === "Admin" && !authKey ? null : (
             <NavItem
               key={index}
               item={item}
               isSelected={item.text === selected}
               setSelected={setSelected}
-              width={Math.round((1 / navItems.length) * 100)}
+              width={Math.round((1 / navItems.length + 1) * 100)}
             />
           )
         )}

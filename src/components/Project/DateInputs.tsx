@@ -17,7 +17,10 @@ type DateInputsProps = {
   startDate: Date;
   endDate?: Date;
   inProgress: boolean;
-  handleChange: (field: string, value: string | boolean | Date | null | undefined) => void;
+  handleChange: (
+    field: string,
+    value: string | boolean | Date | null | undefined
+  ) => void;
 };
 
 const dateDefault = "white";
@@ -70,7 +73,7 @@ const DateInputs: React.FC<DateInputsProps> = ({
           <span
             className={classNames({
               medium_text: true,
-              disabled_text: inProgress,
+              grey_text: inProgress,
             })}
           >
             End Date

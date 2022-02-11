@@ -61,11 +61,11 @@ textarea {
   padding: 6px;
   font-family: main.$font-stack;
   height: 60px;
-  
+
   &:focus {
     outline: 2px solid main.$main-color;
   }
-  
+
   &::placeholder {
     color: main.$grey-secondary;
   }
@@ -130,7 +130,7 @@ select:focus {
   font-style: italic;
 }
 
-.disabled_text {
+.grey_text {
   color: main.$grey-secondary;
 }
 

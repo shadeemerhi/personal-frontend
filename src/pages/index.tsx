@@ -8,6 +8,7 @@ import Layout from "../components/Layout";
 import { useState } from "react";
 import { Box } from "@mui/material";
 import classNames from "classnames";
+import ProjectItemContent from "../components/Project/Item/ProjectItemContent";
 
 const navItems = ["ABOUT", "SKILLS"];
 
@@ -41,15 +42,22 @@ const Home: NextPage = () => {
               <span className="md_text">{data?.user.user?.preBio}</span>
             </div>
             <div className={styles.content_section}>
-              <span className="heavy_text">Mini Bio</span>
-              <br />
+              <span className={`${styles.section_title} heavy_text`}>
+                Mini Bio
+              </span>
               <span className="md_text">{data?.user.user?.bio}</span>
             </div>
-            <div className={styles.content_section}>
-              <span className="heavy_text">Latest Release</span>
-              <br />
-              <span className="md_text">{data?.user.latestRelease?.title}</span>
-            </div>
+            {data?.user.latestRelease && (
+              <div className={styles.content_section}>
+                <span className={`${styles.section_title} heavy_text`}>
+                  Latest Release
+                </span>
+                <ProjectItemContent
+                  authKey="shadman"
+                  project={data?.user.latestRelease}
+                />
+              </div>
+            )}
           </>
         )}
         {navItem === "SKILLS" && (

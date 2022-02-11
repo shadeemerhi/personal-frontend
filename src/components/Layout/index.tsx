@@ -1,9 +1,11 @@
+import React from "react";
 import Head from "next/head";
-import React, { useState } from "react";
 import Navbar from "../Navbar";
 import Header from "./Header";
+import Footer from "./Footer";
+
+import { Box } from "@mui/material";
 import styles from "../../styles/Layout.module.scss";
-import { withApollo } from "../../util/withApollo";
 
 interface LayoutsProps {}
 
@@ -18,8 +20,11 @@ const Layout: React.FC<LayoutsProps> = ({ children }) => {
       <div className={styles.root}>
         <Navbar />
         <div className={styles.page_wrapper}>
-            <Header />
-            <div className={styles.page_content}>{children}</div>
+          <Header />
+          <div className={styles.page_content}>
+            <div>{children}</div>
+            <Footer />
+          </div>
         </div>
       </div>
     </>

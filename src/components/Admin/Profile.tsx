@@ -169,7 +169,7 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
           </button>
         </Box>
         <span
-          className="sm_text disabled_text pointer"
+          className="sm_text grey_text pointer"
           onClick={() => setCreateNew(!createNew)}
         >
           {createNew ? "Undo" : "New"}

@@ -18,7 +18,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   photoFile,
   photoURL,
 }) => {
-
   const onImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files || !event.target.files[0]) return;
     const image = event.target.files[0];
@@ -54,7 +53,10 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
       >
         {photoFile || photoURL ? (
           <>
-            <img src={photoFile ? URL.createObjectURL(photoFile) : photoURL} style={{ maxWidth: '400px' }} />
+            <img
+              src={photoFile ? URL.createObjectURL(photoFile) : photoURL}
+              style={{ maxWidth: "400px" }}
+            />
             {photoFile && (
               <span className="sm_text italic_text">{photoFile.name}</span>
             )}
@@ -62,10 +64,10 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
         ) : (
           <>
             <PhotoCameraBackIcon
-              className="disabled_text"
+              className="grey_text"
               style={{ fontSize: "30pt" }}
             />
-            <span className="sm_text disabled_text">No Image Selected</span>
+            <span className="sm_text grey_text">No Image Selected</span>
           </>
         )}
       </Box>
