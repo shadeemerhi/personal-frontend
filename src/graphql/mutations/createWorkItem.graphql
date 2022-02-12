@@ -1,0 +1,12 @@
+mutation CreateWorkItem($input: WorkItemInput!, $adminKey: String!) {
+  createWorkItem(input: $input, adminKey: $adminKey) {
+    _id
+    companyName
+    title
+    startDate
+    endDate
+    inProgress
+    location
+    description
+  }
+}

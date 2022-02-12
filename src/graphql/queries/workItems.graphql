@@ -1,0 +1,11 @@
+query WorkItems {
+  workItems {
+    companyName
+    title
+    startDate
+    endDate
+    inProgress
+    location
+    description
+  }
+}

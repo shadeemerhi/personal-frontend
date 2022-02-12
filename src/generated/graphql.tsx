@@ -25,6 +25,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   createProject: Project;
   createUser: User;
+  createWorkItem: WorkItem;
   deleteProject: Scalars['Boolean'];
   updateProject: Project;
   updateUser: User;
@@ -40,6 +41,12 @@ export type MutationCreateProjectArgs = {
 export type MutationCreateUserArgs = {
   adminKey: Scalars['String'];
   input: NewUserInput;
+};
+
+
+export type MutationCreateWorkItemArgs = {
+  adminKey: Scalars['String'];
+  input: WorkItemInput;
 };
 
 
@@ -83,7 +90,7 @@ export type NewUserInput = {
 
 export type Project = {
   __typename?: 'Project';
-  _id: Scalars['String'];
+  _id?: Maybe<Scalars['String']>;
   description: Scalars['String'];
   endDate?: Maybe<Scalars['DateTime']>;
   inProgress: Scalars['Boolean'];
@@ -99,6 +106,7 @@ export type Query = {
   project: Project;
   projects: Array<Project>;
   user: UserResponse;
+  workItems: Array<WorkItem>;
 };
 
 
@@ -157,6 +165,29 @@ export type UserResponse = {
   user?: Maybe<User>;
 };
 
+export type WorkItem = {
+  __typename?: 'WorkItem';
+  _id?: Maybe<Scalars['String']>;
+  companyName: Scalars['String'];
+  description: Array<Scalars['String']>;
+  endDate?: Maybe<Scalars['DateTime']>;
+  inProgress: Scalars['Boolean'];
+  location: Scalars['String'];
+  startDate: Scalars['DateTime'];
+  title: Scalars['String'];
+};
+
+export type WorkItemInput = {
+  _id?: InputMaybe<Scalars['String']>;
+  companyName: Scalars['String'];
+  description: Array<Scalars['String']>;
+  endDate?: InputMaybe<Scalars['DateTime']>;
+  inProgress: Scalars['Boolean'];
+  location: Scalars['String'];
+  startDate: Scalars['DateTime'];
+  title: Scalars['String'];
+};
+
 export type CreateProjectMutationVariables = Exact<{
   input: NewProjectInput;
   adminKey: Scalars['String'];
@@ -173,6 +204,14 @@ export type CreateUserMutationVariables = Exact<{
 
 export type CreateUserMutation = { __typename?: 'Mutation', createUser: { __typename?: 'User', title: string } };
 
+export type CreateWorkItemMutationVariables = Exact<{
+  input: WorkItemInput;
+  adminKey: Scalars['String'];
+}>;
+
+
+export type CreateWorkItemMutation = { __typename?: 'Mutation', createWorkItem: { __typename?: 'WorkItem', _id?: string | null | undefined, companyName: string, title: string, startDate: any, endDate?: any | null | undefined, inProgress: boolean, location: string, description: Array<string> } };
+
 export type DeleteProjectMutationVariables = Exact<{
   _id: Scalars['String'];
   adminKey: Scalars['String'];
@@ -187,7 +226,7 @@ export type UpdateProjectMutationVariables = Exact<{
 }>;
 
 
-export type UpdateProjectMutation = { __typename?: 'Mutation', updateProject: { __typename?: 'Project', _id: string, title: string, description: string, photoURL: string, startDate: any, endDate?: any | null | undefined, inProgress: boolean, repositoryLinks: Array<string>, stack: any } };
+export type UpdateProjectMutation = { __typename?: 'Mutation', updateProject: { __typename?: 'Project', _id?: string | null | undefined, title: string, description: string, photoURL: string, startDate: any, endDate?: any | null | undefined, inProgress: boolean, repositoryLinks: Array<string>, stack: any } };
 
 export type UpdateUserMutationVariables = Exact<{
   input: UpdateUserInput;
@@ -200,14 +239,19 @@ export type UpdateUserMutation = { __typename?: 'Mutation', updateUser: { __type
 export type ProjectsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ProjectsQuery = { __typename?: 'Query', projects: Array<{ __typename?: 'Project', _id: string, title: string, description: string, photoURL: string, startDate: any, endDate?: any | null | undefined, inProgress: boolean, repositoryLinks: Array<string>, stack: any }> };
+export type ProjectsQuery = { __typename?: 'Query', projects: Array<{ __typename?: 'Project', _id?: string | null | undefined, title: string, description: string, photoURL: string, startDate: any, endDate?: any | null | undefined, inProgress: boolean, repositoryLinks: Array<string>, stack: any }> };
 
 export type UserQueryVariables = Exact<{
   _id: Scalars['String'];
 }>;
 
 
-export type UserQuery = { __typename?: 'Query', user: { __typename?: 'UserResponse', user?: { __typename?: 'User', _id: string, title: string, photoURL: string, githubLink: string, linkedInLink: string, email: string, preBio: string, bio: string, updatedAt: string } | null | undefined, latestRelease?: { __typename?: 'Project', _id: string, title: string, description: string, photoURL: string, startDate: any, endDate?: any | null | undefined, inProgress: boolean, repositoryLinks: Array<string>, stack: any } | null | undefined } };
+export type UserQuery = { __typename?: 'Query', user: { __typename?: 'UserResponse', user?: { __typename?: 'User', _id: string, title: string, photoURL: string, githubLink: string, linkedInLink: string, email: string, preBio: string, bio: string, updatedAt: string } | null | undefined, latestRelease?: { __typename?: 'Project', _id?: string | null | undefined, title: string, description: string, photoURL: string, startDate: any, endDate?: any | null | undefined, inProgress: boolean, repositoryLinks: Array<string>, stack: any } | null | undefined } };
+
+export type WorkItemsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type WorkItemsQuery = { __typename?: 'Query', workItems: Array<{ __typename?: 'WorkItem', companyName: string, title: string, startDate: any, endDate?: any | null | undefined, inProgress: boolean, location: string, description: Array<string> }> };
 
 
 export const CreateProjectDocument = gql`
@@ -279,6 +323,47 @@ export function useCreateUserMutation(baseOptions?: Apollo.MutationHookOptions<C
 export type CreateUserMutationHookResult = ReturnType<typeof useCreateUserMutation>;
 export type CreateUserMutationResult = Apollo.MutationResult<CreateUserMutation>;
 export type CreateUserMutationOptions = Apollo.BaseMutationOptions<CreateUserMutation, CreateUserMutationVariables>;
+export const CreateWorkItemDocument = gql`
+    mutation CreateWorkItem($input: WorkItemInput!, $adminKey: String!) {
+  createWorkItem(input: $input, adminKey: $adminKey) {
+    _id
+    companyName
+    title
+    startDate
+    endDate
+    inProgress
+    location
+    description
+  }
+}
+    `;
+export type CreateWorkItemMutationFn = Apollo.MutationFunction<CreateWorkItemMutation, CreateWorkItemMutationVariables>;
+
+/**
+ * __useCreateWorkItemMutation__
+ *
+ * To run a mutation, you first call `useCreateWorkItemMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateWorkItemMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createWorkItemMutation, { data, loading, error }] = useCreateWorkItemMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *      adminKey: // value for 'adminKey'
+ *   },
+ * });
+ */
+export function useCreateWorkItemMutation(baseOptions?: Apollo.MutationHookOptions<CreateWorkItemMutation, CreateWorkItemMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateWorkItemMutation, CreateWorkItemMutationVariables>(CreateWorkItemDocument, options);
+      }
+export type CreateWorkItemMutationHookResult = ReturnType<typeof useCreateWorkItemMutation>;
+export type CreateWorkItemMutationResult = Apollo.MutationResult<CreateWorkItemMutation>;
+export type CreateWorkItemMutationOptions = Apollo.BaseMutationOptions<CreateWorkItemMutation, CreateWorkItemMutationVariables>;
 export const DeleteProjectDocument = gql`
     mutation DeleteProject($_id: String!, $adminKey: String!) {
   deleteProject(_id: $_id, adminKey: $adminKey)
@@ -496,3 +581,43 @@ export function useUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserQ
 export type UserQueryHookResult = ReturnType<typeof useUserQuery>;
 export type UserLazyQueryHookResult = ReturnType<typeof useUserLazyQuery>;
 export type UserQueryResult = Apollo.QueryResult<UserQuery, UserQueryVariables>;
+export const WorkItemsDocument = gql`
+    query WorkItems {
+  workItems {
+    companyName
+    title
+    startDate
+    endDate
+    inProgress
+    location
+    description
+  }
+}
+    `;
+
+/**
+ * __useWorkItemsQuery__
+ *
+ * To run a query within a React component, call `useWorkItemsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useWorkItemsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useWorkItemsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useWorkItemsQuery(baseOptions?: Apollo.QueryHookOptions<WorkItemsQuery, WorkItemsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<WorkItemsQuery, WorkItemsQueryVariables>(WorkItemsDocument, options);
+      }
+export function useWorkItemsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<WorkItemsQuery, WorkItemsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<WorkItemsQuery, WorkItemsQueryVariables>(WorkItemsDocument, options);
+        }
+export type WorkItemsQueryHookResult = ReturnType<typeof useWorkItemsQuery>;
+export type WorkItemsLazyQueryHookResult = ReturnType<typeof useWorkItemsLazyQuery>;
+export type WorkItemsQueryResult = Apollo.QueryResult<WorkItemsQuery, WorkItemsQueryVariables>;

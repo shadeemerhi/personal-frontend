@@ -34,5 +34,5 @@ export type User = {
   email: string;
   preBio: string;
   bio: string;
-//   latestRelease: Project;
+  latestRelease: Project;
 };

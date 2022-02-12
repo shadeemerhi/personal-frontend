@@ -4,12 +4,16 @@ import { WorkFormState } from ".";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Box } from "@mui/material";
 import InputField from "../../Project/InputField";
-import { WorkItem } from "../../../types/experience";
+// import { WorkItem } from "../../../types/experience";
 
 import DateInputs from "../../Project/DateInputs";
 import Description from "./Description";
 
 import styles from "../../Project/ProjectForm.module.scss";
+import {
+  useCreateWorkItemMutation,
+  WorkItem,
+} from "../../../generated/graphql";
 
 type FormProps = {
   setShowForm: (value: any) => void;
@@ -18,6 +22,8 @@ type FormProps = {
 
 const WorkItemForm: React.FC<FormProps> = ({ workItem, setShowForm }) => {
   const [currentItem, setCurrentItem] = useState(workItem);
+  const [createWorkItem, { data, loading, error }] =
+    useCreateWorkItemMutation();
 
   const handleChange = (
     field: string,
@@ -37,6 +43,20 @@ const WorkItemForm: React.FC<FormProps> = ({ workItem, setShowForm }) => {
       ...prev,
       description: updatedDescription,
     }));
+  };
+
+  const onSubmit = async () => {
+    try {
+      const { data, errors } = await createWorkItem({
+        variables: {
+          input: currentItem,
+          adminKey: "shadman",
+        },
+      });
+      console.log("HERE IS RESPONSE", data, errors);
+    } catch (error) {
+      console.log("createWorkItem error", error);
+    }
   };
 
   return (
@@ -74,7 +94,7 @@ const WorkItemForm: React.FC<FormProps> = ({ workItem, setShowForm }) => {
             flexDirection="column"
           >
             <InputField
-              name="name"
+              name="title"
               handleChange={handleChange}
               label="Title"
               placeholder="Title"
@@ -87,6 +107,19 @@ const WorkItemForm: React.FC<FormProps> = ({ workItem, setShowForm }) => {
             inProgress={currentItem.inProgress}
             handleChange={handleChange}
           />
+          <Box
+            className={styles.input_container}
+            display="flex"
+            flexDirection="column"
+          >
+            <InputField
+              name="location"
+              handleChange={handleChange}
+              label="Location"
+              placeholder="Location"
+              value={currentItem.location}
+            />
+          </Box>
           <Description
             description={currentItem.description}
             handleChange={handleDescriptionChange}
@@ -99,12 +132,10 @@ const WorkItemForm: React.FC<FormProps> = ({ workItem, setShowForm }) => {
           alignItems="center"
           className={styles.submit_container}
         >
-          <button
-            className="btn_primary submit_button"
-            //   onClick={onSubmit}
-          >
-            Submit New Item
+          <button className="btn_primary submit_button" onClick={onSubmit}>
+            Create Item
           </button>
+          {loading && <span>Loading LOL</span>}
         </Box>
       </Box>
     </>

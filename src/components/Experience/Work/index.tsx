@@ -2,7 +2,10 @@ import { Box } from "@mui/material";
 import React, { useState } from "react";
 
 import WorkItemForm from "./Form";
-import { WorkItem } from "../../../types/experience";
+import WorkItemContent from "./Item";
+
+// import { WorkItem } from "../../../types/experience";
+import { useWorkItemsQuery, WorkItem } from "../../../generated/graphql";
 
 type WorkItemsProps = {};
 
@@ -11,6 +14,7 @@ const DEFAULT_WORK_ITEM: WorkItem = {
   title: "",
   startDate: new Date(),
   inProgress: true,
+  location: "",
   description: [],
 };
 
@@ -20,6 +24,9 @@ export type WorkFormState = {
 };
 
 const WorkItems: React.FC<WorkItemsProps> = () => {
+  const { data, loading, error } = useWorkItemsQuery();
+  console.log("HERE ARE ITEMS", data, loading, error);
+
   const [showForm, setShowForm] = useState<WorkFormState>({
     visible: false,
     workItem: DEFAULT_WORK_ITEM,
@@ -30,7 +37,12 @@ const WorkItems: React.FC<WorkItemsProps> = () => {
       {showForm.visible ? (
         <WorkItemForm workItem={showForm.workItem} setShowForm={setShowForm} />
       ) : (
-        <Box display="flex" justifyContent="center" alignItems="center">
+        <Box
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+        >
           <button
             className="btn_primary"
             onClick={() =>
@@ -42,6 +54,9 @@ const WorkItems: React.FC<WorkItemsProps> = () => {
           >
             Create Work Item
           </button>
+          {data?.workItems.map((item) => (
+            <WorkItemContent workItem={item} />
+          ))}
         </Box>
       )}
     </Box>
