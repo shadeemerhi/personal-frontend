@@ -4,7 +4,6 @@ import { WorkFormState } from ".";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Box, CircularProgress } from "@mui/material";
 import InputField from "../../Project/InputField";
-// import { WorkItem } from "../../../types/experience";
 
 import DateInputs from "../../Project/DateInputs";
 import Description from "./Description";

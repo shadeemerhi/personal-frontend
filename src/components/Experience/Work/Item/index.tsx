@@ -3,6 +3,7 @@ import { WorkItem } from "../../../../generated/graphql";
 
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import PauseCircleOutlineIcon from "@mui/icons-material/PauseCircleOutline";
+import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 
 import { getProjectDateString } from "../../../../util/formatDates";
 
@@ -54,7 +55,7 @@ const WorkItem: React.FC<WorkItemProps> = ({ workItem }) => {
           {workItem.description.map((item) => (
             <Box display="flex" alignItems="flex-start" mb={1}>
               <span className="xs_text" style={{ marginRight: "4px" }}>
-                x
+                <FiberManualRecordIcon sx={{ fontSize: "6pt" }} />
               </span>
               <span className="sm_text">{item}</span>
             </Box>
