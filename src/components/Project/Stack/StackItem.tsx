@@ -23,7 +23,7 @@ const StackItem: React.FC<StackItemProps> = ({
       className={classNames({
         [styles.stack_item]: true,
         border_main: borderColor === "main",
-        border_white: borderColor === "white",
+        border_off_white: borderColor === "white",
       })}
     >
       <span>{name}</span>

@@ -167,6 +167,10 @@ select:focus {
 }
 
 .border_white {
+  border: 1px solid white;
+}
+
+.border_off_white {
   border: 1px solid main.$off-white;
 }
 

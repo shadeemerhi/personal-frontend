@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { WorkFormState } from ".";
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Box } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import InputField from "../../Project/InputField";
 // import { WorkItem } from "../../../types/experience";
 
@@ -22,8 +22,14 @@ type FormProps = {
 
 const WorkItemForm: React.FC<FormProps> = ({ workItem, setShowForm }) => {
   const [currentItem, setCurrentItem] = useState(workItem);
-  const [createWorkItem, { data, loading, error }] =
-    useCreateWorkItemMutation();
+  const [
+    createWorkItem,
+    {
+      data: createWorkItemData,
+      loading: createWorkItemLoading,
+      error: createWorkItemError,
+    },
+  ] = useCreateWorkItemMutation();
 
   const handleChange = (
     field: string,
@@ -51,6 +57,9 @@ const WorkItemForm: React.FC<FormProps> = ({ workItem, setShowForm }) => {
         variables: {
           input: currentItem,
           adminKey: "shadman",
+        },
+        update: (cache) => {
+          cache.evict({ fieldName: "workItems" });
         },
       });
       console.log("HERE IS RESPONSE", data, errors);
@@ -133,9 +142,12 @@ const WorkItemForm: React.FC<FormProps> = ({ workItem, setShowForm }) => {
           className={styles.submit_container}
         >
           <button className="btn_primary submit_button" onClick={onSubmit}>
-            Create Item
+            {createWorkItemLoading ? (
+              <CircularProgress size={18} color="inherit" />
+            ) : (
+              "Create Item"
+            )}
           </button>
-          {loading && <span>Loading LOL</span>}
         </Box>
       </Box>
     </>

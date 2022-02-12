@@ -6,21 +6,29 @@
   padding: 10px;
   display: flex;
   flex-direction: column;
-  border: 1px solid main.$off-white;
   border-radius: 12px;
   margin-top: 20px;
+  transition: 0.2s ease-in-out;
+
+  &:hover.paused {
+    border: 1px solid white;
+  }
 
   .upper_content {
     display: flex;
     justify-content: space-between;
-    border: 1px solid blue;
 
     .icon {
       font-size: 36pt;
+      transition: 0.2s ease-in-out;
       cursor: pointer;
 
       &.paused {
         color: main.$grey-secondary;
+      }
+
+      :hover > & {
+        color: white;
       }
     }
 

@@ -8,6 +8,7 @@ import { getProjectDateString } from "../../../../util/formatDates";
 
 import classNames from "classnames";
 import styles from "./WorkItem.module.scss";
+import { Box } from "@mui/material";
 
 type WorkItemProps = {
   workItem: WorkItem;
@@ -16,7 +17,14 @@ type WorkItemProps = {
 const WorkItem: React.FC<WorkItemProps> = ({ workItem }) => {
   const [play, setPlay] = useState(workItem.inProgress);
   return (
-    <div className={styles.root}>
+    <div
+      className={classNames({
+        [styles.root]: true,
+        [styles.paused]: !play, // to conditionally apply hover border
+        border_main: play,
+        border_off_white: !play,
+      })}
+    >
       <div className={styles.upper_content}>
         {play ? (
           <PauseCircleOutlineIcon
@@ -41,6 +49,18 @@ const WorkItem: React.FC<WorkItemProps> = ({ workItem }) => {
           <span className="sm_text grey_text">{workItem.location}</span>
         </div>
       </div>
+      {play && (
+        <div className={styles.description_container}>
+          {workItem.description.map((item) => (
+            <Box display="flex" alignItems="flex-start" mb={1}>
+              <span className="xs_text" style={{ marginRight: "4px" }}>
+                x
+              </span>
+              <span className="sm_text">{item}</span>
+            </Box>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
