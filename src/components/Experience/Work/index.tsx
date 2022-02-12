@@ -29,7 +29,7 @@ const WorkItems: React.FC<WorkItemsProps> = () => {
   return (
     <Box padding="10px 0px">
       {showForm.visible ? (
-        <WorkItemForm setShowForm={setShowForm} />
+        <WorkItemForm workItem={showForm.workItem} setShowForm={setShowForm} />
       ) : (
         <Box display="flex" justifyContent="center" alignItems="center">
           <button

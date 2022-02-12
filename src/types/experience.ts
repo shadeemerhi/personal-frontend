@@ -4,7 +4,7 @@ export type WorkItem = {
   companyName: string;
   title: string;
   startDate: Date;
-  endDate: Date | null;
+  endDate?: Date;
   inProgress: boolean;
   description: string[];
 };
