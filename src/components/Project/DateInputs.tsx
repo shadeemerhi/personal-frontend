@@ -113,9 +113,8 @@ const DateInputs: React.FC<DateInputsProps> = ({
           sx={{ color: "white" }}
           onChange={(event) => {
             handleChange("inProgress", event.target.checked);
-            if (event.target.checked) {
-              handleChange("endDate", undefined);
-            }
+            const endDate = event.target.checked ? undefined : new Date();
+            handleChange("endDate", endDate);
           }}
         />
       </Box>

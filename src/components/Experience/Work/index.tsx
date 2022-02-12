@@ -10,7 +10,6 @@ const DEFAULT_WORK_ITEM: WorkItem = {
   companyName: "",
   title: "",
   startDate: new Date(),
-  endDate: null,
   inProgress: true,
   description: [],
 };

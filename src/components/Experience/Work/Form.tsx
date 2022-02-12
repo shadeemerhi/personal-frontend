@@ -18,7 +18,16 @@ type FormProps = {
 
 const WorkItemForm: React.FC<FormProps> = ({ workItem, setShowForm }) => {
   const [currentItem, setCurrentItem] = useState(workItem);
-  const handleChange = () => {};
+
+  const handleChange = (
+    field: string,
+    value: string | boolean | Date | null | undefined
+  ) => {
+    setCurrentItem((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
 
   const handleDescriptionChange = (item: string, adding?: boolean) => {
     const updatedLinks = adding
@@ -52,11 +61,11 @@ const WorkItemForm: React.FC<FormProps> = ({ workItem, setShowForm }) => {
             flexDirection="column"
           >
             <InputField
-              name="Company Name"
+              name="companyName"
               handleChange={handleChange}
               label="Company Name"
               placeholder="Company Name"
-              value={workItem.companyName}
+              value={currentItem.companyName}
             />
           </Box>
           <Box
@@ -65,11 +74,11 @@ const WorkItemForm: React.FC<FormProps> = ({ workItem, setShowForm }) => {
             flexDirection="column"
           >
             <InputField
-              name="Title"
+              name="name"
               handleChange={handleChange}
               label="Title"
               placeholder="Title"
-              value={workItem.title}
+              value={currentItem.title}
             />
           </Box>
           <DateInputs
@@ -82,6 +91,20 @@ const WorkItemForm: React.FC<FormProps> = ({ workItem, setShowForm }) => {
             description={currentItem.description}
             handleChange={handleDescriptionChange}
           />
+        </Box>
+        <Box
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+          className={styles.submit_container}
+        >
+          <button
+            className="btn_primary submit_button"
+            //   onClick={onSubmit}
+          >
+            Submit New Item
+          </button>
         </Box>
       </Box>
     </>
