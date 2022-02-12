@@ -32,7 +32,7 @@ const Description: React.FC<DescriptionProps> = ({
         <label className="medium_text">Description</label>
         <input
           onChange={(event) => setItem(event.target.value)}
-          placeholder="Link"
+          placeholder="Add item"
           value={item}
         />
       </form>

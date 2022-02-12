@@ -30,12 +30,12 @@ const WorkItemForm: React.FC<FormProps> = ({ workItem, setShowForm }) => {
   };
 
   const handleDescriptionChange = (item: string, adding?: boolean) => {
-    const updatedLinks = adding
+    const updatedDescription = adding
       ? [...currentItem.description, item]
       : currentItem.description.filter((l) => l !== item);
     setCurrentItem((prev) => ({
       ...prev,
-      repositoryLinks: updatedLinks,
+      description: updatedDescription,
     }));
   };
 
