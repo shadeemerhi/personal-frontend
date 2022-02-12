@@ -1,22 +1,6 @@
 @use "./main.scss";
 @import "./_mixins";
 
-.sub_nav {
-  display: flex;
-  justify-content: space-between;
-  width: 150px;
-  //   margin-bottom: 30px;
-
-  .nav_item {
-    color: main.$grey-secondary;
-    &._selected {
-      color: white;
-      font-weight: 500;
-      border-bottom: 2px solid main.$main-color;
-    }
-  }
-}
-
 .content_container {
   .content_section {
     display: flex;

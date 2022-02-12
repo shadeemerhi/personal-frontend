@@ -1,0 +1,15 @@
+@use "./main.scss";
+@import "./_mixins";
+
+.sub_nav {
+  .nav_item {
+    color: main.$grey-secondary;
+    margin-right: 14px;
+
+    &._selected {
+      color: white;
+      font-weight: 500;
+      border-bottom: 2px solid main.$main-color;
+    }
+  }
+}

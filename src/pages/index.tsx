@@ -1,14 +1,14 @@
-import type { NextPage } from "next";
-import Head from "next/head";
-import { withApollo } from "../util/withApollo";
-
-import { useUserQuery } from "../generated/graphql";
-import styles from "../styles/Home.module.scss";
-import Layout from "../components/Layout";
 import { useState } from "react";
-import { Box } from "@mui/material";
-import classNames from "classnames";
+import type { NextPage } from "next";
+import { withApollo } from "../util/withApollo";
+import { useUserQuery } from "../generated/graphql";
+
+import Layout from "../components/Layout";
 import ProjectItemContent from "../components/Project/Item/ProjectItemContent";
+import SubNav from "../components/Navbar/SubNav";
+
+import classNames from "classnames";
+import styles from "../styles/Home.module.scss";
 
 const navItems = ["ABOUT", "SKILLS"];
 
@@ -21,20 +21,7 @@ const Home: NextPage = () => {
   });
   return (
     <Layout>
-      <div className={styles.sub_nav}>
-        {navItems.map((item) => (
-          <span
-            className={classNames({
-              [styles.nav_item]: true,
-              pointer: true,
-              [styles._selected]: item === navItem,
-            })}
-            onClick={() => setNavItem(item)}
-          >
-            {item}
-          </span>
-        ))}
-      </div>
+      <SubNav items={navItems} selected={navItem} setItem={setNavItem} />
       <div className={styles.content_container}>
         {navItem === "ABOUT" && (
           <>
