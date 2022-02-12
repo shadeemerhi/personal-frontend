@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { WorkFormState } from ".";
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Box, CircularProgress } from "@mui/material";
+import { Alert, Box, CircularProgress } from "@mui/material";
 import InputField from "../../Project/InputField";
 
 import DateInputs from "../../Project/DateInputs";
@@ -13,6 +13,7 @@ import {
   useCreateWorkItemMutation,
   WorkItem,
 } from "../../../generated/graphql";
+import { validateWorkItem } from "../../../util/validateSubmissions";
 
 type FormProps = {
   setShowForm: (value: any) => void;
@@ -21,6 +22,7 @@ type FormProps = {
 
 const WorkItemForm: React.FC<FormProps> = ({ workItem, setShowForm }) => {
   const [currentItem, setCurrentItem] = useState(workItem);
+  const [incompleteItem, setIncompleteItem] = useState(false);
   const [
     createWorkItem,
     {
@@ -51,6 +53,12 @@ const WorkItemForm: React.FC<FormProps> = ({ workItem, setShowForm }) => {
   };
 
   const onSubmit = async () => {
+    if (!validateWorkItem(currentItem)) {
+      setIncompleteItem(true);
+      return;
+    }
+    if (incompleteItem) setIncompleteItem(false);
+
     try {
       const { data, errors } = await createWorkItem({
         variables: {
@@ -148,6 +156,15 @@ const WorkItemForm: React.FC<FormProps> = ({ workItem, setShowForm }) => {
             )}
           </button>
         </Box>
+        {(createWorkItemError || incompleteItem) && (
+          <Box mb={2} mt={2}>
+            <Alert severity="error">
+              {incompleteItem
+                ? "One or more of the required fields is missing"
+                : "Error creating/updating project"}
+            </Alert>
+          </Box>
+        )}
       </Box>
     </>
   );

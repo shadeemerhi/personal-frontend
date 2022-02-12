@@ -11,7 +11,7 @@ import {
 } from "../../generated/graphql";
 import { ProjectFormState } from "../../pages/projects";
 import { Project, StackInputItem } from "../../types/project";
-import { validateProject } from "../../util/validateProject";
+import { validateProject } from "../../util/validateSubmissions";
 import DateInputs from "./DateInputs";
 import GithubLinks from "./GithubLinks";
 import ImageUpload from "./ImageUpload";
@@ -177,7 +177,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
             photoFile={currentProject.photoFile}
             photoURL={currentProject.photoURL}
             stateUpdateFunction={setCurrentProject}
-            title='Project Image'
+            title="Project Image"
           />
           <DateInputs
             startDate={currentProject.startDate}
@@ -236,10 +236,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
                 </p>
               </Box>
             )}
-            <button
-              className="btn_primary submit_button"
-              onClick={onSubmit}
-            >
+            <button className="btn_primary submit_button" onClick={onSubmit}>
               {createProjectLoading || updateProjectLoading ? (
                 <CircularProgress size={18} color="inherit" />
               ) : (
