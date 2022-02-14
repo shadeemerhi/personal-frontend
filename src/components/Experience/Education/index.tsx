@@ -1,5 +1,8 @@
-import { Box } from "@mui/material";
 import React, { useState } from "react";
+import { Box } from "@mui/material";
+
+import EducationForm from "./Form";
+
 import { EducationItem } from "../../../generated/graphql";
 
 type EducationProps = {
@@ -27,7 +30,11 @@ const Education: React.FC<EducationProps> = ({ authKey }) => {
   return (
     <Box padding="10px 0px">
       {showForm.visible ? (
-        <span>here is form</span>
+        <EducationForm
+          educationItem={showForm.formItem}
+          setShowForm={setShowForm}
+          authKey={authKey}
+        />
       ) : (
         <Box
           display="flex"
