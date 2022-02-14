@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { EducationFormState } from ".";
-import { EducationItem } from "../../../generated/graphql";
+import {
+  EducationItem,
+  useCreateEducationItemMutation,
+} from "../../../generated/graphql";
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Alert, Box, CircularProgress } from "@mui/material";
@@ -26,6 +29,15 @@ const Form: React.FC<FormProps> = ({
   const [currentItem, setCurrentItem] = useState(educationItem);
   const [incompleteItem, setIncompleteItem] = useState(false);
 
+  const [
+    createEducationItem,
+    {
+      data: createEducationItemData,
+      loading: createEducationItemLoading,
+      error: createEducationItemError,
+    },
+  ] = useCreateEducationItemMutation();
+
   const handleChange = (
     field: string,
     value: string | boolean | Date | null | undefined
@@ -36,7 +48,28 @@ const Form: React.FC<FormProps> = ({
     }));
   };
 
-  const onSubmit = () => {};
+  const onCreateEducationItem = async () => {
+    try {
+      const { data, errors } = await createEducationItem({
+        variables: {
+          input: currentItem,
+          adminKey: authKey,
+        },
+        update: (cache) => {
+          cache.evict({ fieldName: "educationItems" });
+        },
+      });
+      console.log("HERE IS CREATE RESPONSE", data, errors);
+    } catch (error) {
+      console.log("createEducationItem error", error);
+    }
+  };
+
+  const onUpdateEducationItem = async () => {};
+
+  const onSubmit = () => {
+    editing ? onUpdateEducationItem() : onCreateEducationItem();
+  };
 
   return (
     <>
@@ -87,7 +120,7 @@ const Form: React.FC<FormProps> = ({
             handleChange={handleChange}
           />
         </Box>
-        {false && (
+        {createEducationItemData && (
           <Box mb={2} mt={2}>
             <Alert severity="success">
               {`Item successfully ${true ? "created" : "updated"}`}
@@ -106,7 +139,7 @@ const Form: React.FC<FormProps> = ({
             </Alert>
           </Box>
         )}
-        {(false || incompleteItem) && (
+        {(createEducationItemError || incompleteItem) && (
           <Box mb={2} mt={2}>
             <Alert severity="error">
               {incompleteItem
@@ -123,7 +156,7 @@ const Form: React.FC<FormProps> = ({
           className={styles.submit_container}
         >
           <button className="btn_primary submit_button" onClick={onSubmit}>
-            {false ? (
+            {createEducationItemLoading ? (
               <CircularProgress size={18} color="inherit" />
             ) : (
               <>{editing ? "Save Item" : "Create Item"}</>

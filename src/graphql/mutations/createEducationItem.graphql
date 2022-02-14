@@ -1,0 +1,10 @@
+mutation CreateEducationItem($input: EducationItemInput!, $adminKey: String!) {
+  createEducationItem(input: $input, adminKey: $adminKey) {
+    _id
+    schoolName
+    title
+    startDate
+    endDate
+    inProgress
+  }
+}

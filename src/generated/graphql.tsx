@@ -31,8 +31,18 @@ export type EducationItem = {
   title: Scalars['String'];
 };
 
+export type EducationItemInput = {
+  _id?: InputMaybe<Scalars['String']>;
+  endDate?: InputMaybe<Scalars['DateTime']>;
+  inProgress: Scalars['Boolean'];
+  schoolName: Scalars['String'];
+  startDate: Scalars['DateTime'];
+  title: Scalars['String'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
+  createEducationItem: EducationItem;
   createProject: Project;
   createUser: User;
   createWorkItem: WorkItem;
@@ -41,6 +51,12 @@ export type Mutation = {
   updateProject: Project;
   updateUser: User;
   updateWorkItem: WorkItem;
+};
+
+
+export type MutationCreateEducationItemArgs = {
+  adminKey: Scalars['String'];
+  input: EducationItemInput;
 };
 
 
@@ -128,6 +144,7 @@ export type Project = {
 export type Query = {
   __typename?: 'Query';
   educationItems: Array<EducationItem>;
+  indicateItems: Scalars['Boolean'];
   project: Project;
   projects: Array<Project>;
   user: UserResponse;
@@ -213,6 +230,14 @@ export type WorkItemInput = {
   title: Scalars['String'];
 };
 
+export type CreateEducationItemMutationVariables = Exact<{
+  input: EducationItemInput;
+  adminKey: Scalars['String'];
+}>;
+
+
+export type CreateEducationItemMutation = { __typename?: 'Mutation', createEducationItem: { __typename?: 'EducationItem', _id?: string | null | undefined, schoolName: string, title: string, startDate: any, endDate?: any | null | undefined, inProgress: boolean } };
+
 export type CreateProjectMutationVariables = Exact<{
   input: NewProjectInput;
   adminKey: Scalars['String'];
@@ -277,6 +302,11 @@ export type UpdateWorkItemMutationVariables = Exact<{
 
 export type UpdateWorkItemMutation = { __typename?: 'Mutation', updateWorkItem: { __typename?: 'WorkItem', _id?: string | null | undefined, companyName: string, title: string, startDate: any, endDate?: any | null | undefined, inProgress: boolean, location: string, description: Array<string> } };
 
+export type EducationItemsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type EducationItemsQuery = { __typename?: 'Query', educationItems: Array<{ __typename?: 'EducationItem', _id?: string | null | undefined, schoolName: string, title: string, startDate: any, endDate?: any | null | undefined, inProgress: boolean }> };
+
 export type ProjectsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -295,6 +325,45 @@ export type WorkItemsQueryVariables = Exact<{ [key: string]: never; }>;
 export type WorkItemsQuery = { __typename?: 'Query', workItems: Array<{ __typename?: 'WorkItem', _id?: string | null | undefined, companyName: string, title: string, startDate: any, endDate?: any | null | undefined, inProgress: boolean, location: string, description: Array<string> }> };
 
 
+export const CreateEducationItemDocument = gql`
+    mutation CreateEducationItem($input: EducationItemInput!, $adminKey: String!) {
+  createEducationItem(input: $input, adminKey: $adminKey) {
+    _id
+    schoolName
+    title
+    startDate
+    endDate
+    inProgress
+  }
+}
+    `;
+export type CreateEducationItemMutationFn = Apollo.MutationFunction<CreateEducationItemMutation, CreateEducationItemMutationVariables>;
+
+/**
+ * __useCreateEducationItemMutation__
+ *
+ * To run a mutation, you first call `useCreateEducationItemMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateEducationItemMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createEducationItemMutation, { data, loading, error }] = useCreateEducationItemMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *      adminKey: // value for 'adminKey'
+ *   },
+ * });
+ */
+export function useCreateEducationItemMutation(baseOptions?: Apollo.MutationHookOptions<CreateEducationItemMutation, CreateEducationItemMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateEducationItemMutation, CreateEducationItemMutationVariables>(CreateEducationItemDocument, options);
+      }
+export type CreateEducationItemMutationHookResult = ReturnType<typeof useCreateEducationItemMutation>;
+export type CreateEducationItemMutationResult = Apollo.MutationResult<CreateEducationItemMutation>;
+export type CreateEducationItemMutationOptions = Apollo.BaseMutationOptions<CreateEducationItemMutation, CreateEducationItemMutationVariables>;
 export const CreateProjectDocument = gql`
     mutation CreateProject($input: NewProjectInput!, $adminKey: String!) {
   createProject(input: $input, adminKey: $adminKey) {
@@ -595,6 +664,45 @@ export function useUpdateWorkItemMutation(baseOptions?: Apollo.MutationHookOptio
 export type UpdateWorkItemMutationHookResult = ReturnType<typeof useUpdateWorkItemMutation>;
 export type UpdateWorkItemMutationResult = Apollo.MutationResult<UpdateWorkItemMutation>;
 export type UpdateWorkItemMutationOptions = Apollo.BaseMutationOptions<UpdateWorkItemMutation, UpdateWorkItemMutationVariables>;
+export const EducationItemsDocument = gql`
+    query EducationItems {
+  educationItems {
+    _id
+    schoolName
+    title
+    startDate
+    endDate
+    inProgress
+  }
+}
+    `;
+
+/**
+ * __useEducationItemsQuery__
+ *
+ * To run a query within a React component, call `useEducationItemsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useEducationItemsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useEducationItemsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useEducationItemsQuery(baseOptions?: Apollo.QueryHookOptions<EducationItemsQuery, EducationItemsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<EducationItemsQuery, EducationItemsQueryVariables>(EducationItemsDocument, options);
+      }
+export function useEducationItemsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<EducationItemsQuery, EducationItemsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<EducationItemsQuery, EducationItemsQueryVariables>(EducationItemsDocument, options);
+        }
+export type EducationItemsQueryHookResult = ReturnType<typeof useEducationItemsQuery>;
+export type EducationItemsLazyQueryHookResult = ReturnType<typeof useEducationItemsLazyQuery>;
+export type EducationItemsQueryResult = Apollo.QueryResult<EducationItemsQuery, EducationItemsQueryVariables>;
 export const ProjectsDocument = gql`
     query Projects {
   projects {

@@ -1,0 +1,10 @@
+query EducationItems {
+  educationItems {
+    _id
+    schoolName
+    title
+    startDate
+    endDate
+    inProgress
+  }
+}

@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import { Box } from "@mui/material";
 
 import EducationForm from "./Form";
+import EducationItemContent from "./Item";
 
-import { EducationItem } from "../../../generated/graphql";
+import {
+  EducationItem,
+  useEducationItemsQuery,
+} from "../../../generated/graphql";
 
 type EducationProps = {
   authKey: string;
@@ -22,10 +26,15 @@ const DEFAULT_EDUCATION_ITEM: EducationItem = {
 };
 
 const Education: React.FC<EducationProps> = ({ authKey }) => {
+  const { data, error } = useEducationItemsQuery();
   const [showForm, setShowForm] = useState<EducationFormState>({
     visible: false,
     formItem: DEFAULT_EDUCATION_ITEM,
   });
+
+  if (error) {
+    return <div>There was an error sad face</div>;
+  }
 
   return (
     <Box padding="10px 0px">
@@ -53,6 +62,9 @@ const Education: React.FC<EducationProps> = ({ authKey }) => {
           >
             Create Education Item
           </button>
+          {data?.educationItems.map((item) => (
+            <EducationItemContent educationItem={item} authKey={authKey} />
+          ))}
         </Box>
       )}
     </Box>
