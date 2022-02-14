@@ -1,0 +1,28 @@
+@use "../../../../styles/main.scss";
+@import "../../../../styles/mixins";
+
+.root {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 0px;
+
+  &.border_top {
+    border-top: 1px solid main.$grey-primary;
+  }
+
+  &.border_bottom {
+    border-bottom: 1px solid main.$grey-primary;
+  }
+
+  .title_container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .date_icon_container {
+    display: flex;
+    flex-direction: column;
+    // justify-content: flex-start;
+  }
+}
