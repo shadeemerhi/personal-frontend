@@ -27,6 +27,7 @@ export type Mutation = {
   createUser: User;
   createWorkItem: WorkItem;
   deleteProject: Scalars['Boolean'];
+  deleteWorkItem: Scalars['Boolean'];
   updateProject: Project;
   updateUser: User;
   updateWorkItem: WorkItem;
@@ -52,6 +53,12 @@ export type MutationCreateWorkItemArgs = {
 
 
 export type MutationDeleteProjectArgs = {
+  _id: Scalars['String'];
+  adminKey: Scalars['String'];
+};
+
+
+export type MutationDeleteWorkItemArgs = {
   _id: Scalars['String'];
   adminKey: Scalars['String'];
 };
@@ -226,6 +233,14 @@ export type DeleteProjectMutationVariables = Exact<{
 
 
 export type DeleteProjectMutation = { __typename?: 'Mutation', deleteProject: boolean };
+
+export type DeleteWorkItemMutationVariables = Exact<{
+  _id: Scalars['String'];
+  adminKey: Scalars['String'];
+}>;
+
+
+export type DeleteWorkItemMutation = { __typename?: 'Mutation', deleteWorkItem: boolean };
 
 export type UpdateProjectMutationVariables = Exact<{
   input: UpdateProjectInput;
@@ -411,6 +426,38 @@ export function useDeleteProjectMutation(baseOptions?: Apollo.MutationHookOption
 export type DeleteProjectMutationHookResult = ReturnType<typeof useDeleteProjectMutation>;
 export type DeleteProjectMutationResult = Apollo.MutationResult<DeleteProjectMutation>;
 export type DeleteProjectMutationOptions = Apollo.BaseMutationOptions<DeleteProjectMutation, DeleteProjectMutationVariables>;
+export const DeleteWorkItemDocument = gql`
+    mutation DeleteWorkItem($_id: String!, $adminKey: String!) {
+  deleteWorkItem(_id: $_id, adminKey: $adminKey)
+}
+    `;
+export type DeleteWorkItemMutationFn = Apollo.MutationFunction<DeleteWorkItemMutation, DeleteWorkItemMutationVariables>;
+
+/**
+ * __useDeleteWorkItemMutation__
+ *
+ * To run a mutation, you first call `useDeleteWorkItemMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteWorkItemMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteWorkItemMutation, { data, loading, error }] = useDeleteWorkItemMutation({
+ *   variables: {
+ *      _id: // value for '_id'
+ *      adminKey: // value for 'adminKey'
+ *   },
+ * });
+ */
+export function useDeleteWorkItemMutation(baseOptions?: Apollo.MutationHookOptions<DeleteWorkItemMutation, DeleteWorkItemMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteWorkItemMutation, DeleteWorkItemMutationVariables>(DeleteWorkItemDocument, options);
+      }
+export type DeleteWorkItemMutationHookResult = ReturnType<typeof useDeleteWorkItemMutation>;
+export type DeleteWorkItemMutationResult = Apollo.MutationResult<DeleteWorkItemMutation>;
+export type DeleteWorkItemMutationOptions = Apollo.BaseMutationOptions<DeleteWorkItemMutation, DeleteWorkItemMutationVariables>;
 export const UpdateProjectDocument = gql`
     mutation UpdateProject($input: UpdateProjectInput!, $adminKey: String!) {
   updateProject(input: $input, adminKey: $adminKey) {

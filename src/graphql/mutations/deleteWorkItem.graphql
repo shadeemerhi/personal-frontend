@@ -1,0 +1,3 @@
+mutation DeleteWorkItem($_id: String!, $adminKey: String!) {
+  deleteWorkItem(_id: $_id, adminKey: $adminKey)
+}

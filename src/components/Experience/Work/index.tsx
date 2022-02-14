@@ -6,7 +6,9 @@ import WorkItemContent from "./Item";
 
 import { useWorkItemsQuery, WorkItem } from "../../../generated/graphql";
 
-type WorkItemsProps = {};
+type WorkItemsProps = {
+  authKey: string;
+};
 
 const DEFAULT_WORK_ITEM: WorkItem = {
   companyName: "",
@@ -22,14 +24,17 @@ export type WorkFormState = {
   formItem: WorkItem;
 };
 
-const WorkItems: React.FC<WorkItemsProps> = () => {
-  const { data, loading, error } = useWorkItemsQuery();
-  console.log("HERE ARE ITEMS", data, loading, error);
+const WorkItems: React.FC<WorkItemsProps> = ({ authKey }) => {
+  const { data, error } = useWorkItemsQuery();
 
   const [showForm, setShowForm] = useState<WorkFormState>({
     visible: false,
     formItem: DEFAULT_WORK_ITEM,
   });
+
+  if (error) {
+    return <div>There was an error sad face</div>;
+  }
 
   return (
     <Box padding="10px 0px">
@@ -38,6 +43,7 @@ const WorkItems: React.FC<WorkItemsProps> = () => {
           workItem={showForm.formItem}
           setShowForm={setShowForm}
           editing={!!showForm.formItem._id}
+          authKey={authKey}
         />
       ) : (
         <Box
@@ -58,7 +64,11 @@ const WorkItems: React.FC<WorkItemsProps> = () => {
             Create Work Item
           </button>
           {data?.workItems.map((item) => (
-            <WorkItemContent workItem={item} setShowForm={setShowForm} />
+            <WorkItemContent
+              workItem={item}
+              setShowForm={setShowForm}
+              authKey={authKey}
+            />
           ))}
         </Box>
       )}

@@ -23,7 +23,7 @@ const Experience: NextPage = () => {
   return (
     <Layout>
       <SubNav items={navItems} selected={navItem} setItem={setNavItem} />
-      {navItem === "WORK" && <WorkItems />}
+      {navItem === "WORK" && <WorkItems authKey={authKey} />}
       {/* {navItem === "EDUCATION" && <span>Education Items</span>} */}
     </Layout>
   );

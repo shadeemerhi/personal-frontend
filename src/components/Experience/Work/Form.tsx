@@ -12,6 +12,7 @@ import styles from "../../Project/ProjectForm.module.scss";
 import {
   useCreateWorkItemMutation,
   useUpdateWorkItemMutation,
+  WorkItemInput,
   WorkItem,
 } from "../../../generated/graphql";
 import { validateWorkItem } from "../../../util/validateSubmissions";
@@ -19,12 +20,14 @@ import { validateWorkItem } from "../../../util/validateSubmissions";
 type FormProps = {
   setShowForm: (value: any) => void;
   workItem: WorkItem;
+  authKey: string;
   editing?: boolean;
 };
 
 const WorkItemForm: React.FC<FormProps> = ({
   workItem,
   setShowForm,
+  authKey,
   editing,
 }) => {
   const [currentItem, setCurrentItem] = useState(workItem);
@@ -78,13 +81,13 @@ const WorkItemForm: React.FC<FormProps> = ({
       const { data, errors } = await createWorkItem({
         variables: {
           input: currentItem,
-          adminKey: "shadman",
+          adminKey: authKey,
         },
         update: (cache) => {
           cache.evict({ fieldName: "workItems" });
         },
       });
-      console.log("HERE IS RESPONSE", data, errors);
+      console.log("HERE IS CREATE RESPONSE", data, errors);
     } catch (error) {
       console.log("createWorkItem error", error);
     }
@@ -96,8 +99,8 @@ const WorkItemForm: React.FC<FormProps> = ({
     try {
       const { data, errors } = await updateWorkItem({
         variables: {
-          input: updatedItem,
-          adminKey: "shadman",
+          input: updatedItem as WorkItemInput,
+          adminKey: authKey,
         },
       });
       console.log("HERE IS UPDATE RESPONSE", data, errors);
@@ -176,14 +179,27 @@ const WorkItemForm: React.FC<FormProps> = ({
             handleChange={handleDescriptionChange}
           />
         </Box>
-        {createWorkItemData ||
-          (updateWorkItemData && (
-            <Box mb={2} mt={2}>
-              <Alert severity="success">{`Item successfully ${
+        {(createWorkItemData || updateWorkItemData) && (
+          <Box mb={2} mt={2}>
+            <Alert severity="success">
+              {`Item successfully ${
                 createWorkItemData ? "created" : "updated"
-              }`}</Alert>
-            </Box>
-          ))}
+              }`}
+              {". "}
+              <span
+                className="heavy_text pointer"
+                onClick={() =>
+                  setShowForm((prev: WorkFormState) => ({
+                    ...prev,
+                    visible: false,
+                  }))
+                }
+              >
+                View
+              </span>
+            </Alert>
+          </Box>
+        )}
         {(createWorkItemError || updateWorkItemError || incompleteItem) && (
           <Box mb={2} mt={2}>
             <Alert severity="error">
