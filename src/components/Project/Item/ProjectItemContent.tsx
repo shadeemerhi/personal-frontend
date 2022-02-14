@@ -9,12 +9,13 @@ import AdminIcons from "./AdminIcons";
 
 import styles from "./ProjectItem.module.scss";
 import { getProjectDateString } from "../../../util/formatDates";
+import { WorkFormState } from "../../Experience/Work";
 
 type ProjectItemContentProps = {
   project: Project;
   authKey: string;
   onDelete?: () => void;
-  setShowForm?: (value: ProjectFormState) => void;
+  setShowForm?: (value: ProjectFormState | WorkFormState) => void;
   error?: any;
   loading?: boolean;
 };
@@ -48,7 +49,7 @@ const ProjectItemContent: React.FC<ProjectItemContentProps> = ({
             <AdminIcons
               setShowForm={setShowForm}
               onDelete={onDelete!}
-              project={project}
+              formItem={project}
               loading={loading!}
             />
           )}

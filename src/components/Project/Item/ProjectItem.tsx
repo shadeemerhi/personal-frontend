@@ -1,22 +1,16 @@
 import React from "react";
 
-import { Alert, Box } from "@mui/material";
-
-import StackItem from "../Stack/StackItem";
-import AdminIcons from "./AdminIcons";
 import ProjectItemContent from "./ProjectItemContent";
 
 import { ProjectFormState } from "../../../pages/projects";
 import { Project } from "../../../types/project";
 import { useDeleteProjectMutation } from "../../../generated/graphql";
-import { getProjectDateString } from "../../../util/formatDates";
-
-import styles from "./ProjectItem.module.scss";
+import { WorkFormState } from "../../Experience/Work";
 
 type ProjectItemProps = {
   authKey: string;
   project: Project;
-  setShowForm?: (value: ProjectFormState) => void;
+  setShowForm?: (value: any) => void;
 };
 
 const ProjectItemWrapper: React.FC<ProjectItemProps> = ({

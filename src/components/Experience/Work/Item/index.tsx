@@ -10,13 +10,19 @@ import { getProjectDateString } from "../../../../util/formatDates";
 import classNames from "classnames";
 import styles from "./WorkItem.module.scss";
 import { Box } from "@mui/material";
+import AdminIcons from "../../../Project/Item/AdminIcons";
+import { WorkFormState } from "..";
+import { ProjectFormState } from "../../../../pages/projects";
 
 type WorkItemProps = {
   workItem: WorkItem;
+  setShowForm: (value: any) => void;
 };
 
-const WorkItem: React.FC<WorkItemProps> = ({ workItem }) => {
+const WorkItem: React.FC<WorkItemProps> = ({ workItem, setShowForm }) => {
   const [play, setPlay] = useState(workItem.inProgress);
+
+  const onDelete = async () => {};
   return (
     <div
       className={classNames({
@@ -51,7 +57,7 @@ const WorkItem: React.FC<WorkItemProps> = ({ workItem }) => {
         </div>
       </div>
       {play && (
-        <div className={styles.description_container}>
+        <>
           {workItem.description.map((item) => (
             <Box display="flex" alignItems="flex-start" mb={1}>
               <span className="xs_text" style={{ marginRight: "4px" }}>
@@ -60,8 +66,16 @@ const WorkItem: React.FC<WorkItemProps> = ({ workItem }) => {
               <span className="sm_text">{item}</span>
             </Box>
           ))}
-        </div>
+        </>
       )}
+      <Box display="flex" justifyContent="flex-end">
+        <AdminIcons
+          onDelete={onDelete}
+          setShowForm={setShowForm}
+          loading={false}
+          formItem={workItem}
+        />
+      </Box>
     </div>
   );
 };

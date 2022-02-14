@@ -28,7 +28,7 @@ const DEFAULT_PROJECT: Project = {
 
 export type ProjectFormState = {
   visible: boolean;
-  project: Project;
+  formItem: Project;
 };
 
 const Projects: NextPage = () => {
@@ -36,7 +36,7 @@ const Projects: NextPage = () => {
   const { data, loading, error } = useProjectsQuery();
   const [showForm, setShowForm] = useState<ProjectFormState>({
     visible: false,
-    project: DEFAULT_PROJECT,
+    formItem: DEFAULT_PROJECT,
   });
 
   if (error) return <div>There was an error sad face</div>;
@@ -50,8 +50,8 @@ const Projects: NextPage = () => {
       {showForm.visible ? (
         <ProjectForm
           setShowForm={setShowForm}
-          project={showForm.project}
-          editing={!!showForm.project._id}
+          project={showForm.formItem}
+          editing={!!showForm.formItem._id}
           authKey={authKey}
         />
       ) : (
@@ -69,7 +69,7 @@ const Projects: NextPage = () => {
                     onClick={() =>
                       setShowForm({
                         visible: true,
-                        project: DEFAULT_PROJECT,
+                        formItem: DEFAULT_PROJECT,
                       })
                     }
                   >
@@ -82,7 +82,7 @@ const Projects: NextPage = () => {
                 <ProjectItem
                   key={project._id}
                   authKey={authKey}
-                  project={project}
+                  project={project as Project} // should fix type here and use type from 'generated' - adjust backend Project entity
                   setShowForm={setShowForm}
                 />
               ))}

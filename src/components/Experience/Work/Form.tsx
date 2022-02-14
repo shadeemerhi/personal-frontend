@@ -31,6 +31,7 @@ const WorkItemForm: React.FC<FormProps> = ({ workItem, setShowForm }) => {
       error: createWorkItemError,
     },
   ] = useCreateWorkItemMutation();
+  console.log("here is loading state hehe", createWorkItemLoading);
 
   const handleChange = (
     field: string,
@@ -141,6 +142,22 @@ const WorkItemForm: React.FC<FormProps> = ({ workItem, setShowForm }) => {
             handleChange={handleDescriptionChange}
           />
         </Box>
+        {createWorkItemData && (
+          <Box mb={2} mt={2}>
+            <Alert severity="success">{`Item successfully ${
+              createWorkItemData ? "created" : "updated"
+            }`}</Alert>
+          </Box>
+        )}
+        {(createWorkItemError || incompleteItem) && (
+          <Box mb={2} mt={2}>
+            <Alert severity="error">
+              {incompleteItem
+                ? "One or more of the required fields is missing"
+                : "Error creating/updating project"}
+            </Alert>
+          </Box>
+        )}
         <Box
           display="flex"
           flexDirection="column"
@@ -156,15 +173,6 @@ const WorkItemForm: React.FC<FormProps> = ({ workItem, setShowForm }) => {
             )}
           </button>
         </Box>
-        {(createWorkItemError || incompleteItem) && (
-          <Box mb={2} mt={2}>
-            <Alert severity="error">
-              {incompleteItem
-                ? "One or more of the required fields is missing"
-                : "Error creating/updating project"}
-            </Alert>
-          </Box>
-        )}
       </Box>
     </>
   );

@@ -1,0 +1,11 @@
+@import "../../../styles/mixins";
+
+.icon_container {
+  display: none;
+}
+
+@include md {
+  .icon_container {
+    display: flex;
+  }
+}

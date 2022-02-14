@@ -4,19 +4,21 @@ import { Project } from "../../../types/project";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
-import styles from "./ProjectItem.module.scss";
 import { ProjectFormState } from "../../../pages/projects";
 import { Box, CircularProgress } from "@mui/material";
+import { WorkFormState } from "../../Experience/Work";
+import { WorkItem } from "../../../generated/graphql";
+import styles from "./AdminIcon.module.scss";
 
 type AdminIconsProps = {
-  setShowForm: (value: ProjectFormState) => void;
+  setShowForm: (value: any) => void;
   onDelete: () => void;
-  project: Project;
+  formItem: Project | WorkItem;
   loading: boolean;
 };
 
 const AdminIcons: React.FC<AdminIconsProps> = ({
-  project,
+  formItem,
   setShowForm,
   loading,
   onDelete,
@@ -28,7 +30,7 @@ const AdminIcons: React.FC<AdminIconsProps> = ({
         onClick={() =>
           setShowForm({
             visible: true,
-            project,
+            formItem,
           })
         }
       />

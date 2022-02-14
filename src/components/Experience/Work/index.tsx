@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import WorkItemForm from "./Form";
 import WorkItemContent from "./Item";
 
-// import { WorkItem } from "../../../types/experience";
 import { useWorkItemsQuery, WorkItem } from "../../../generated/graphql";
 
 type WorkItemsProps = {};
@@ -20,7 +19,7 @@ const DEFAULT_WORK_ITEM: WorkItem = {
 
 export type WorkFormState = {
   visible: boolean;
-  workItem: WorkItem;
+  formItem: WorkItem;
 };
 
 const WorkItems: React.FC<WorkItemsProps> = () => {
@@ -29,13 +28,13 @@ const WorkItems: React.FC<WorkItemsProps> = () => {
 
   const [showForm, setShowForm] = useState<WorkFormState>({
     visible: false,
-    workItem: DEFAULT_WORK_ITEM,
+    formItem: DEFAULT_WORK_ITEM,
   });
 
   return (
     <Box padding="10px 0px">
       {showForm.visible ? (
-        <WorkItemForm workItem={showForm.workItem} setShowForm={setShowForm} />
+        <WorkItemForm workItem={showForm.formItem} setShowForm={setShowForm} />
       ) : (
         <Box
           display="flex"
@@ -48,14 +47,14 @@ const WorkItems: React.FC<WorkItemsProps> = () => {
             onClick={() =>
               setShowForm({
                 visible: true,
-                workItem: DEFAULT_WORK_ITEM,
+                formItem: DEFAULT_WORK_ITEM,
               })
             }
           >
             Create Work Item
           </button>
           {data?.workItems.map((item) => (
-            <WorkItemContent workItem={item} />
+            <WorkItemContent workItem={item} setShowForm={setShowForm} />
           ))}
         </Box>
       )}
