@@ -5,9 +5,9 @@ import { withApollo } from "../util/withApollo";
 
 import SubNav from "../components/Navbar/SubNav";
 import { useAuth } from "../hooks/useAuth";
-import { WorkItem } from "../types/experience";
-import { Box } from "@mui/material";
+
 import WorkItems from "../components/Experience/Work";
+import Education from "../components/Experience/Education";
 
 interface ExperiencePageProps {
   setShowForm: any;
@@ -24,7 +24,7 @@ const Experience: NextPage = () => {
     <Layout>
       <SubNav items={navItems} selected={navItem} setItem={setNavItem} />
       {navItem === "WORK" && <WorkItems authKey={authKey} />}
-      {/* {navItem === "EDUCATION" && <span>Education Items</span>} */}
+      {navItem === "EDUCATION" && <Education authKey={authKey} />}
     </Layout>
   );
 };

@@ -52,17 +52,19 @@ const WorkItems: React.FC<WorkItemsProps> = ({ authKey }) => {
           justifyContent="center"
           alignItems="center"
         >
-          <button
-            className="btn_primary"
-            onClick={() =>
-              setShowForm({
-                visible: true,
-                formItem: DEFAULT_WORK_ITEM,
-              })
-            }
-          >
-            Create Work Item
-          </button>
+          {authKey && (
+            <button
+              className="btn_primary"
+              onClick={() =>
+                setShowForm({
+                  visible: true,
+                  formItem: DEFAULT_WORK_ITEM,
+                })
+              }
+            >
+              Create Work Item
+            </button>
+          )}
           {data?.workItems.map((item) => (
             <WorkItemContent
               workItem={item}

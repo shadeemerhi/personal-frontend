@@ -21,6 +21,16 @@ export type Scalars = {
   Upload: any;
 };
 
+export type EducationItem = {
+  __typename?: 'EducationItem';
+  _id?: Maybe<Scalars['String']>;
+  endDate?: Maybe<Scalars['DateTime']>;
+  inProgress: Scalars['Boolean'];
+  schoolName: Scalars['String'];
+  startDate: Scalars['DateTime'];
+  title: Scalars['String'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createProject: Project;
@@ -117,6 +127,7 @@ export type Project = {
 
 export type Query = {
   __typename?: 'Query';
+  educationItems: Array<EducationItem>;
   project: Project;
   projects: Array<Project>;
   user: UserResponse;
