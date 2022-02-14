@@ -72,7 +72,7 @@ const EducationItem: React.FC<EducationItemProps> = ({
               educationItem.endDate
             )}
           </span>
-          {true && (
+          {authKey && (
             <Box display="flex" justifyContent="flex-end">
               <AdminIcons
                 formItem={educationItem}

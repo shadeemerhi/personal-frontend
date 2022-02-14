@@ -42,6 +42,7 @@ const Education: React.FC<EducationProps> = ({ authKey }) => {
         <EducationForm
           educationItem={showForm.formItem}
           setShowForm={setShowForm}
+          editing={!!showForm.formItem._id}
           authKey={authKey}
         />
       ) : (
@@ -52,17 +53,19 @@ const Education: React.FC<EducationProps> = ({ authKey }) => {
           alignItems="center"
         >
           <Box mb={2}>
-            <button
-              className="btn_primary"
-              onClick={() =>
-                setShowForm({
-                  visible: true,
-                  formItem: DEFAULT_EDUCATION_ITEM,
-                })
-              }
-            >
-              Create Education Item
-            </button>
+            {authKey && (
+              <button
+                className="btn_primary"
+                onClick={() =>
+                  setShowForm({
+                    visible: true,
+                    formItem: DEFAULT_EDUCATION_ITEM,
+                  })
+                }
+              >
+                Create Education Item
+              </button>
+            )}
           </Box>
           {data?.educationItems.map((item, index) => (
             <EducationItemContent

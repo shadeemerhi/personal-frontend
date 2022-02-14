@@ -49,6 +49,7 @@ export type Mutation = {
   deleteEducationItem: Scalars['Boolean'];
   deleteProject: Scalars['Boolean'];
   deleteWorkItem: Scalars['Boolean'];
+  updateEducationItem: EducationItem;
   updateProject: Project;
   updateUser: User;
   updateWorkItem: WorkItem;
@@ -94,6 +95,12 @@ export type MutationDeleteProjectArgs = {
 export type MutationDeleteWorkItemArgs = {
   _id: Scalars['String'];
   adminKey: Scalars['String'];
+};
+
+
+export type MutationUpdateEducationItemArgs = {
+  adminKey: Scalars['String'];
+  input: EducationItemInput;
 };
 
 
@@ -292,6 +299,14 @@ export type DeleteWorkItemMutationVariables = Exact<{
 
 
 export type DeleteWorkItemMutation = { __typename?: 'Mutation', deleteWorkItem: boolean };
+
+export type UpdateEducationItemMutationVariables = Exact<{
+  input: EducationItemInput;
+  adminKey: Scalars['String'];
+}>;
+
+
+export type UpdateEducationItemMutation = { __typename?: 'Mutation', updateEducationItem: { __typename?: 'EducationItem', _id?: string | null | undefined, schoolName: string, title: string, startDate: any, endDate?: any | null | undefined, inProgress: boolean } };
 
 export type UpdateProjectMutationVariables = Exact<{
   input: UpdateProjectInput;
@@ -585,6 +600,45 @@ export function useDeleteWorkItemMutation(baseOptions?: Apollo.MutationHookOptio
 export type DeleteWorkItemMutationHookResult = ReturnType<typeof useDeleteWorkItemMutation>;
 export type DeleteWorkItemMutationResult = Apollo.MutationResult<DeleteWorkItemMutation>;
 export type DeleteWorkItemMutationOptions = Apollo.BaseMutationOptions<DeleteWorkItemMutation, DeleteWorkItemMutationVariables>;
+export const UpdateEducationItemDocument = gql`
+    mutation UpdateEducationItem($input: EducationItemInput!, $adminKey: String!) {
+  updateEducationItem(input: $input, adminKey: $adminKey) {
+    _id
+    schoolName
+    title
+    startDate
+    endDate
+    inProgress
+  }
+}
+    `;
+export type UpdateEducationItemMutationFn = Apollo.MutationFunction<UpdateEducationItemMutation, UpdateEducationItemMutationVariables>;
+
+/**
+ * __useUpdateEducationItemMutation__
+ *
+ * To run a mutation, you first call `useUpdateEducationItemMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateEducationItemMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateEducationItemMutation, { data, loading, error }] = useUpdateEducationItemMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *      adminKey: // value for 'adminKey'
+ *   },
+ * });
+ */
+export function useUpdateEducationItemMutation(baseOptions?: Apollo.MutationHookOptions<UpdateEducationItemMutation, UpdateEducationItemMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateEducationItemMutation, UpdateEducationItemMutationVariables>(UpdateEducationItemDocument, options);
+      }
+export type UpdateEducationItemMutationHookResult = ReturnType<typeof useUpdateEducationItemMutation>;
+export type UpdateEducationItemMutationResult = Apollo.MutationResult<UpdateEducationItemMutation>;
+export type UpdateEducationItemMutationOptions = Apollo.BaseMutationOptions<UpdateEducationItemMutation, UpdateEducationItemMutationVariables>;
 export const UpdateProjectDocument = gql`
     mutation UpdateProject($input: UpdateProjectInput!, $adminKey: String!) {
   updateProject(input: $input, adminKey: $adminKey) {

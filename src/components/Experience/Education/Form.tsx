@@ -3,6 +3,7 @@ import { EducationFormState } from ".";
 import {
   EducationItem,
   useCreateEducationItemMutation,
+  useUpdateEducationItemMutation,
 } from "../../../generated/graphql";
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -38,6 +39,15 @@ const Form: React.FC<FormProps> = ({
     },
   ] = useCreateEducationItemMutation();
 
+  const [
+    updateEducationItem,
+    {
+      data: updateEducationItemData,
+      loading: updateEducationItemLoading,
+      error: updateEducationItemError,
+    },
+  ] = useUpdateEducationItemMutation();
+
   const handleChange = (
     field: string,
     value: string | boolean | Date | null | undefined
@@ -65,7 +75,21 @@ const Form: React.FC<FormProps> = ({
     }
   };
 
-  const onUpdateEducationItem = async () => {};
+  const onUpdateEducationItem = async () => {
+    const updatedItem = { ...currentItem };
+    delete updatedItem.__typename;
+    try {
+      const { data, errors } = await updateEducationItem({
+        variables: {
+          input: updatedItem,
+          adminKey: authKey,
+        },
+      });
+      console.log("HERE IS UPDATE RESPONSE", data, errors);
+    } catch (error) {
+      console.log("updateEducationItem error", error);
+    }
+  };
 
   const onSubmit = () => {
     editing ? onUpdateEducationItem() : onCreateEducationItem();
@@ -84,7 +108,7 @@ const Form: React.FC<FormProps> = ({
       />
       <Box className={`${styles.outer_form_container} custom_form`} mb={10}>
         <h3 className="heavy_text">
-          {false ? "Update Project" : "Create New Work Item"}
+          {editing ? "Update Education Item" : "Create New Education Item"}
         </h3>
         <Box>
           <Box
@@ -120,10 +144,12 @@ const Form: React.FC<FormProps> = ({
             handleChange={handleChange}
           />
         </Box>
-        {createEducationItemData && (
+        {(createEducationItemData || updateEducationItemData) && (
           <Box mb={2} mt={2}>
             <Alert severity="success">
-              {`Item successfully ${true ? "created" : "updated"}`}
+              {`Item successfully ${
+                createEducationItemData ? "created" : "updated"
+              }`}
               {". "}
               <span
                 className="heavy_text pointer"
@@ -139,7 +165,9 @@ const Form: React.FC<FormProps> = ({
             </Alert>
           </Box>
         )}
-        {(createEducationItemError || incompleteItem) && (
+        {(createEducationItemError ||
+          updateEducationItemError ||
+          incompleteItem) && (
           <Box mb={2} mt={2}>
             <Alert severity="error">
               {incompleteItem
@@ -156,7 +184,7 @@ const Form: React.FC<FormProps> = ({
           className={styles.submit_container}
         >
           <button className="btn_primary submit_button" onClick={onSubmit}>
-            {createEducationItemLoading ? (
+            {createEducationItemLoading || updateEducationItemLoading ? (
               <CircularProgress size={18} color="inherit" />
             ) : (
               <>{editing ? "Save Item" : "Create Item"}</>

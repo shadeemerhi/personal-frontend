@@ -1,0 +1,10 @@
+mutation UpdateEducationItem($input: EducationItemInput!, $adminKey: String!) {
+  updateEducationItem(input: $input, adminKey: $adminKey) {
+    _id
+    schoolName
+    title
+    startDate
+    endDate
+    inProgress
+  }
+}

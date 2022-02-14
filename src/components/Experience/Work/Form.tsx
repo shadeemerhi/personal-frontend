@@ -126,7 +126,7 @@ const WorkItemForm: React.FC<FormProps> = ({
       />
       <Box className={`${styles.outer_form_container} custom_form`} mb={10}>
         <h3 className="heavy_text">
-          {false ? "Update Project" : "Create New Work Item"}
+          {editing ? "Update Work Item" : "Create New Work Item"}
         </h3>
         <Box>
           <Box
