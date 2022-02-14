@@ -7,13 +7,13 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { ProjectFormState } from "../../../pages/projects";
 import { Box, CircularProgress } from "@mui/material";
 import { WorkFormState } from "../../Experience/Work";
-import { WorkItem } from "../../../generated/graphql";
+import { EducationItem, WorkItem } from "../../../generated/graphql";
 import styles from "./AdminIcon.module.scss";
 
 type AdminIconsProps = {
   setShowForm: (value: any) => void;
   onDelete: () => void;
-  formItem: Project | WorkItem;
+  formItem: Project | WorkItem | EducationItem;
   loading: boolean;
 };
 

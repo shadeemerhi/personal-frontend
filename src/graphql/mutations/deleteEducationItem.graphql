@@ -1,0 +1,3 @@
+mutation DeleteEducationItem($_id: String!, $adminKey: String!) {
+  deleteEducationItem(_id: $_id, adminKey: $adminKey)
+}
