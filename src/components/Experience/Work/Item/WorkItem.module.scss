@@ -36,7 +36,8 @@
     .title_container {
       display: flex;
       flex-direction: column;
-      align-items: flex-end;
+      text-align: right;
+      font-size: main.$sm-text;
 
       span {
         margin-bottom: 4px;

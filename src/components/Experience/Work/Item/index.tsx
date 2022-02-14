@@ -4,18 +4,19 @@ import {
   WorkItem,
 } from "../../../../generated/graphql";
 
+import { Alert, Box } from "@mui/material";
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import PauseCircleOutlineIcon from "@mui/icons-material/PauseCircleOutline";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 
 import { getProjectDateString } from "../../../../util/formatDates";
 
-import classNames from "classnames";
-import styles from "./WorkItem.module.scss";
-import { Alert, Box } from "@mui/material";
 import AdminIcons from "../../../Project/Item/AdminIcons";
 import { WorkFormState } from "..";
 import { ProjectFormState } from "../../../../pages/projects";
+
+import styles from "./WorkItem.module.scss";
+import classNames from "classnames";
 
 type WorkItemProps = {
   workItem: WorkItem;
@@ -78,11 +79,11 @@ const WorkItem: React.FC<WorkItemProps> = ({
           )}
           <div className={styles.title_container}>
             <span className="heavy_text md_text">{workItem.companyName}</span>
-            <span className="sm_text">{workItem.title}</span>
-            <span className="sm_text grey_text">
+            <span>{workItem.title}</span>
+            <span className="grey_text">
               {getProjectDateString(workItem.startDate, workItem.endDate)}
             </span>
-            <span className="sm_text grey_text">{workItem.location}</span>
+            <span className="grey_text">{workItem.location}</span>
           </div>
         </div>
         {play && (
