@@ -12,8 +12,9 @@ type SubNavProps = {
 const SubNav: React.FC<SubNavProps> = ({ items, selected, setItem }) => {
   return (
     <div className={styles.sub_nav}>
-      {items.map((item) => (
+      {items.map((item, index) => (
         <span
+          key={index}
           className={classNames({
             [styles.nav_item]: true,
             pointer: true,

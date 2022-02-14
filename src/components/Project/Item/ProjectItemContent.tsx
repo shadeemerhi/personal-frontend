@@ -74,8 +74,9 @@ const ProjectItemContent: React.FC<ProjectItemContentProps> = ({
               >
                 Front:
               </span>
-              {project.stack.frontend.map((item: string) => (
+              {project.stack.frontend.map((item: string, index: number) => (
                 <StackItem
+                  key={index}
                   name={item}
                   category="Frontend"
                   borderColor="white"
@@ -88,10 +89,11 @@ const ProjectItemContent: React.FC<ProjectItemContentProps> = ({
               >
                 Back:
               </span>
-              {project.stack.backend.map((item: string) => (
+              {project.stack.backend.map((item: string, index: number) => (
                 <StackItem
+                  key={index}
                   name={item}
-                  category="Frontend"
+                  category="Backend"
                   borderColor="white"
                 />
               ))}
@@ -103,10 +105,11 @@ const ProjectItemContent: React.FC<ProjectItemContentProps> = ({
                 >
                   Other:
                 </span>
-                {project.stack.other.map((item: string) => (
+                {project.stack.other.map((item: string, index: number) => (
                   <StackItem
+                    key={index}
                     name={item}
-                    category="Frontend"
+                    category="Other"
                     borderColor="white"
                   />
                 ))}
