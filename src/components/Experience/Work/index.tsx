@@ -34,7 +34,11 @@ const WorkItems: React.FC<WorkItemsProps> = () => {
   return (
     <Box padding="10px 0px">
       {showForm.visible ? (
-        <WorkItemForm workItem={showForm.formItem} setShowForm={setShowForm} />
+        <WorkItemForm
+          workItem={showForm.formItem}
+          setShowForm={setShowForm}
+          editing={!!showForm.formItem._id}
+        />
       ) : (
         <Box
           display="flex"

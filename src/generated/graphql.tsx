@@ -29,6 +29,7 @@ export type Mutation = {
   deleteProject: Scalars['Boolean'];
   updateProject: Project;
   updateUser: User;
+  updateWorkItem: WorkItem;
 };
 
 
@@ -65,6 +66,12 @@ export type MutationUpdateProjectArgs = {
 export type MutationUpdateUserArgs = {
   adminKey: Scalars['String'];
   input: UpdateUserInput;
+};
+
+
+export type MutationUpdateWorkItemArgs = {
+  adminKey: Scalars['String'];
+  input: WorkItemInput;
 };
 
 export type NewProjectInput = {
@@ -236,6 +243,14 @@ export type UpdateUserMutationVariables = Exact<{
 
 export type UpdateUserMutation = { __typename?: 'Mutation', updateUser: { __typename?: 'User', _id: string, title: string, photoURL: string, githubLink: string, linkedInLink: string, email: string, preBio: string, bio: string, updatedAt: string } };
 
+export type UpdateWorkItemMutationVariables = Exact<{
+  input: WorkItemInput;
+  adminKey: Scalars['String'];
+}>;
+
+
+export type UpdateWorkItemMutation = { __typename?: 'Mutation', updateWorkItem: { __typename?: 'WorkItem', _id?: string | null | undefined, companyName: string, title: string, startDate: any, endDate?: any | null | undefined, inProgress: boolean, location: string, description: Array<string> } };
+
 export type ProjectsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -251,7 +266,7 @@ export type UserQuery = { __typename?: 'Query', user: { __typename?: 'UserRespon
 export type WorkItemsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type WorkItemsQuery = { __typename?: 'Query', workItems: Array<{ __typename?: 'WorkItem', companyName: string, title: string, startDate: any, endDate?: any | null | undefined, inProgress: boolean, location: string, description: Array<string> }> };
+export type WorkItemsQuery = { __typename?: 'Query', workItems: Array<{ __typename?: 'WorkItem', _id?: string | null | undefined, companyName: string, title: string, startDate: any, endDate?: any | null | undefined, inProgress: boolean, location: string, description: Array<string> }> };
 
 
 export const CreateProjectDocument = gql`
@@ -481,6 +496,47 @@ export function useUpdateUserMutation(baseOptions?: Apollo.MutationHookOptions<U
 export type UpdateUserMutationHookResult = ReturnType<typeof useUpdateUserMutation>;
 export type UpdateUserMutationResult = Apollo.MutationResult<UpdateUserMutation>;
 export type UpdateUserMutationOptions = Apollo.BaseMutationOptions<UpdateUserMutation, UpdateUserMutationVariables>;
+export const UpdateWorkItemDocument = gql`
+    mutation UpdateWorkItem($input: WorkItemInput!, $adminKey: String!) {
+  updateWorkItem(input: $input, adminKey: $adminKey) {
+    _id
+    companyName
+    title
+    startDate
+    endDate
+    inProgress
+    location
+    description
+  }
+}
+    `;
+export type UpdateWorkItemMutationFn = Apollo.MutationFunction<UpdateWorkItemMutation, UpdateWorkItemMutationVariables>;
+
+/**
+ * __useUpdateWorkItemMutation__
+ *
+ * To run a mutation, you first call `useUpdateWorkItemMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateWorkItemMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateWorkItemMutation, { data, loading, error }] = useUpdateWorkItemMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *      adminKey: // value for 'adminKey'
+ *   },
+ * });
+ */
+export function useUpdateWorkItemMutation(baseOptions?: Apollo.MutationHookOptions<UpdateWorkItemMutation, UpdateWorkItemMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateWorkItemMutation, UpdateWorkItemMutationVariables>(UpdateWorkItemDocument, options);
+      }
+export type UpdateWorkItemMutationHookResult = ReturnType<typeof useUpdateWorkItemMutation>;
+export type UpdateWorkItemMutationResult = Apollo.MutationResult<UpdateWorkItemMutation>;
+export type UpdateWorkItemMutationOptions = Apollo.BaseMutationOptions<UpdateWorkItemMutation, UpdateWorkItemMutationVariables>;
 export const ProjectsDocument = gql`
     query Projects {
   projects {
@@ -584,6 +640,7 @@ export type UserQueryResult = Apollo.QueryResult<UserQuery, UserQueryVariables>;
 export const WorkItemsDocument = gql`
     query WorkItems {
   workItems {
+    _id
     companyName
     title
     startDate

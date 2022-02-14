@@ -1,0 +1,12 @@
+mutation UpdateWorkItem($input: WorkItemInput!, $adminKey: String!) {
+  updateWorkItem(input: $input, adminKey: $adminKey) {
+    _id
+    companyName
+    title
+    startDate
+    endDate
+    inProgress
+    location
+    description
+  }
+}

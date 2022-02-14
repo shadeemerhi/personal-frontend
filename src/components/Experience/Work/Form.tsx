@@ -11,6 +11,7 @@ import Description from "./Description";
 import styles from "../../Project/ProjectForm.module.scss";
 import {
   useCreateWorkItemMutation,
+  useUpdateWorkItemMutation,
   WorkItem,
 } from "../../../generated/graphql";
 import { validateWorkItem } from "../../../util/validateSubmissions";
@@ -18,9 +19,14 @@ import { validateWorkItem } from "../../../util/validateSubmissions";
 type FormProps = {
   setShowForm: (value: any) => void;
   workItem: WorkItem;
+  editing?: boolean;
 };
 
-const WorkItemForm: React.FC<FormProps> = ({ workItem, setShowForm }) => {
+const WorkItemForm: React.FC<FormProps> = ({
+  workItem,
+  setShowForm,
+  editing,
+}) => {
   const [currentItem, setCurrentItem] = useState(workItem);
   const [incompleteItem, setIncompleteItem] = useState(false);
   const [
@@ -31,7 +37,15 @@ const WorkItemForm: React.FC<FormProps> = ({ workItem, setShowForm }) => {
       error: createWorkItemError,
     },
   ] = useCreateWorkItemMutation();
-  console.log("here is loading state hehe", createWorkItemLoading);
+
+  const [
+    updateWorkItem,
+    {
+      data: updateWorkItemData,
+      loading: updateWorkItemLoading,
+      error: updateWorkItemError,
+    },
+  ] = useUpdateWorkItemMutation();
 
   const handleChange = (
     field: string,
@@ -53,7 +67,7 @@ const WorkItemForm: React.FC<FormProps> = ({ workItem, setShowForm }) => {
     }));
   };
 
-  const onSubmit = async () => {
+  const onCreateWorkItem = async () => {
     if (!validateWorkItem(currentItem)) {
       setIncompleteItem(true);
       return;
@@ -74,6 +88,26 @@ const WorkItemForm: React.FC<FormProps> = ({ workItem, setShowForm }) => {
     } catch (error) {
       console.log("createWorkItem error", error);
     }
+  };
+
+  const onUpdateWorkItem = async () => {
+    const updatedItem = { ...currentItem };
+    delete updatedItem.__typename;
+    try {
+      const { data, errors } = await updateWorkItem({
+        variables: {
+          input: updatedItem,
+          adminKey: "shadman",
+        },
+      });
+      console.log("HERE IS UPDATE RESPONSE", data, errors);
+    } catch (error) {
+      console.log("updateWorkItem error", error);
+    }
+  };
+
+  const onSubmit = () => {
+    editing ? onUpdateWorkItem() : onCreateWorkItem();
   };
 
   return (
@@ -142,14 +176,15 @@ const WorkItemForm: React.FC<FormProps> = ({ workItem, setShowForm }) => {
             handleChange={handleDescriptionChange}
           />
         </Box>
-        {createWorkItemData && (
-          <Box mb={2} mt={2}>
-            <Alert severity="success">{`Item successfully ${
-              createWorkItemData ? "created" : "updated"
-            }`}</Alert>
-          </Box>
-        )}
-        {(createWorkItemError || incompleteItem) && (
+        {createWorkItemData ||
+          (updateWorkItemData && (
+            <Box mb={2} mt={2}>
+              <Alert severity="success">{`Item successfully ${
+                createWorkItemData ? "created" : "updated"
+              }`}</Alert>
+            </Box>
+          ))}
+        {(createWorkItemError || updateWorkItemError || incompleteItem) && (
           <Box mb={2} mt={2}>
             <Alert severity="error">
               {incompleteItem
@@ -166,10 +201,10 @@ const WorkItemForm: React.FC<FormProps> = ({ workItem, setShowForm }) => {
           className={styles.submit_container}
         >
           <button className="btn_primary submit_button" onClick={onSubmit}>
-            {createWorkItemLoading ? (
+            {createWorkItemLoading || updateWorkItemLoading ? (
               <CircularProgress size={18} color="inherit" />
             ) : (
-              "Create Item"
+              <>{editing ? "Save Item" : "Create Item"}</>
             )}
           </button>
         </Box>
