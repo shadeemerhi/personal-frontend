@@ -41,7 +41,7 @@ const AuthProvider: React.FC<UseAuthProps> = ({ children }) => {
 
   useEffect(() => {
     if (router.pathname.includes("admin") && !authKey) {
-      router.push("/");
+      router.replace("/");
     }
   }, []);
 

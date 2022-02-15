@@ -3,17 +3,20 @@ import React from "react";
 import Profile from "../components/Admin/Profile";
 import Layout from "../components/Layout";
 import { useUserQuery } from "../generated/graphql";
-import { User } from "../types/project";
+import { useAuth } from "../hooks/useAuth";
 import { withApollo } from "../util/withApollo";
 
 const Admin: React.FC<{}> = () => {
-  const { data, error, loading } = useUserQuery({
+  const { data } = useUserQuery({
     variables: { _id: "421f6412-edf9-4ef8-b131-8e957901ce2a" },
   });
-  console.log("here is data", data);
+
+  const { authKey } = useAuth();
 
   return (
-    <Layout>{data?.user.user && <Profile profile={data?.user.user} />}</Layout>
+    <Layout>
+      {data?.user.user && authKey && <Profile profile={data?.user.user} />}
+    </Layout>
   );
 };
 export default withApollo({ ssr: true })(Admin);
