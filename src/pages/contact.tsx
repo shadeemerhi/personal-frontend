@@ -16,7 +16,6 @@ const Contact: React.FC<{}> = () => {
       _id: "421f6412-edf9-4ef8-b131-8e957901ce2a",
     },
   });
-  console.log("HERE IS DATA", data);
 
   return (
     <Layout>

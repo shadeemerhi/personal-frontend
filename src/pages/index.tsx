@@ -10,7 +10,8 @@ import SubNav from "../components/Navbar/SubNav";
 import classNames from "classnames";
 import styles from "../styles/Home.module.scss";
 
-const navItems = ["ABOUT", "SKILLS"];
+// Removed skills - can add more sections as/if needed
+const navItems = ["ABOUT"];
 
 const Home: NextPage = () => {
   const [navItem, setNavItem] = useState("ABOUT");
