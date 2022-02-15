@@ -1,0 +1,20 @@
+@use "./main.scss";
+@import "./mixins";
+
+.contact_item {
+  display: flex;
+  align-items: center;
+  transition: 0.2s ease-in-out;
+  width: fit-content;
+  margin-bottom: 20px;
+  cursor: pointer;
+
+  .icon {
+    font-size: 22pt;
+    margin-right: 8px;
+  }
+
+  &:hover {
+    color: main.$main-color;
+  }
+}
