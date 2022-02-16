@@ -74,11 +74,15 @@ const Stack: React.FC<StackProps> = ({ stack, handleChange }) => {
               <span className="sm_text">
                 {category.charAt(0).toUpperCase() + category.slice(1)}
               </span>
+              {/*
+              // @ts-ignore */}
               {!stack[category].length && (
                 <span className="italic_text grey_text xs_text">No items</span>
               )}
             </Box>
             <Box display="flex" flexWrap="wrap">
+              {/*
+              // @ts-ignore */}
               {stack[category].map((itemName: string, index: number) => (
                 <StackItem
                   key={index}
