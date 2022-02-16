@@ -31,6 +31,7 @@ const Header: React.FC<HeaderProps> = () => {
         <div className={styles.icon_container}>
           <a
             target="_blank"
+            rel="noreferrer"
             href={data?.user.user?.githubLink}
             className={styles.icon_item}
           >
@@ -39,6 +40,7 @@ const Header: React.FC<HeaderProps> = () => {
           </a>
           <a
             target="_blank"
+            rel="noreferrer"
             href={data?.user.user?.linkedInLink}
             className={styles.icon_item}
           >
@@ -47,6 +49,7 @@ const Header: React.FC<HeaderProps> = () => {
           </a>
           <a
             target="_blank"
+            rel="noreferrer"
             href={`mailto: ${data?.user.user?.email}`}
             className={styles.icon_item}
           >

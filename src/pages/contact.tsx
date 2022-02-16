@@ -21,6 +21,7 @@ const Contact: React.FC<{}> = () => {
     <Layout>
       <a
         target="_blank"
+        rel="noreferrer"
         href={`mailto: ${data?.user.user?.email}`}
         className={styles.contact_item}
       >
@@ -29,6 +30,7 @@ const Contact: React.FC<{}> = () => {
       </a>
       <a
         target="_blank"
+        rel="noreferrer"
         href={data?.user.user?.linkedInLink}
         className={styles.contact_item}
       >
@@ -38,6 +40,7 @@ const Contact: React.FC<{}> = () => {
 
       <a
         target="_blank"
+        rel="noreferrer"
         href={data?.user.user?.githubLink}
         className={styles.contact_item}
       >
