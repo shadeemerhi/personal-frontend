@@ -65,8 +65,9 @@ const WorkItems: React.FC<WorkItemsProps> = ({ authKey }) => {
               Create Work Item
             </button>
           )}
-          {data?.workItems.map((item) => (
+          {data?.workItems.map((item, index) => (
             <WorkItemContent
+              key={index}
               workItem={item}
               setShowForm={setShowForm}
               authKey={authKey}

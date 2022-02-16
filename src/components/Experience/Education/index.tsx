@@ -69,6 +69,7 @@ const Education: React.FC<EducationProps> = ({ authKey }) => {
           </Box>
           {data?.educationItems.map((item, index) => (
             <EducationItemContent
+              key={index}
               educationItem={item}
               setShowForm={setShowForm}
               authKey={authKey}

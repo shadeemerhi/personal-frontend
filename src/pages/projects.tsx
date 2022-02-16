@@ -41,10 +41,6 @@ const Projects: NextPage = () => {
 
   if (error) return <div>There was an error sad face</div>;
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [showForm]);
-
   return (
     <Layout>
       {showForm.visible ? (

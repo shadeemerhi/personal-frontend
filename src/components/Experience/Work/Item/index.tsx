@@ -88,8 +88,8 @@ const WorkItem: React.FC<WorkItemProps> = ({
         </div>
         {play && (
           <>
-            {workItem.description.map((item) => (
-              <Box display="flex" alignItems="flex-start" mb={1}>
+            {workItem.description.map((item, index) => (
+              <Box key={index} display="flex" alignItems="flex-start" mb={1}>
                 <span className="xs_text" style={{ marginRight: "4px" }}>
                   <FiberManualRecordIcon sx={{ fontSize: "6pt" }} />
                 </span>

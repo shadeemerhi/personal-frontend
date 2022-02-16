@@ -37,8 +37,13 @@ const GithubLinks: React.FC<GithubLinksProps> = ({
         />
       </form>
       <Box mt={2}>
-        {repositoryLinks.map((link) => (
-          <Box display="flex" justifyContent="space-between" alignItems='center'>
+        {repositoryLinks.map((link, index) => (
+          <Box
+            key={index}
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+          >
             <span className="light_text sm_text">{link}</span>
             <ClearIcon
               className="pointer"

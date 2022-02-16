@@ -37,8 +37,9 @@ const Description: React.FC<DescriptionProps> = ({
         />
       </form>
       <Box mt={2}>
-        {description.map((item) => (
+        {description.map((item, index) => (
           <Box
+            key={index}
             display="flex"
             justifyContent="space-between"
             alignItems="center"
