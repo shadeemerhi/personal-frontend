@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 
 type AuthModalProps = {
-  handleClose?: (value: boolean) => void;
+  handleClose?: () => void;
 };
 
 const AuthModal: React.FC<AuthModalProps> = ({ handleClose }) => {
@@ -15,7 +15,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ handleClose }) => {
     event.preventDefault();
     setKey("");
     const verified = verifyKey(key);
-    if (verified) handleClose();
+    if (verified) handleClose!();
   };
 
   return (
