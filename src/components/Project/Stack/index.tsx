@@ -1,7 +1,6 @@
 import { Box } from "@mui/material";
 import React, { useState } from "react";
 import { Stack, StackInputItem } from "../../../types/project";
-import ClearIcon from "@mui/icons-material/Clear";
 import StackItem from "./StackItem";
 
 import styles from "../ProjectForm.module.scss";
@@ -16,6 +15,7 @@ const Stack: React.FC<StackProps> = ({ stack, handleChange }) => {
     name: "",
     category: "frontend",
   });
+
   const onAddItem = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!item) return;
@@ -26,7 +26,6 @@ const Stack: React.FC<StackProps> = ({ stack, handleChange }) => {
     });
   };
 
-  type TestType = keyof Stack;
   return (
     <Box
       className={styles.input_container}
@@ -74,15 +73,11 @@ const Stack: React.FC<StackProps> = ({ stack, handleChange }) => {
               <span className="sm_text">
                 {category.charAt(0).toUpperCase() + category.slice(1)}
               </span>
-              {/*
-              // @ts-ignore */}
               {!stack[category].length && (
                 <span className="italic_text grey_text xs_text">No items</span>
               )}
             </Box>
             <Box display="flex" flexWrap="wrap">
-              {/*
-              // @ts-ignore */}
               {stack[category].map((itemName: string, index: number) => (
                 <StackItem
                   key={index}

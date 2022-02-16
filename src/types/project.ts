@@ -2,6 +2,7 @@ export type Stack = {
   frontend: string[];
   backend: string[];
   other: string[];
+  [key: string]: any;
 };
 
 export type StackInputItem = {
