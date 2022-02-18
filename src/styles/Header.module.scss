@@ -4,6 +4,7 @@
 .root {
   position: relative;
   height: 260px;
+  margin-top: 48px;
   overflow: hidden;
 
   .text_icon_container {
@@ -86,6 +87,7 @@
 @include sm {
   .root {
     height: 420px;
+    margin-top: 0;
 
     .text_icon_container {
       .name {
