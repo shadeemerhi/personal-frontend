@@ -2,11 +2,11 @@ import React from "react";
 import Layout from "../components/Layout";
 import { withApollo } from "../util/withApollo";
 
-const Blog: React.FC<{}> = () => {
+const Channel: React.FC<{}> = () => {
   return (
     <Layout>
-      <span>Blog coming soon!</span>
+      <span>Currently integrating the YouTube Data API. Coming soon!</span>
     </Layout>
   );
 };
-export default withApollo({ ssr: true })(Blog);
+export default withApollo({ ssr: true })(Channel);

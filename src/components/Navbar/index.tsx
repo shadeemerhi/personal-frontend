@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import HomeIcon from "@mui/icons-material/Home";
 import CodeIcon from "@mui/icons-material/Code";
-import ArticleIcon from "@mui/icons-material/Article";
+import YouTubeIcon from "@mui/icons-material/YouTube";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import LockIcon from "@mui/icons-material/Lock";
@@ -33,9 +33,9 @@ const navItems = [
     icon: WorkOutlineIcon,
   },
   {
-    text: "Blog",
-    route: "/blog",
-    icon: ArticleIcon,
+    text: "Channel",
+    route: "/channel",
+    icon: YouTubeIcon,
   },
   {
     text: "Contact",
