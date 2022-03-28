@@ -4,10 +4,12 @@ import { Alert, Box, CircularProgress, Stack } from "@mui/material";
 import axios from "axios";
 import ReactPlayer from "react-player";
 import Layout from "../components/Layout";
-import styles from "../styles/Channel.module.scss";
+import styles from "../styles/Youtube.module.scss";
 import { withApollo } from "../util/withApollo";
+import VideoElem from "../components/Youtube/VideoElem";
 
-const Youtube: React.FC<{}> = () => {
+const Youtube: React.FC<{}> = (props) => {
+  // Will be moved to custom hook
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -18,7 +20,7 @@ const Youtube: React.FC<{}> = () => {
         const youtube = axios.create({
           baseURL: "https://www.googleapis.com/youtube/v3",
           params: {
-            maxResults: 5,
+            maxResults: 10,
             key: process.env.NEXT_PUBLIC_YOUTUBE_API_KEY,
           },
         });
@@ -72,20 +74,8 @@ const Youtube: React.FC<{}> = () => {
         </Box>
       ) : (
         <Stack spacing={8} display="flex" alignItems="center" mb={10}>
-          {videos.map((item: any, index) => (
-            <div className={styles.video} key={index}>
-              <ReactPlayer
-                url={`https://www.youtube.com/watch?v=${item.contentDetails.videoId}`}
-                controls
-                height="100%"
-                width="100%"
-                config={{
-                  youtube: {
-                    playerVars: { showinfo: 1 },
-                  },
-                }}
-              />
-            </div>
+          {videos.map((video: any, index) => (
+            <VideoElem key={index} video={video} />
           ))}
         </Stack>
       )}
@@ -97,4 +87,5 @@ const Youtube: React.FC<{}> = () => {
     </Layout>
   );
 };
+
 export default withApollo({ ssr: true })(Youtube);
