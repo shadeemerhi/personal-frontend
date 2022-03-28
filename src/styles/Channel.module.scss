@@ -1,12 +1,48 @@
 @use "./main.scss";
 @import "./_mixins";
 
+.youtube_text_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+
+  a {
+    display: inherit;
+    align-items: inherit;
+  }
+
+  .icon {
+    color: #ff0000;
+    margin-left: 8px;
+    margin-right: 4px;
+    font-size: 30pt !important;
+  }
+}
+
 .video {
-  width: 100%;
-  // height: 246px;
+  width: 380px;
+  height: 214px;
+  margin: 10px;
+}
+
+@include sm {
+  .video {
+    width: 400px;
+    height: 225px;
+  }
 }
 
 @include md {
   .video {
+    width: 540px;
+    height: 304px;
+  }
+}
+
+@include xl {
+  .video {
+    width: 840px;
+    height: 472px;
   }
 }

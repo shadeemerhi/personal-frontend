@@ -23,9 +23,9 @@ const navItems = [
     icon: HomeIcon,
   },
   {
-    text: "Projects",
-    route: "/projects",
-    icon: CodeIcon,
+    text: "Youtube",
+    route: "/youtube",
+    icon: YouTubeIcon,
   },
   {
     text: "Experience",
@@ -33,9 +33,9 @@ const navItems = [
     icon: WorkOutlineIcon,
   },
   {
-    text: "Channel",
-    route: "/channel",
-    icon: YouTubeIcon,
+    text: "Projects",
+    route: "/projects",
+    icon: CodeIcon,
   },
   {
     text: "Contact",
