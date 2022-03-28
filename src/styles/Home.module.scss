@@ -10,5 +10,17 @@
     .section_title {
       margin-bottom: 10px;
     }
+
+    .video_container {
+      display: flex;
+      max-width: 1200px;
+      justify-content: center;
+    }
+
+    @include md {
+      .video_container {
+        justify-content: flex-start;
+      }
+    }
   }
 }

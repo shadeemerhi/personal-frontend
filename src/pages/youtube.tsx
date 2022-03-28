@@ -8,6 +8,7 @@ import styles from "../styles/Youtube.module.scss";
 import { withApollo } from "../util/withApollo";
 import VideoElem from "../components/Youtube/VideoElem";
 import { useYoutube } from "../hooks/useYoutube";
+import ChannelLink from "../components/Youtube/ChannelLink";
 
 const Youtube: React.FC = () => {
   const {
@@ -29,16 +30,7 @@ const Youtube: React.FC = () => {
 
   return (
     <Layout>
-      <div className={styles.youtube_text_container}>
-        <span className="xl_text">Find me on </span>{" "}
-        <a
-          href="https://www.youtube.com/channel/UCxwvyK3-Xs4zvoGWFT_iDmw"
-          target="_blank"
-        >
-          <YouTubeIcon className={styles.icon} />
-          <span className="xl_text pointer heavy_text">Youtube</span>
-        </a>
-      </div>
+      <ChannelLink textSizeClass="xl_text" center />
       {loading ? (
         <Box display="flex" justifyContent="center" alignItems="center">
           <CircularProgress color="inherit" size={100} />

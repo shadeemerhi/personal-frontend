@@ -12,6 +12,7 @@ import styles from "../styles/Home.module.scss";
 import { useYoutube } from "../hooks/useYoutube";
 import { Box, CircularProgress, Stack } from "@mui/material";
 import VideoElem from "../components/Youtube/VideoElem";
+import ChannelLink from "../components/Youtube/ChannelLink";
 
 // Removed skills - can add more sections as/if needed
 const navItems = ["ABOUT"];
@@ -63,10 +64,13 @@ const Home: NextPage = () => {
               <>
                 {latestVideoRelease && (
                   <div className={styles.content_section}>
-                    <span className={`${styles.section_title} heavy_text`}>
+                    <ChannelLink textSizeClass="lg_text" />
+                    <span className={`${styles.section_title}`}>
                       Latest Release
                     </span>
-                    <VideoElem video={latestVideoRelease} />
+                    <div className={styles.video_container}>
+                      <VideoElem video={latestVideoRelease} />
+                    </div>
                   </div>
                 )}
               </>
