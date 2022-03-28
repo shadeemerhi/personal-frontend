@@ -7,53 +7,21 @@ import Layout from "../components/Layout";
 import styles from "../styles/Youtube.module.scss";
 import { withApollo } from "../util/withApollo";
 import VideoElem from "../components/Youtube/VideoElem";
+import { useYoutube } from "../hooks/useYoutube";
 
-const Youtube: React.FC<{}> = (props) => {
-  // Will be moved to custom hook
-  const [videos, setVideos] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+const Youtube: React.FC = () => {
+  const {
+    videos,
+    youtubeRef,
+    createYoutubeInstance,
+    getAllChannelVideos,
+    loading,
+    error,
+  } = useYoutube();
+
   useEffect(() => {
-    const createYoutubeInstance = async () => {
-      setLoading(true);
-      try {
-        const youtube = axios.create({
-          baseURL: "https://www.googleapis.com/youtube/v3",
-          params: {
-            maxResults: 10,
-            key: process.env.NEXT_PUBLIC_YOUTUBE_API_KEY,
-          },
-        });
-
-        const channelStuff = await youtube.get("/channels", {
-          params: {
-            id: process.env.NEXT_PUBLIC_YOUTUBE_CHANNEL_ID,
-            part: "contentDetails",
-          },
-        });
-
-        const playlistId =
-          channelStuff.data.items[0].contentDetails.relatedPlaylists.uploads;
-
-        const uploadedItems = await youtube.get("/playlistItems", {
-          params: {
-            part: "contentDetails",
-            playlistId,
-          },
-        });
-
-        if (uploadedItems.data.items) {
-          setVideos(uploadedItems.data.items);
-        }
-        console.log("HERE IS UPLOAD STUFF", uploadedItems);
-      } catch (error: any) {
-        console.log("Error fetching channel data", error.message);
-        setError("Error fetching videos");
-      }
-      setLoading(false);
-    };
-
-    createYoutubeInstance();
+    if (!youtubeRef?.current) createYoutubeInstance();
+    getAllChannelVideos();
   }, []);
 
   return (
