@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { NextPage } from "next";
 import { withApollo } from "../util/withApollo";
 import { useUserQuery } from "../generated/graphql";
@@ -9,17 +9,37 @@ import SubNav from "../components/Navbar/SubNav";
 
 import classNames from "classnames";
 import styles from "../styles/Home.module.scss";
+import { useYoutube } from "../hooks/useYoutube";
+import { Box, CircularProgress, Stack } from "@mui/material";
+import VideoElem from "../components/Youtube/VideoElem";
 
 // Removed skills - can add more sections as/if needed
 const navItems = ["ABOUT"];
 
 const Home: NextPage = () => {
   const [navItem, setNavItem] = useState("ABOUT");
+  const {
+    youtubeRef,
+    createYoutubeInstance,
+    latestRelease: latestVideoRelease,
+    getLatestRelease,
+    loading: loadingVideo,
+    error,
+  } = useYoutube();
   const { data } = useUserQuery({
     variables: {
       _id: "421f6412-edf9-4ef8-b131-8e957901ce2a",
     },
   });
+
+  useEffect(() => {
+    if (!youtubeRef?.current) createYoutubeInstance();
+
+    if (!latestVideoRelease) {
+      getLatestRelease();
+    }
+  }, []);
+
   return (
     <Layout>
       <SubNav items={navItems} selected={navItem} setItem={setNavItem} />
@@ -35,10 +55,26 @@ const Home: NextPage = () => {
               </span>
               <span className="md_text">{data?.user.user?.bio}</span>
             </div>
+            {loadingVideo ? (
+              <Box display="flex" justifyContent="center" alignItems="center">
+                <CircularProgress color="inherit" size={100} />
+              </Box>
+            ) : (
+              <>
+                {latestVideoRelease && (
+                  <div className={styles.content_section}>
+                    <span className={`${styles.section_title} heavy_text`}>
+                      Latest Release
+                    </span>
+                    <VideoElem video={latestVideoRelease} />
+                  </div>
+                )}
+              </>
+            )}
             {data?.user.latestRelease && (
               <div className={styles.content_section}>
                 <span className={`${styles.section_title} heavy_text`}>
-                  Latest Release
+                  Currently Working On
                 </span>
                 <ProjectItemContent
                   authKey="shadman"

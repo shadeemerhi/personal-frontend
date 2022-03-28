@@ -8,6 +8,7 @@ interface YoutubeContextInterface {
   videos: any[];
   latestRelease: any;
   getAllChannelVideos: any;
+  getLatestRelease: any;
   createYoutubeInstance: any;
   loading: boolean;
   error: string;
@@ -16,8 +17,9 @@ interface YoutubeContextInterface {
 const YoutubeContext = React.createContext<YoutubeContextInterface>({
   youtubeRef: null,
   videos: [],
-  latestRelease: {},
+  latestRelease: null,
   getAllChannelVideos: null,
+  getLatestRelease: null,
   createYoutubeInstance: null,
   loading: false,
   error: "",
@@ -29,7 +31,7 @@ export const useYoutube = () => {
 
 const YoutubeProvider: React.FC<useYoutubeProps> = ({ children }) => {
   const [videos, setVideos] = useState([]);
-  const [latestRelease, setLatestRelease] = useState({});
+  const [latestRelease, setLatestRelease] = useState();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const youtubeRef = useRef<AxiosInstance>();
@@ -49,27 +51,17 @@ const YoutubeProvider: React.FC<useYoutubeProps> = ({ children }) => {
     if (!youtubeRef.current) return;
     setLoading(true);
     try {
-      const channelStuff = await youtubeRef.current.get("/channels", {
-        params: {
-          id: process.env.NEXT_PUBLIC_YOUTUBE_CHANNEL_ID,
-          part: "contentDetails",
-        },
-      });
-
-      const playlistId =
-        channelStuff.data.items[0].contentDetails.relatedPlaylists.uploads;
-
       const uploadedItems = await youtubeRef.current.get("/playlistItems", {
         params: {
           part: "contentDetails",
-          playlistId,
+          playlistId: process.env.NEXT_PUBLIC_YOUTUBE_PLAYLIST_ID,
         },
       });
 
       if (uploadedItems.data.items) {
         setVideos(uploadedItems.data.items);
       }
-      console.log("HERE IS UPLOAD STUFF", uploadedItems);
+      console.log("HERE IS UPLOAD ITEMS", uploadedItems);
     } catch (error: any) {
       console.log("Error fetching channel data", error.message);
       setError("Error fetching videos");
@@ -77,17 +69,37 @@ const YoutubeProvider: React.FC<useYoutubeProps> = ({ children }) => {
     setLoading(false);
   };
 
-  useEffect(() => {
-    console.log("THIS IS RUNNING HAHA");
+  const getLatestRelease = async () => {
+    if (!youtubeRef.current) return;
+    try {
+      const latestReleaseResults = await youtubeRef.current.get(
+        "/playlistItems",
+        {
+          params: {
+            part: "contentDetails",
+            maxResults: 1,
+            playlistId: process.env.NEXT_PUBLIC_YOUTUBE_PLAYLIST_ID,
+          },
+        }
+      );
 
-    // createYoutubeInstance();
-  }, []);
+      if (latestReleaseResults.data.items.length) {
+        const latestRelease = latestReleaseResults.data.items[0];
+        setLatestRelease(latestRelease);
+      }
+      console.log("THIS SHOULD HAVE ONE ITEM", latestReleaseResults);
+    } catch (error: any) {
+      console.log("Error fetching latest release", error.message);
+      setError("Error fetching latest release");
+    }
+  };
 
   const value = {
     youtubeRef,
     videos,
     latestRelease,
     getAllChannelVideos,
+    getLatestRelease,
     createYoutubeInstance,
     loading,
     error,

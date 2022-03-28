@@ -21,7 +21,10 @@ const Youtube: React.FC = () => {
 
   useEffect(() => {
     if (!youtubeRef?.current) createYoutubeInstance();
-    getAllChannelVideos();
+
+    if (!videos.length) {
+      getAllChannelVideos();
+    }
   }, []);
 
   return (
