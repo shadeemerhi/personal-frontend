@@ -20,6 +20,7 @@ const ChannelLink: React.FC<ChannelLinkProps> = ({ textSizeClass, center }) => {
       <a
         href="https://www.youtube.com/channel/UCxwvyK3-Xs4zvoGWFT_iDmw"
         target="_blank"
+        rel="noreferrer"
       >
         <YouTubeIcon className={styles.icon} />
         <span className={`pointer ${textSizeClass}`}>Youtube</span>
