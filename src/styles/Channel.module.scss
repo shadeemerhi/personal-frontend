@@ -1,0 +1,12 @@
+@use "./main.scss";
+@import "./_mixins";
+
+.video {
+  width: 100%;
+  // height: 246px;
+}
+
+@include md {
+  .video {
+  }
+}
