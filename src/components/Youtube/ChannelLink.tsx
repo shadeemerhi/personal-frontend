@@ -23,7 +23,7 @@ const ChannelLink: React.FC<ChannelLinkProps> = ({ textSizeClass, center }) => {
         rel="noreferrer"
       >
         <YouTubeIcon className={styles.icon} />
-        <span className={`pointer ${textSizeClass}`}>Youtube</span>
+        <span className={`pointer ${textSizeClass} heavy_text`}>YouTube</span>
       </a>
     </div>
   );

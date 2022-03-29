@@ -23,7 +23,7 @@ const navItems = [
     icon: HomeIcon,
   },
   {
-    text: "Youtube",
+    text: "YouTube",
     route: "/youtube",
     icon: YouTubeIcon,
   },

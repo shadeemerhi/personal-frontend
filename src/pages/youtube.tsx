@@ -36,7 +36,7 @@ const Youtube: React.FC = () => {
           <CircularProgress color="inherit" size={100} />
         </Box>
       ) : (
-        <Stack spacing={8} display="flex" alignItems="center" mb={10}>
+        <Stack spacing={8} mt={4} mb={10}>
           {videos.map((video: any, index) => (
             <VideoElem key={index} video={video} />
           ))}

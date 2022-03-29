@@ -42,6 +42,7 @@ const YoutubeProvider: React.FC<useYoutubeProps> = ({ children }) => {
       params: {
         maxResults: 10,
         key: process.env.NEXT_PUBLIC_YOUTUBE_API_KEY,
+        part: "snippet",
       },
     });
     youtubeRef.current = youtube;
@@ -53,7 +54,6 @@ const YoutubeProvider: React.FC<useYoutubeProps> = ({ children }) => {
     try {
       const uploadedItems = await youtubeRef.current.get("/playlistItems", {
         params: {
-          part: "contentDetails",
           playlistId: process.env.NEXT_PUBLIC_YOUTUBE_PLAYLIST_ID,
         },
       });
@@ -76,7 +76,6 @@ const YoutubeProvider: React.FC<useYoutubeProps> = ({ children }) => {
         "/playlistItems",
         {
           params: {
-            part: "contentDetails",
             maxResults: 1,
             playlistId: process.env.NEXT_PUBLIC_YOUTUBE_PLAYLIST_ID,
           },

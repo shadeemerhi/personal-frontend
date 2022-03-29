@@ -65,7 +65,7 @@ const Home: NextPage = () => {
                 {latestVideoRelease && (
                   <div className={styles.content_section}>
                     <ChannelLink textSizeClass="lg_text" />
-                    <span className={`${styles.section_title}`}>
+                    <span className={`${styles.section_title} md_text`}>
                       Latest Release
                     </span>
                     <div className={styles.video_container}>
