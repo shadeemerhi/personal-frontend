@@ -17,7 +17,7 @@ type VideoElemProps = {
 const VideoElem: React.FC<VideoElemProps> = ({ video }) => {
   return (
     <div className={styles.video_item_container}>
-      <span className="md_text heavy_text">{video.snippet.title}</span>
+      <span className="md_text">{video.snippet.title}</span>
       <div className={styles.video}>
         <ReactPlayer
           url={`https://www.youtube.com/watch?v=${video.snippet.resourceId.videoId}`}
